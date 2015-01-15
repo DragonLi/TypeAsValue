@@ -15,7 +15,10 @@ struct add {
 		"only values of the same type may be added"
 	);
 
-	typedef Int<X::value + Y::value> type;
+	typedef std::integral_constant<
+		decltype(X::value + Y::value),
+		X::value + Y::value
+	> type;
 };
 
 template <
@@ -28,7 +31,42 @@ struct substract {
 		"only values of the same type may be substracted"
 	);
 
-	typedef Int<X::value - Y::value> type;
+	typedef std::integral_constant<
+		decltype(X::value - Y::value),
+		X::value - Y::value
+	> type;
+};
+
+template <
+	typename X,
+	typename Y
+>
+struct multiply {
+	static_assert(
+		equal_type<X, Y>::value,
+		"only values of the same type may be multiplied"
+	);
+
+	typedef std::integral_constant<
+		decltype(X::value * Y::value),
+		X::value * Y::value
+	> type;
+};
+
+template <
+	typename X,
+	typename Y
+>
+struct divide {
+	static_assert(
+		equal_type<X, Y>::value,
+		"only values of the same type may be divided"
+	);
+
+	typedef std::integral_constant<
+		decltype(X::value / Y::value),
+		X::value / Y::value
+	> type;
 };
 
 }
