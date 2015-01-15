@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 
 #include "type.h"
-#include "operation.h"
+#include "operation/math.h"
 
 class TypeAsValueTest : public ::testing::Test { };
 
