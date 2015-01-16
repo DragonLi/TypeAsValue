@@ -10,10 +10,10 @@ TEST_F(TypeAsValueTest, Value) {
 }
 
 TEST_F(TypeAsValueTest, BasicMath) {
-	EXPECT_EQ(3,  ( tav::add<tav::Int<1>, tav::Int<2>>::type::value ));
-	EXPECT_EQ(4,  ( tav::substract<tav::Int<10>, tav::Int<6>>::type::value ));
-	EXPECT_EQ(42, ( tav::multiply<tav::Int<2>, tav::Int<21>>::type::value ));
-	EXPECT_EQ(5, ( tav::divide<tav::Int<10>, tav::Int<2>>::type::value ));
+	EXPECT_EQ(3,  ( tav::add<tav::Int<1>, tav::Int<2>>::value ));
+	EXPECT_EQ(4,  ( tav::substract<tav::Int<10>, tav::Int<6>>::value ));
+	EXPECT_EQ(42, ( tav::multiply<tav::Int<2>, tav::Int<21>>::value ));
+	EXPECT_EQ(5,  ( tav::divide<tav::Int<10>, tav::Int<2>>::value ));
 }
 
 int main(int argc, char **argv) {

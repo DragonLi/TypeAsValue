@@ -9,45 +9,37 @@ template <
 	typename X,
 	typename Y
 >
-struct add {
-	typedef std::integral_constant<
-		decltype(X::value + Y::value),
-		X::value + Y::value
-	> type;
-};
+using add = typename std::integral_constant<
+	decltype(X::value + Y::value),
+	X::value + Y::value
+>::type;
 
 template <
 	typename X,
 	typename Y
 >
-struct substract {
-	typedef std::integral_constant<
-		decltype(X::value - Y::value),
-		X::value - Y::value
-	> type;
-};
+using substract = typename std::integral_constant<
+	decltype(X::value - Y::value),
+	X::value - Y::value
+>::type;
 
 template <
 	typename X,
 	typename Y
 >
-struct multiply {
-	typedef std::integral_constant<
-		decltype(X::value * Y::value),
-		X::value * Y::value
-	> type;
-};
+using multiply = typename std::integral_constant<
+	decltype(X::value * Y::value),
+	X::value * Y::value
+>::type;
 
 template <
 	typename X,
 	typename Y
 >
-struct divide {
-	typedef std::integral_constant<
-		decltype(X::value / Y::value),
-		X::value / Y::value
-	> type;
-};
+using divide = typename std::integral_constant<
+	decltype(X::value / Y::value),
+	X::value / Y::value
+>::type;
 
 }
 
