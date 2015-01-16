@@ -32,10 +32,15 @@ TEST_F(TypeAsValueTest, Cons) {
 }
 
 TEST_F(TypeAsValueTest, List) {
-	EXPECT_EQ(1, ( tav::Car<tav::List<tav::Int<1>>::type>::value ));
-	EXPECT_EQ(1, ( tav::Car<tav::List<tav::Int<1>, tav::Int<2>>::type>::value ));
-	EXPECT_EQ(2, ( tav::Car<tav::Cdr<tav::List<tav::Int<1>, tav::Int<2>>::type>>::value ));
-	EXPECT_EQ(2, ( tav::Car<tav::Cdr<tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>>::value ));
+	EXPECT_EQ(1, ( tav::Head<tav::List<tav::Int<1>>::type>::value ));
+	EXPECT_EQ(1, ( tav::Head<tav::List<tav::Int<1>, tav::Int<2>>::type>::value ));
+	EXPECT_EQ(2, ( tav::Head<tav::Tail<tav::List<tav::Int<1>, tav::Int<2>>::type>>::value ));
+	EXPECT_EQ(2, ( tav::Head<tav::Tail<tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>>::value ));
+}
+
+TEST_F(TypeAsValueTest, ListConcatenate) {
+	EXPECT_EQ(1, ( tav::Head<tav::Concatenate<tav::List<tav::Int<1>>::type, tav::List<tav::Int<2>>::type>::type>::value ));
+	EXPECT_EQ(2, ( tav::Head<tav::Tail<tav::Concatenate<tav::List<tav::Int<1>>::type, tav::List<tav::Int<2>>::type>::type>>::value ));
 }
 
 int main(int argc, char **argv) {
