@@ -8,38 +8,50 @@
 
 class TypeAsValueTest : public ::testing::Test { };
 
-TEST_F(TypeAsValueTest, Value) {
-	ASSERT_TRUE(( std::is_same<int, tav::Int<1>::value_type>::value ));
-}
-
 TEST_F(TypeAsValueTest, BasicMath) {
+	// (+ 1 2)
 	EXPECT_EQ(3,  ( tav::Add<tav::Int<1>, tav::Int<2>>::value ));
+	// (- 10 6)
 	EXPECT_EQ(4,  ( tav::Substract<tav::Int<10>, tav::Int<6>>::value ));
+	// (* 2 21)
 	EXPECT_EQ(42, ( tav::Multiply<tav::Int<2>, tav::Int<21>>::value ));
+	// (/ 10 2)
 	EXPECT_EQ(5,  ( tav::Divide<tav::Int<10>, tav::Int<2>>::value ));
 }
 
 TEST_F(TypeAsValueTest, Conditional) {
+	// (if #t 1 2)
 	EXPECT_EQ(1, ( tav::If<true,  tav::Int<1>, tav::Int<2>>::value ));
+	// (if #f 1 2)
 	EXPECT_EQ(2, ( tav::If<false, tav::Int<1>, tav::Int<2>>::value ));
 }
 
 TEST_F(TypeAsValueTest, Cons) {
+	// (car (cons 1 void))
 	EXPECT_EQ(1, ( tav::Car<tav::Cons<tav::Int<1>, void>>::value ));
+	// (car (cons 1 2))
 	EXPECT_EQ(1, ( tav::Car<tav::Cons<tav::Int<1>, tav::Int<2>>>::value ));
+	// (cdr (cons 1 2))
 	EXPECT_EQ(2, ( tav::Cdr<tav::Cons<tav::Int<1>, tav::Int<2>>>::value ));
+	// (car (cdr (cons 1 (cons 2 3))))
 	EXPECT_EQ(2, ( tav::Car<tav::Cdr<tav::Cons<tav::Int<1>, tav::Cons<tav::Int<2>, tav::Int<3>>>>>::value ));
 }
 
 TEST_F(TypeAsValueTest, List) {
+	// (head (list 1))
 	EXPECT_EQ(1, ( tav::Head<tav::List<tav::Int<1>>::type>::value ));
+	// (head (list 1 2))
 	EXPECT_EQ(1, ( tav::Head<tav::List<tav::Int<1>, tav::Int<2>>::type>::value ));
+	// (head (tail (list 1 2)))
 	EXPECT_EQ(2, ( tav::Head<tav::Tail<tav::List<tav::Int<1>, tav::Int<2>>::type>>::value ));
+	// (head (tail (list 1 2 3)))
 	EXPECT_EQ(2, ( tav::Head<tav::Tail<tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>>::value ));
 }
 
 TEST_F(TypeAsValueTest, ListConcatenate) {
+	// (head (concatenate (list 1) (list 2)))
 	EXPECT_EQ(1, ( tav::Head<tav::Concatenate<tav::List<tav::Int<1>>::type, tav::List<tav::Int<2>>::type>::type>::value ));
+	// (head (tail (concatenate (list 1) (list 2))))
 	EXPECT_EQ(2, ( tav::Head<tav::Tail<tav::Concatenate<tav::List<tav::Int<1>>::type, tav::List<tav::Int<2>>::type>::type>>::value ));
 }
 
