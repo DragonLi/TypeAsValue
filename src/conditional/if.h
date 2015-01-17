@@ -7,13 +7,13 @@ namespace tav {
 
 template <
 	bool     Condition,
-	typename IfBranch,
-	typename ElseBranch
+	typename TrueBranch,
+	typename FalseBranch
 >
 using If = typename std::conditional<
 	Condition,
-	IfBranch,
-	ElseBranch
+	TrueBranch,
+	FalseBranch
 >::type;
 
 }

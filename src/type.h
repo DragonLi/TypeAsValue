@@ -8,6 +8,9 @@ namespace tav {
 template <int Value>
 using Int = typename std::integral_constant<int, Value>::type;
 
+template <std::size_t Value>
+using Size = typename std::integral_constant<std::size_t, Value>::type;
+
 template <bool Value>
 using Boolean = typename std::integral_constant<bool, Value>::type;
 

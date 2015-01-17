@@ -21,9 +21,9 @@ TEST_F(TypeAsValueTest, BasicMath) {
 
 TEST_F(TypeAsValueTest, Conditional) {
 	// (if #t 1 2)
-	EXPECT_EQ(1, ( tav::If<true,  tav::Int<1>, tav::Int<2>>::value ));
+	EXPECT_EQ(1, ( tav::If<true,  tav::Int<1>, tav::Int<2>>::type::value ));
 	// (if #f 1 2)
-	EXPECT_EQ(2, ( tav::If<false, tav::Int<1>, tav::Int<2>>::value ));
+	EXPECT_EQ(2, ( tav::If<false, tav::Int<1>, tav::Int<2>>::type::value ));
 }
 
 TEST_F(TypeAsValueTest, Cons) {
@@ -38,6 +38,11 @@ TEST_F(TypeAsValueTest, Cons) {
 }
 
 TEST_F(TypeAsValueTest, List) {
+	// (length (list 1))
+	EXPECT_EQ(1, ( tav::Length<tav::List<tav::Int<1>>::type>::type::value ));
+	// (length (list 1 2))
+	EXPECT_EQ(2, ( tav::Length<tav::List<tav::Int<1>, tav::Int<2>>::type>::type::value ));
+
 	// (head (list 1))
 	EXPECT_EQ(1, ( tav::Head<tav::List<tav::Int<1>>::type>::value ));
 	// (head (list 1 2))
@@ -49,6 +54,11 @@ TEST_F(TypeAsValueTest, List) {
 }
 
 TEST_F(TypeAsValueTest, ListConcatenate) {
+	// (length (concatenate (list 1) (list 2)))
+	EXPECT_EQ(2, ( tav::Length<tav::Concatenate<tav::List<tav::Int<1>>::type, tav::List<tav::Int<2>>::type>::type>::type::value ));
+	// (length (concatenate (list 1 2) (list 3 4)))
+	EXPECT_EQ(4, ( tav::Length<tav::Concatenate<tav::List<tav::Int<1>, tav::Int<2>>::type, tav::List<tav::Int<3>, tav::Int<4>>::type>::type>::type::value ));
+
 	// (head (concatenate (list 1) (list 2)))
 	EXPECT_EQ(1, ( tav::Head<tav::Concatenate<tav::List<tav::Int<1>>::type, tav::List<tav::Int<2>>::type>::type>::value ));
 	// (head (tail (concatenate (list 1) (list 2))))

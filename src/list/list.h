@@ -27,6 +27,16 @@ using Head = Car<Cons>;
 template <typename Cons>
 using Tail = Cdr<Cons>;
 
+template <typename Cons>
+struct Length {
+	typedef Add<Size<1>, typename Length<Cdr<Cons>>::type> type;
+};
+
+template <>
+struct Length<void> {
+	typedef Size<0> type;
+};
+
 template <
 	typename Primary,
 	typename Secondary
