@@ -53,6 +53,15 @@ TEST_F(TypeAsValueTest, List) {
 	EXPECT_EQ(2, ( tav::Head<tav::Tail<tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>>::value ));
 }
 
+TEST_F(TypeAsValueTest, ListNth) {
+	// (nth 0 (list 1))
+	EXPECT_EQ(1, ( tav::Nth<tav::Size<0>, tav::List<tav::Int<1>>::type>::type::value ));
+	// (nth 0 (list 1 2))
+	EXPECT_EQ(1, ( tav::Nth<tav::Size<0>, tav::List<tav::Int<1>, tav::Int<2>>::type>::type::value ));
+	// (nth 1 (list 1 2))
+	EXPECT_EQ(2, ( tav::Nth<tav::Size<1>, tav::List<tav::Int<1>, tav::Int<2>>::type>::type::value ));
+}
+
 TEST_F(TypeAsValueTest, ListConcatenate) {
 	// (length (concatenate (list 1) (list 2)))
 	EXPECT_EQ(2, ( tav::Length<tav::Concatenate<tav::List<tav::Int<1>>::type, tav::List<tav::Int<2>>::type>::type>::type::value ));
