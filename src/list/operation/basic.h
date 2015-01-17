@@ -2,6 +2,7 @@
 #define TYPEASVALUE_SRC_LIST_OPERATION_BASIC_H_
 
 #include "operation/math.h"
+#include "conditional/if.h"
 
 namespace tav {
 
@@ -26,12 +27,44 @@ struct Nth {
 	typedef If<
 		equal_value<Index, Size<0>>::value,
 		Head<Cons>,
-		typename Nth<Substract<Index, Size<1>>, Tail<Cons>>::type
+		typename Nth<
+			Substract<Index, Size<1>>,
+			Tail<Cons>
+		>::type
 	> type;
 };
 
 template <typename Index>
 struct Nth<Index, void> {
+	typedef void type;
+};
+
+template <
+	typename Count,
+	typename Current
+>
+struct Take {
+	typedef Cons<
+		Head<Current>,
+		typename Take<
+			Substract<Count, Size<1>>,
+			Tail<Current>
+		>::type
+	> type;
+};
+
+template <typename Current>
+struct Take<Size<0>, Current> {
+	typedef void type;
+};
+
+template <typename Count>
+struct Take<Count, void> {
+	typedef void type;
+};
+
+template <>
+struct Take<Size<0>, void> {
 	typedef void type;
 };
 
