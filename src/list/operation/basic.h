@@ -2,20 +2,23 @@
 #define TYPEASVALUE_SRC_LIST_OPERATION_BASIC_H_
 
 #include "operation/math.h"
+#include "higher/fold.h"
 
 namespace tav {
 
 template <typename Cons>
-struct Length {
-	typedef Add<
-		Size<1>,
-		typename Length<Tail<Cons>
-	>::type> type;
-};
+class Length {
+	private:
+		template <
+			typename,
+			typename Current
+		>
+		struct Count {
+			typedef Add<Size<1>, Current> type;
+		};
 
-template <>
-struct Length<void> {
-	typedef Size<0> type;
+	public:
+		typedef typename Fold<Count, Size<0>, Cons>::type type;
 };
 
 template <
