@@ -5,6 +5,7 @@
 #include "conditional/if.h"
 #include "list/cons.h"
 #include "list/list.h"
+#include "list/operation/higher/fold.h"
 
 class TypeAsValueTest : public ::testing::Test { };
 
@@ -81,6 +82,11 @@ TEST_F(TypeAsValueTest, ListConcatenate) {
 	EXPECT_EQ(1, ( tav::Head<tav::Concatenate<tav::List<tav::Int<1>>::type, tav::List<tav::Int<2>>::type>::type>::value ));
 	// (head (tail (concatenate (list 1) (list 2))))
 	EXPECT_EQ(2, ( tav::Head<tav::Tail<tav::Concatenate<tav::List<tav::Int<1>>::type, tav::List<tav::Int<2>>::type>::type>>::value ));
+}
+
+TEST_F(TypeAsValueTest, ListFold) {
+	// (fold + 0 (list 1 2 3))
+	EXPECT_EQ(6, ( tav::Fold<tav::Add, tav::Int<0>, tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>::type::value ));
 }
 
 int main(int argc, char **argv) {
