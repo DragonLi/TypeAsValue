@@ -99,6 +99,11 @@ TEST_F(TypeAsValueTest, ListMap) {
 	EXPECT_TRUE(( std::is_same<tav::List<tav::Int<4>, tav::Int<8>, tav::Int<12>>::type, tav::Map<quadruple, tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>::type>::value ));
 }
 
+TEST_F(TypeAsValueTest, ListReverse) {
+	// (reverse (list 1 2 3))
+	EXPECT_TRUE(( std::is_same<tav::List<tav::Int<3>, tav::Int<2>, tav::Int<1>>::type, tav::Reverse<tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>::type>::value ));
+}
+
 int main(int argc, char **argv) {
 	testing::InitGoogleTest(&argc, argv);
 
