@@ -11,14 +11,15 @@ class Length {
 	private:
 		template <
 			typename,
-			typename Current
+			typename Previous
 		>
 		struct Count {
-			typedef Add<Size<1>, Current> type;
+			typedef Add<Size<1>, Previous> type;
 		};
 
 	public:
 		typedef typename Fold<Count, Size<0>, Cons>::type type;
+
 };
 
 template <

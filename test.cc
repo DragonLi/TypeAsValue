@@ -3,11 +3,16 @@
 #include "type.h"
 #include "operation/math.h"
 #include "conditional/if.h"
+
 #include "list/cons.h"
 #include "list/list.h"
 #include "list/operation/higher/fold.h"
+#include "list/operation/higher/misc.h"
 
 class TypeAsValueTest : public ::testing::Test { };
+
+template <typename Element>
+using quadruple = tav::Multiply<tav::Int<4>, Element>;
 
 TEST_F(TypeAsValueTest, BasicMath) {
 	// (+ 1 2)
@@ -87,6 +92,11 @@ TEST_F(TypeAsValueTest, ListConcatenate) {
 TEST_F(TypeAsValueTest, ListFold) {
 	// (fold + 0 (list 1 2 3))
 	EXPECT_EQ(6, ( tav::Fold<tav::Add, tav::Int<0>, tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>::type::value ));
+}
+
+TEST_F(TypeAsValueTest, ListMap) {
+	// (map quadruple (list 1 2 3))
+	EXPECT_TRUE(( std::is_same<tav::List<tav::Int<4>, tav::Int<8>, tav::Int<12>>::type, tav::Map<quadruple, tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>::type>::value ));
 }
 
 int main(int argc, char **argv) {
