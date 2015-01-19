@@ -18,19 +18,16 @@ template <
 	typename X,
 	typename Y
 >
-using equal_type = typename std::integral_constant<
-	bool,
-	std::is_same<typename X::value_type, typename Y::value_type>::value
+using EqualType = typename std::is_same<
+	typename X::value_type,
+	typename Y::value_type
 >::type;
 
 template <
 	typename X,
 	typename Y
 >
-using equal_value = typename std::integral_constant<
-	bool,
-	X::value == Y::value
->::type;
+using EqualValue = Boolean<X::value == Y::value>;
 
 }
 

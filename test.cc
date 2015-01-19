@@ -9,8 +9,27 @@
 
 int main(int, char **) { }
 
-template <typename Element>
-using quadruple = tav::Multiply<tav::Int<4>, Element>;
+// equality
+
+static_assert(
+	std::is_same<tav::Boolean<true>, tav::EqualType<tav::Int<1>, tav::Int<2>>>::value,
+	"(EqualType 1 2) != #t"
+);
+
+static_assert(
+	std::is_same<tav::Boolean<false>, tav::EqualType<tav::Int<1>, tav::Size<1>>>::value,
+	"(EqualType (int 1) (size 2)) != #f"
+);
+
+static_assert(
+	std::is_same<tav::Boolean<true>, tav::EqualValue<tav::Int<1>, tav::Size<1>>>::value,
+	"(equal? (int 1) (size 1)) != #t"
+);
+
+static_assert(
+	std::is_same<tav::Boolean<false>, tav::EqualValue<tav::Int<1>, tav::Int<2>>>::value,
+	"(equal? 1 2) != #f"
+);
 
 // basic math operations
 
@@ -146,6 +165,9 @@ static_assert(
 );
 
 // list map
+
+template <typename Element>
+using quadruple = tav::Multiply<tav::Int<4>, Element>;
 
 static_assert(
 	std::is_same<tav::List<tav::Int<4>, tav::Int<8>, tav::Int<12>>::type, tav::Map<quadruple, tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>::type>::value,
