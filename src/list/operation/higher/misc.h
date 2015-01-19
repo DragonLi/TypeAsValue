@@ -3,6 +3,7 @@
 
 #include "fold.h"
 #include "list/operation/concatenate.h"
+#include "conditional/if.h"
 
 namespace tav {
 
@@ -16,12 +17,35 @@ class Map {
 			typename Current,
 			typename Previous
 		>
-		struct FunctionWrapper {
+		struct function_wrapper {
 			typedef Cons<Function<Current>, Previous> type;
 		};
 
 	public:
-		typedef typename Fold<FunctionWrapper, void, List>::type type;
+		typedef typename Fold<function_wrapper, void, List>::type type;
+
+};
+
+template <
+	template<typename> class Function,
+	typename                 List
+>
+class Filter {
+	private:
+		template <
+			typename Current,
+			typename Previous
+		>
+		struct function_wrapper {
+			typedef If<
+				Function<Current>::type::value,
+				Cons<Current, Previous>,
+				Previous
+			> type;
+		};
+
+	public:
+		typedef typename Fold<function_wrapper, void, List>::type type;
 
 };
 
@@ -32,7 +56,7 @@ class Reverse {
 			typename Current,
 			typename Previous
 		>
-		struct ReversedConcatenate {
+		struct reversed_concatenate {
 			typedef typename Concatenate<
 				Previous,
 				Cons<Current, void>
@@ -40,7 +64,7 @@ class Reverse {
 		};
 
 	public:
-		typedef typename Fold<ReversedConcatenate, void, List>::type type;
+		typedef typename Fold<reversed_concatenate, void, List>::type type;
 
 };
 

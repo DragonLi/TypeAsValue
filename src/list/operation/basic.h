@@ -13,12 +13,12 @@ class Length {
 			typename,
 			typename Previous
 		>
-		struct Count {
+		struct count {
 			typedef Add<Size<1>, Previous> type;
 		};
 
 	public:
-		typedef typename Fold<Count, Size<0>, Cons>::type type;
+		typedef typename Fold<count, Size<0>, Cons>::type type;
 
 };
 
