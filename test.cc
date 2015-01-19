@@ -1,5 +1,3 @@
-#include "gtest/gtest.h"
-
 #include "type.h"
 #include "operation/math.h"
 #include "conditional/if.h"
@@ -9,108 +7,161 @@
 #include "list/operation/higher/fold.h"
 #include "list/operation/higher/misc.h"
 
-class TypeAsValueTest : public ::testing::Test { };
+int main(int, char **) { }
 
 template <typename Element>
 using quadruple = tav::Multiply<tav::Int<4>, Element>;
 
-TEST_F(TypeAsValueTest, BasicMath) {
-	// (+ 1 2)
-	EXPECT_EQ(3,  ( tav::Add<tav::Int<1>, tav::Int<2>>::value ));
-	// (- 10 6)
-	EXPECT_EQ(4,  ( tav::Substract<tav::Int<10>, tav::Int<6>>::value ));
-	// (* 2 21)
-	EXPECT_EQ(42, ( tav::Multiply<tav::Int<2>, tav::Int<21>>::value ));
-	// (/ 10 2)
-	EXPECT_EQ(5,  ( tav::Divide<tav::Int<10>, tav::Int<2>>::value ));
-}
+// basic math operations
 
-TEST_F(TypeAsValueTest, Conditional) {
-	// (if #t 1 2)
-	EXPECT_EQ(1, ( tav::If<true,  tav::Int<1>, tav::Int<2>>::type::value ));
-	// (if #f 1 2)
-	EXPECT_EQ(2, ( tav::If<false, tav::Int<1>, tav::Int<2>>::type::value ));
-}
+static_assert(
+	std::is_same<tav::Int<3>, tav::Add<tav::Int<1>, tav::Int<2>>>::value,
+	"(+ 1 2) != 3"
+);
 
-TEST_F(TypeAsValueTest, Cons) {
-	// (car (cons 1 void))
-	EXPECT_EQ(1, ( tav::Car<tav::Cons<tav::Int<1>, void>>::value ));
-	// (car (cons 1 2))
-	EXPECT_EQ(1, ( tav::Car<tav::Cons<tav::Int<1>, tav::Int<2>>>::value ));
-	// (cdr (cons 1 2))
-	EXPECT_EQ(2, ( tav::Cdr<tav::Cons<tav::Int<1>, tav::Int<2>>>::value ));
-	// (car (cdr (cons 1 (cons 2 3))))
-	EXPECT_EQ(2, ( tav::Car<tav::Cdr<tav::Cons<tav::Int<1>, tav::Cons<tav::Int<2>, tav::Int<3>>>>>::value ));
-}
+static_assert(
+	std::is_same<tav::Int<4>, tav::Substract<tav::Int<10>, tav::Int<6>>>::value,
+	"(- 10 6) != 4"
+);
 
-TEST_F(TypeAsValueTest, List) {
-	// (length (list 1))
-	EXPECT_EQ(1, ( tav::Length<tav::List<tav::Int<1>>::type>::type::value ));
-	// (length (list 1 2))
-	EXPECT_EQ(2, ( tav::Length<tav::List<tav::Int<1>, tav::Int<2>>::type>::type::value ));
+static_assert(
+	std::is_same<tav::Int<42>, tav::Multiply<tav::Int<2>, tav::Int<21>>>::value,
+	"(* 2 21) != 42"
+);
 
-	// (head (list 1))
-	EXPECT_EQ(1, ( tav::Head<tav::List<tav::Int<1>>::type>::value ));
-	// (head (list 1 2))
-	EXPECT_EQ(1, ( tav::Head<tav::List<tav::Int<1>, tav::Int<2>>::type>::value ));
-	// (head (tail (list 1 2)))
-	EXPECT_EQ(2, ( tav::Head<tav::Tail<tav::List<tav::Int<1>, tav::Int<2>>::type>>::value ));
-	// (head (tail (list 1 2 3)))
-	EXPECT_EQ(2, ( tav::Head<tav::Tail<tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>>::value ));
-}
+static_assert(
+	std::is_same<tav::Int<5>, tav::Divide<tav::Int<10>, tav::Int<2>>>::value,
+	"(/ 10 2) != 42"
+);
 
-TEST_F(TypeAsValueTest, ListNth) {
-	// (nth 0 (list 1))
-	EXPECT_EQ(1, ( tav::Nth<tav::Size<0>, tav::List<tav::Int<1>>::type>::type::value ));
-	// (nth 0 (list 1 2))
-	EXPECT_EQ(1, ( tav::Nth<tav::Size<0>, tav::List<tav::Int<1>, tav::Int<2>>::type>::type::value ));
-	// (nth 1 (list 1 2))
-	EXPECT_EQ(2, ( tav::Nth<tav::Size<1>, tav::List<tav::Int<1>, tav::Int<2>>::type>::type::value ));
-}
+// conditionals
 
-TEST_F(TypeAsValueTest, ListTake) {
-	// (length (take 1 (list 1 2)))
-	EXPECT_EQ(1, ( tav::Length<tav::Take<tav::Size<1>, tav::List<tav::Int<1>, tav::Int<2>>::type>::type>::type::value ));
-	// (length (take 2 (list 1 2)))
-	EXPECT_EQ(2, ( tav::Length<tav::Take<tav::Size<2>, tav::List<tav::Int<1>, tav::Int<2>>::type>::type>::type::value ));
-	// (length (take 3 (list 1 2)))
-	EXPECT_EQ(2, ( tav::Length<tav::Take<tav::Size<3>, tav::List<tav::Int<1>, tav::Int<2>>::type>::type>::type::value ));
-}
+static_assert(
+	std::is_same<tav::Int<1>, tav::If<true,  tav::Int<1>, tav::Int<2>>::type>::value,
+	"(if #t 1 2) != 1"
+);
 
-TEST_F(TypeAsValueTest, ListConcatenate) {
-	// (length (concatenate (list 1) (list 2)))
-	EXPECT_EQ(2, ( tav::Length<tav::Concatenate<tav::List<tav::Int<1>>::type, tav::List<tav::Int<2>>::type>::type>::type::value ));
-	// (length (concatenate (list 1 2) (list 3 4)))
-	EXPECT_EQ(4, ( tav::Length<tav::Concatenate<tav::List<tav::Int<1>, tav::Int<2>>::type, tav::List<tav::Int<3>, tav::Int<4>>::type>::type>::type::value ));
+static_assert(
+	std::is_same<tav::Int<2>, tav::If<false,  tav::Int<1>, tav::Int<2>>::type>::value,
+	"(if #f 1 2) != 2"
+);
 
-	// (head (concatenate (list 1) (list 2)))
-	EXPECT_EQ(1, ( tav::Head<tav::Concatenate<tav::List<tav::Int<1>>::type, tav::List<tav::Int<2>>::type>::type>::value ));
-	// (head (tail (concatenate (list 1) (list 2))))
-	EXPECT_EQ(2, ( tav::Head<tav::Tail<tav::Concatenate<tav::List<tav::Int<1>>::type, tav::List<tav::Int<2>>::type>::type>>::value ));
-}
+// cons
 
-TEST_F(TypeAsValueTest, ListFold) {
-	// (fold + 0 (list 1 2 3))
-	EXPECT_EQ(6, ( tav::Fold<tav::Add, tav::Int<0>, tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>::type::value ));
-}
+static_assert(
+	std::is_same<tav::Int<1>, tav::Car<tav::Cons<tav::Int<1>, void>>>::value,
+	"(car (cons 1 void)) != 1"
+);
 
-TEST_F(TypeAsValueTest, ListMap) {
-	// (map quadruple (list 1 2 3))
-	EXPECT_TRUE(( std::is_same<tav::List<tav::Int<4>, tav::Int<8>, tav::Int<12>>::type, tav::Map<quadruple, tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>::type>::value ));
-}
+static_assert(
+	std::is_same<tav::Int<1>, tav::Car<tav::Cons<tav::Int<1>, tav::Int<2>>>>::value,
+	"(car (cons 1 2)) != 1"
+);
 
-TEST_F(TypeAsValueTest, ListFilter) {
-	// (filter odd (list 1 2 3))
-	EXPECT_TRUE(( std::is_same<tav::List<tav::Int<1>, tav::Int<3>>::type, tav::Filter<tav::Odd, tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>::type>::value ));
-}
+static_assert(
+	std::is_same<tav::Int<2>, tav::Cdr<tav::Cons<tav::Int<1>, tav::Int<2>>>>::value,
+	"(cdr (cons 1 2)) != 2"
+);
 
-TEST_F(TypeAsValueTest, ListReverse) {
-	// (reverse (list 1 2 3))
-	EXPECT_TRUE(( std::is_same<tav::List<tav::Int<3>, tav::Int<2>, tav::Int<1>>::type, tav::Reverse<tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>::type>::value ));
-}
+static_assert(
+	std::is_same<tav::Int<2>, tav::Car<tav::Cdr<tav::Cons<tav::Int<1>, tav::Cons<tav::Int<2>, tav::Int<3>>>>>>::value,
+	"(car (cdr (cons 1 (cons 2 3)))) != 2"
+);
 
-int main(int argc, char **argv) {
-	testing::InitGoogleTest(&argc, argv);
+// list
 
-	return RUN_ALL_TESTS();
-}
+static_assert(
+	std::is_same<tav::Cons<tav::Int<1>, void>, tav::List<tav::Int<1>>::type>::value,
+	"(list 1) != (cons 1 void)"
+);
+
+static_assert(
+	std::is_same<tav::Cons<tav::Int<1>, tav::Cons<tav::Int<2>, void>>, tav::List<tav::Int<1>, tav::Int<2>>::type>::value,
+	"(list 1 2) != (cons 1 (cons 2 void))"
+);
+
+// list length
+
+static_assert(
+	std::is_same<tav::Size<1>, tav::Length<tav::List<tav::Int<1>>::type>::type>::value,
+	"(length (list 1)) != 1"
+);
+
+static_assert(
+	std::is_same<tav::Size<2>, tav::Length<tav::List<tav::Int<1>, tav::Int<2>>::type>::type>::value,
+	"(length (list 1 2)) != 2"
+);
+
+// list nth
+
+static_assert(
+	std::is_same<tav::Int<1>, tav::Nth<tav::Size<0>, tav::List<tav::Int<1>>::type>::type>::value,
+	"(nth 0 (list 1)) != 1"
+);
+
+static_assert(
+	std::is_same<tav::Int<1>, tav::Nth<tav::Size<0>, tav::List<tav::Int<1>, tav::Int<2>>::type>::type>::value,
+	"(nth 0 (list 1 2)) != 1"
+);
+
+static_assert(
+	std::is_same<tav::Int<2>, tav::Nth<tav::Size<1>, tav::List<tav::Int<1>, tav::Int<2>>::type>::type>::value,
+	"(nth 1 (list 1 2)) != 2"
+);
+
+// list take
+
+static_assert(
+	std::is_same<tav::Size<1>, tav::Length<tav::Take<tav::Size<1>, tav::List<tav::Int<1>, tav::Int<2>>::type>::type>::type>::value,
+	"(length (take 1 (list 1 2))) != 1"
+);
+
+static_assert(
+	std::is_same<tav::Size<2>, tav::Length<tav::Take<tav::Size<2>, tav::List<tav::Int<1>, tav::Int<2>>::type>::type>::type>::value,
+	"(length (take 2 (list 1 2))) != 2"
+);
+
+static_assert(
+	std::is_same<tav::Size<2>, tav::Length<tav::Take<tav::Size<3>, tav::List<tav::Int<1>, tav::Int<2>>::type>::type>::type>::value,
+	"(length (take 3 (list 1 2))) != 2"
+);
+
+// list concatenate
+
+static_assert(
+	std::is_same<tav::Size<2>, tav::Length<tav::Concatenate<tav::List<tav::Int<1>>::type, tav::List<tav::Int<2>>::type>::type>::type>::value,
+	"(length (concatenate (list 1) (list 2))) != 2"
+);
+
+static_assert(
+	std::is_same<tav::Size<4>, tav::Length<tav::Concatenate<tav::List<tav::Int<1>, tav::Int<2>>::type, tav::List<tav::Int<3>, tav::Int<4>>::type>::type>::type>::value,
+	"(length (concatenate (list 1 2) (list 3 4))) != 4"
+);
+
+// list fold
+
+static_assert(
+	std::is_same<tav::Int<6>, tav::Fold<tav::Add, tav::Int<0>, tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>::type>::value,
+	"(fold + 0 (list 1 2 3)) != 6"
+);
+
+// list map
+
+static_assert(
+	std::is_same<tav::List<tav::Int<4>, tav::Int<8>, tav::Int<12>>::type, tav::Map<quadruple, tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>::type>::value,
+	"(map quadruple (list 1 2 3)) != (list 4 8 12)"
+);
+
+// list filter
+
+static_assert(
+	std::is_same<tav::List<tav::Int<1>, tav::Int<3>>::type, tav::Filter<tav::Odd, tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>::type>::value,
+	"(filter odd (list 1 2 3)) != (list 1 3)"
+);
+
+// list reverse
+
+static_assert(
+	std::is_same<tav::List<tav::Int<3>, tav::Int<2>, tav::Int<1>>::type, tav::Reverse<tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>::type>::value,
+	"(reverse (list 1 2 3)) != (list 3 2 1)"
+);
