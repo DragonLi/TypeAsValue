@@ -14,9 +14,6 @@ class TypeAsValueTest : public ::testing::Test { };
 template <typename Element>
 using quadruple = tav::Multiply<tav::Int<4>, Element>;
 
-template <typename Element>
-using odd = tav::Boolean<(Element::value % 2 == 1)>;
-
 TEST_F(TypeAsValueTest, BasicMath) {
 	// (+ 1 2)
 	EXPECT_EQ(3,  ( tav::Add<tav::Int<1>, tav::Int<2>>::value ));
@@ -104,7 +101,7 @@ TEST_F(TypeAsValueTest, ListMap) {
 
 TEST_F(TypeAsValueTest, ListFilter) {
 	// (filter odd (list 1 2 3))
-	EXPECT_TRUE(( std::is_same<tav::List<tav::Int<1>, tav::Int<3>>::type, tav::Filter<odd, tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>::type>::value ));
+	EXPECT_TRUE(( std::is_same<tav::List<tav::Int<1>, tav::Int<3>>::type, tav::Filter<tav::Odd, tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>::type>::value ));
 }
 
 TEST_F(TypeAsValueTest, ListReverse) {

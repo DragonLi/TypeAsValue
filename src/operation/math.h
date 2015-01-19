@@ -41,6 +41,12 @@ using Divide = typename std::integral_constant<
 	X::value / Y::value
 >::type;
 
+template <typename X>
+using Even = Boolean<(X::value % 2 == 0)>;
+
+template <typename X>
+using Odd = Boolean<!Even<X>::value>;
+
 }
 
 #endif  // TYPEASVALUE_SRC_OPERATION_MATH_H_
