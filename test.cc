@@ -1,5 +1,6 @@
 #include "type.h"
 #include "operation/math.h"
+#include "operation/logic.h"
 #include "conditional/if.h"
 
 #include "list/cons.h"
@@ -48,7 +49,7 @@ static_assert(
 static_assert(
 	std::is_same<
 		tav::Int<3>,
-		tav::Add<tav::Int<1>, tav::Int<2>>
+		tav::Add<tav::Int<1>, tav::Int<2>>::type
 	>::value,
 	"(+ 1 2) != 3"
 );
@@ -56,7 +57,7 @@ static_assert(
 static_assert(
 	std::is_same<
 		tav::Int<4>,
-		tav::Substract<tav::Int<10>, tav::Int<6>>
+		tav::Substract<tav::Int<10>, tav::Int<6>>::type
 	>::value,
 	"(- 10 6) != 4"
 );
@@ -64,7 +65,7 @@ static_assert(
 static_assert(
 	std::is_same<
 		tav::Int<42>,
-		tav::Multiply<tav::Int<2>, tav::Int<21>>
+		tav::Multiply<tav::Int<2>, tav::Int<21>>::type
 	>::value,
 	"(* 2 21) != 42"
 );
@@ -72,9 +73,67 @@ static_assert(
 static_assert(
 	std::is_same<
 		tav::Int<5>,
-		tav::Divide<tav::Int<10>, tav::Int<2>>
+		tav::Divide<tav::Int<10>, tav::Int<2>>::type
 	>::value,
 	"(/ 10 2) != 42"
+);
+
+// logic
+
+static_assert(
+	std::is_same<
+		tav::Boolean<true>,
+		tav::And<tav::Boolean<true>, tav::Boolean<true>>::type
+	>::value,
+	"(and #t #t) != #t"
+);
+
+static_assert(
+	std::is_same<
+		tav::Boolean<false>,
+		tav::And<tav::Boolean<false>, tav::Boolean<true>>::type
+	>::value,
+	"(and #f #t) != #f"
+);
+
+static_assert(
+	std::is_same<
+		tav::Boolean<true>,
+		tav::Or<tav::Boolean<true>, tav::Boolean<true>>::type
+	>::value,
+	"(or #t #t) != #t"
+);
+
+static_assert(
+	std::is_same<
+		tav::Boolean<true>,
+		tav::Or<tav::Boolean<false>, tav::Boolean<true>>::type
+	>::value,
+	"(or #f #t) != #t"
+);
+
+static_assert(
+	std::is_same<
+		tav::Boolean<false>,
+		tav::Or<tav::Boolean<false>, tav::Boolean<false>>::type
+	>::value,
+	"(or #f #f) != #f"
+);
+
+static_assert(
+	std::is_same<
+		tav::Boolean<true>,
+		tav::Xor<tav::Boolean<false>, tav::Boolean<true>>::type
+	>::value,
+	"(xor #f #t) != #t"
+);
+
+static_assert(
+	std::is_same<
+		tav::Boolean<false>,
+		tav::Xor<tav::Boolean<true>, tav::Boolean<true>>::type
+	>::value,
+	"(xor #t #t) != #f"
 );
 
 // conditionals
