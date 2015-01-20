@@ -7,6 +7,7 @@
 #include "list/list.h"
 #include "list/operation/higher/fold.h"
 #include "list/operation/higher/misc.h"
+#include "list/operation/higher/query.h"
 
 int main(int, char **) { }
 
@@ -382,7 +383,7 @@ static_assert(
 			tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type
 		>::type
 	>::value,
-	"(filter odd (list 1 2 3)) != (list 1 3)"
+	"(filter odd? (list 1 2 3)) != (list 1 3)"
 );
 
 // list reverse
@@ -395,4 +396,50 @@ static_assert(
 		>::type
 	>::value,
 	"(reverse (list 1 2 3)) != (list 3 2 1)"
+);
+
+// list query
+
+static_assert(
+	std::is_same<
+		tav::Boolean<true>,
+		tav::Any<
+			tav::Odd,
+			tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type
+		>::type
+	>::value,
+	"(any odd? (list 1 2 3)) != #t"
+);
+
+static_assert(
+	std::is_same<
+		tav::Boolean<false>,
+		tav::Any<
+			tav::Odd,
+			tav::List<tav::Int<2>, tav::Int<4>, tav::Int<6>>::type
+		>::type
+	>::value,
+	"(any odd? (list 2 4 6)) != #f"
+);
+
+static_assert(
+	std::is_same<
+		tav::Boolean<true>,
+		tav::All<
+			tav::Even,
+			tav::List<tav::Int<2>, tav::Int<4>, tav::Int<6>>::type
+		>::type
+	>::value,
+	"(all even? (list 2 4 6)) != #t"
+);
+
+static_assert(
+	std::is_same<
+		tav::Boolean<false>,
+		tav::All<
+			tav::Odd,
+			tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type
+		>::type
+	>::value,
+	"(all odd? (list 1 2 3)) != #f"
 );
