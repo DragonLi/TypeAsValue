@@ -23,6 +23,9 @@ template <
 >
 using Xor = Boolean<X::value ^ Y::value>;
 
+template <typename X>
+using Not = Boolean<!X::value>;
+
 }
 
 #endif // TYPEASVALUE_SRC_OPERATION_LOGIC_H_

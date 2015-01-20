@@ -443,3 +443,25 @@ static_assert(
 	>::value,
 	"(all odd? (list 1 2 3)) != #f"
 );
+
+static_assert(
+	std::is_same<
+		tav::Boolean<true>,
+		tav::None<
+			tav::Even,
+			tav::List<tav::Int<1>, tav::Int<3>, tav::Int<5>>::type
+		>::type
+	>::value,
+	"(none even? (list 1 3 5)) != #t"
+);
+
+static_assert(
+	std::is_same<
+		tav::Boolean<false>,
+		tav::None<
+			tav::Even,
+			tav::List<tav::Int<2>, tav::Int<3>, tav::Int<5>>::type
+		>::type
+	>::value,
+	"(none even? (list 2 3 5)) != #f"
+);
