@@ -6,6 +6,7 @@
 #include "list/cons.h"
 #include "list/list.h"
 #include "list/operation/reverse.h"
+#include "list/operation/contains.h"
 #include "list/operation/higher/fold.h"
 #include "list/operation/higher/misc.h"
 #include "list/operation/higher/query.h"
@@ -465,4 +466,28 @@ static_assert(
 		>::type
 	>::value,
 	"(none even? (list 2 3 5)) != #f"
+);
+
+// list contains
+
+static_assert(
+	std::is_same<
+		tav::Boolean<true>,
+		tav::Contains<
+			tav::Int<2>,
+			tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type
+		>::type
+	>::value,
+	"(contains 2 (list 1 2 3)) != #t"
+);
+
+static_assert(
+	std::is_same<
+		tav::Boolean<false>,
+		tav::Contains<
+			tav::Int<0>,
+			tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type
+		>::type
+	>::value,
+	"(contains 0 (list 1 2 3)) != #f"
 );

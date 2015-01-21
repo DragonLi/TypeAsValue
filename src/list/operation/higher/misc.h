@@ -17,7 +17,10 @@ class Map {
 			typename Previous
 		>
 		struct function_wrapper {
-			typedef Cons<Function<Current>, Previous> type;
+			typedef Cons<
+				typename Function<Current>::type,
+				Previous
+			> type;
 		};
 
 	public:

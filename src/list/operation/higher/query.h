@@ -2,6 +2,7 @@
 #define TYPEASVALUE_SRC_LIST_OPERATION_HIGHER_QUERY_H_
 
 #include "fold.h"
+#include "misc.h"
 #include "operation/logic.h"
 
 namespace tav {
