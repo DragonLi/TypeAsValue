@@ -2,7 +2,6 @@
 #define TYPEASVALUE_SRC_LIST_OPERATION_HIGHER_MISC_H_
 
 #include "fold.h"
-#include "list/operation/concatenate.h"
 #include "conditional/if.h"
 
 namespace tav {
@@ -46,25 +45,6 @@ class Filter {
 
 	public:
 		typedef typename Fold<function_wrapper, void, List>::type type;
-
-};
-
-template <typename List>
-class Reverse {
-	private:
-		template <
-			typename Current,
-			typename Previous
-		>
-		struct reversed_concatenate {
-			typedef typename Concatenate<
-				Previous,
-				Cons<Current, void>
-			>::type type;
-		};
-
-	public:
-		typedef typename Fold<reversed_concatenate, void, List>::type type;
 
 };
 
