@@ -25,7 +25,7 @@ const std::size_t count = tav::Length<
 * conditionals
 * `Cons` structure
 * `List` function as helper for `Cons` construction
-* basic list operators such as `Nth`, `Length`, `Take` and `Concatenate`
+* basic list operators such as `Nth`, `Length`, `Take` and `Append`
 * higher order list operation `Fold`
 * higher order list operations such as `Map` and `Filter` expressed in terms of `Fold`
 * higher order list queries such as `Any`, `All` and `None`

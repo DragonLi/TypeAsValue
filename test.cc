@@ -323,7 +323,7 @@ static_assert(
 	std::is_same<
 		tav::Size<2>,
 		tav::Length<
-			tav::Concatenate<
+			tav::Append<
 				tav::List<tav::Int<1>>::type,
 				tav::List<tav::Int<2>>::type
 			>::type
@@ -336,7 +336,7 @@ static_assert(
 	std::is_same<
 		tav::Size<4>,
 		tav::Length<
-			tav::Concatenate<
+			tav::Append<
 				tav::List<tav::Int<1>, tav::Int<2>>::type,
 				tav::List<tav::Int<3>, tav::Int<4>>::type
 			>::type

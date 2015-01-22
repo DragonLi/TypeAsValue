@@ -1,7 +1,7 @@
 #ifndef TYPEASVALUE_SRC_LIST_OPERATION_REVERSE_H_
 #define TYPEASVALUE_SRC_LIST_OPERATION_REVERSE_H_
 
-#include "concatenate.h"
+#include "append.h"
 #include "higher/fold.h"
 
 namespace tav {
@@ -13,15 +13,15 @@ class Reverse {
 			typename Current,
 			typename Previous
 		>
-		struct reversed_concatenate {
-			typedef typename Concatenate<
+		struct reversed_append {
+			typedef typename Append<
 				Previous,
 				Cons<Current, void>
 			>::type type;
 		};
 
 	public:
-		typedef typename Fold<reversed_concatenate, void, List>::type type;
+		typedef typename Fold<reversed_append, void, List>::type type;
 
 };
 
