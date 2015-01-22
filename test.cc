@@ -317,7 +317,7 @@ static_assert(
 	"(length (take 3 (list 1 2))) != 2"
 );
 
-// list concatenate
+// list append
 
 static_assert(
 	std::is_same<
@@ -329,7 +329,7 @@ static_assert(
 			>::type
 		>::type
 	>::value,
-	"(length (concatenate (list 1) (list 2))) != 2"
+	"(length (append (list 1) (list 2))) != 2"
 );
 
 static_assert(
@@ -342,7 +342,7 @@ static_assert(
 			>::type
 		>::type
 	>::value,
-	"(length (concatenate (list 1 2) (list 3 4))) != 4"
+	"(length (append (list 1 2) (list 3 4))) != 4"
 );
 
 // list fold
@@ -490,4 +490,20 @@ static_assert(
 		>::type
 	>::value,
 	"(contains 0 (list 1 2 3)) != #f"
+);
+
+// list concatenate
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>, tav::Int<4>, tav::Int<5>, tav::Int<6>>::type,
+		tav::Concatenate<
+			tav::List<
+				tav::List<tav::Int<1>, tav::Int<2>>::type,
+				tav::List<tav::Int<3>>::type,
+				tav::List<tav::Int<4>, tav::Int<5>, tav::Int<6>>::type
+			>::type
+		>::type
+	>::value,
+	"(length (concatenate (list (list 1 2) (list 3) (list 4 5 6)))) != 6"
 );
