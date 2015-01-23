@@ -5,12 +5,13 @@
 
 #include "list/cons.h"
 #include "list/list.h"
-#include "list/iota.h"
 #include "list/operation/reverse.h"
 #include "list/operation/contains.h"
 #include "list/operation/higher/fold.h"
 #include "list/operation/higher/misc.h"
 #include "list/operation/higher/query.h"
+#include "list/generator/iota.h"
+#include "list/generator/higher/list_tabulate.h"
 
 int main(int, char **) { }
 
@@ -545,4 +546,17 @@ static_assert(
 		>::type
 	>::value,
 	"(iota 5 5 -1) != (list 5 4 3 2 1)"
+);
+
+// list tabulate
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Size<0>, tav::Size<1>, tav::Size<4>, tav::Size<9>>::type,
+		tav::ListTabulate<
+			tav::Size<4>,
+			tav::Square
+		>::type
+	>::value,
+	"(list-tabulate 4 square) != (list 0 1 4 9)"
 );

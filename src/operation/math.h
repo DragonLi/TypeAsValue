@@ -41,6 +41,9 @@ using Divide = typename std::integral_constant<
 	X::value / Y::value
 >::type;
 
+template <typename Base>
+using Square = Multiply<Base, Base>;
+
 template <typename X>
 using Even = Boolean<(X::value % 2 == 0)>;
 
