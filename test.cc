@@ -5,6 +5,7 @@
 
 #include "list/cons.h"
 #include "list/list.h"
+#include "list/iota.h"
 #include "list/operation/reverse.h"
 #include "list/operation/contains.h"
 #include "list/operation/higher/fold.h"
@@ -506,4 +507,42 @@ static_assert(
 		>::type
 	>::value,
 	"(length (concatenate (list (list 1 2) (list 3) (list 4 5 6)))) != 6"
+);
+
+// list iota
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type,
+		tav::Iota<
+			tav::Size<3>,
+			tav::Int<1>,
+			tav::Int<1>
+		>::type
+	>::value,
+	"(iota 3 1 1) != (list 1 2 3)"
+);
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<0>, tav::Int<2>, tav::Int<4>, tav::Int<6>, tav::Int<8>>::type,
+		tav::Iota<
+			tav::Size<5>,
+			tav::Int<0>,
+			tav::Int<2>
+		>::type
+	>::value,
+	"(iota 5 0 2) != (list 0 2 4 6 8)"
+);
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<5>, tav::Int<4>, tav::Int<3>, tav::Int<2>, tav::Int<1>>::type,
+		tav::Iota<
+			tav::Size<5>,
+			tav::Int<5>,
+			tav::Int<-1>
+		>::type
+	>::value,
+	"(iota 5 5 -1) != (list 5 4 3 2 1)"
 );
