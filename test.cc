@@ -84,6 +84,22 @@ static_assert(
 	"(/ 10 2) != 42"
 );
 
+static_assert(
+	std::is_same<
+		tav::Int<1>,
+		tav::Modulo<tav::Int<10>, tav::Int<3>>::type
+	>::value,
+	"(modulo 10 3) != 1"
+);
+
+static_assert(
+	std::is_same<
+		tav::Int<4096>,
+		tav::Square<tav::Int<64>>::type
+	>::value,
+	"(square 64) != 4096"
+);
+
 // logic
 
 static_assert(
