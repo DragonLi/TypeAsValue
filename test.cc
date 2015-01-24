@@ -11,6 +11,7 @@
 #include "list/operation/higher/misc.h"
 #include "list/operation/higher/query.h"
 #include "list/generator/iota.h"
+#include "list/generator/make_list.h"
 #include "list/generator/higher/list_tabulate.h"
 
 int main(int, char **) { }
@@ -514,6 +515,18 @@ static_assert(
 
 static_assert(
 	std::is_same<
+		tav::List<tav::Int<1>>::type,
+		tav::Iota<
+			tav::Size<1>,
+			tav::Int<1>,
+			tav::Int<1>
+		>::type
+	>::value,
+	"(iota 1 1 1) != (list 1)"
+);
+
+static_assert(
+	std::is_same<
 		tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type,
 		tav::Iota<
 			tav::Size<3>,
@@ -546,6 +559,24 @@ static_assert(
 		>::type
 	>::value,
 	"(iota 5 5 -1) != (list 5 4 3 2 1)"
+);
+
+// make list
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<42>>::type,
+		tav::MakeList<tav::Size<1>, tav::Int<42>>::type
+	>::value,
+	"(make-list 1 42) != (list 42)"
+);
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<42>, tav::Int<42>, tav::Int<42>>::type,
+		tav::MakeList<tav::Size<3>, tav::Int<42>>::type
+	>::value,
+	"(make-list 3 42) != (list 42 42 42)"
 );
 
 // list tabulate
