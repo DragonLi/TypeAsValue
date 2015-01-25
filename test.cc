@@ -607,3 +607,27 @@ static_assert(
 	>::value,
 	"(list-tabulate 4 square) != (list 0 1 4 9)"
 );
+
+// list count
+
+static_assert(
+	std::is_same<
+		tav::Size<2>,
+		tav::Count<
+			tav::Odd,
+			tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type
+		>::type
+	>::value,
+	"(count odd? (list 1 2 3)) != 2"
+);
+
+static_assert(
+	std::is_same<
+		tav::Size<0>,
+		tav::Count<
+			tav::Even,
+			tav::List<tav::Int<1>, tav::Int<3>, tav::Int<5>>::type
+		>::type
+	>::value,
+	"(count even? (list 1 3 5)) != 0"
+);

@@ -3,6 +3,7 @@
 
 #include "fold.h"
 #include "misc.h"
+#include "operation/math.h"
 #include "operation/logic.h"
 
 namespace tav {
@@ -33,6 +34,16 @@ template <
 >
 using None = Not<
 	typename Any<Function, List>::type
+>;
+
+template <
+	template<typename> class Function,
+	typename                 List
+>
+using Count = Fold<
+	Add,
+	tav::Size<0>,
+	typename Map<Function, List>::type
 >;
 
 }
