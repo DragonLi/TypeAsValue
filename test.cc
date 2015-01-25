@@ -14,6 +14,8 @@
 #include "list/generator/make_list.h"
 #include "list/generator/higher/list_tabulate.h"
 
+#include "function/apply.h"
+
 int main(int, char **) { }
 
 // equality
@@ -630,4 +632,25 @@ static_assert(
 		>::type
 	>::value,
 	"(count even? (list 1 3 5)) != 0"
+);
+
+// function apply
+
+static_assert(
+	std::is_same<
+		tav::Int<42>,
+		tav::Apply<tav::Multiply, tav::Int<21>, tav::_0>::type<tav::Int<2>>::type
+	>::value,
+	"((lambda (x) (* 21 x)) 2) != 42"
+);
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<10>, tav::Int<12>, tav::Int<14>>::type,
+		tav::Map<
+			tav::Apply<tav::Add, tav::_0, tav::Int<10>>::single_type,
+			tav::List<tav::Int<0>, tav::Int<2>, tav::Int<4>>::type
+		>::type
+	>::value,
+	"(map (lambda (x) (+ x 10)) (list 0 2 4)) != (list 10 12 14)"
 );
