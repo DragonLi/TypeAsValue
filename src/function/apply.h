@@ -48,15 +48,21 @@ struct Apply {
 	typedef typename tav::List<Arguments...>::type argument_list;
 
 	template <typename... Partials>
-	using type = Function<
+	using variadic_type = Function<
 		typename detail::resolve_placeholder<
 			typename tav::List<Partials...>::type,
 			Arguments
 		>::type...
 	>;
 
-	template <typename Partials>
-	using single_type = type<Partials>;
+	template <typename Partial>
+	using single_type = variadic_type<Partial>;
+
+	template <typename Partial0, typename Partial1>
+	using pair_type = variadic_type<Partial0, Partial1>;
+
+	template <typename Partial0, typename Partial1, typename Partial2>
+	using triple_type = variadic_type<Partial0, Partial1, Partial2>;
 };
 
 }

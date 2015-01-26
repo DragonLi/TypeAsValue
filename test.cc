@@ -639,7 +639,13 @@ static_assert(
 static_assert(
 	std::is_same<
 		tav::Int<42>,
-		tav::Apply<tav::Multiply, tav::Int<21>, tav::_0>::type<tav::Int<2>>::type
+		tav::Apply<
+			tav::Multiply,
+			tav::Int<21>,
+			tav::_0
+		>::single_type<
+			tav::Int<2>
+		>::type
 	>::value,
 	"((lambda (x) (* 21 x)) 2) != 42"
 );
@@ -648,7 +654,11 @@ static_assert(
 	std::is_same<
 		tav::List<tav::Int<10>, tav::Int<12>, tav::Int<14>>::type,
 		tav::Map<
-			tav::Apply<tav::Add, tav::_0, tav::Int<10>>::single_type,
+			tav::Apply<
+				tav::Add,
+				tav::_0,
+				tav::Int<10>
+			>::single_type,
 			tav::List<tav::Int<0>, tav::Int<2>, tav::Int<4>>::type
 		>::type
 	>::value,
