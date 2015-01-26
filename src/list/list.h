@@ -30,6 +30,8 @@ using Tail = Cdr<Cons>;
 }
 
 #include "operation/basic.h"
+#include "operation/nth.h"
+#include "operation/take.h"
 #include "operation/append.h"
 #include "operation/concatenate.h"
 

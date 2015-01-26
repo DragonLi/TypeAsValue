@@ -3,6 +3,9 @@
 
 #include <type_traits>
 
+#include "list/list.h"
+#include "list/operation/nth.h"
+
 namespace tav {
 
 namespace detail {
@@ -45,8 +48,6 @@ template <
 	typename...                 Arguments
 >
 struct Apply {
-	typedef typename tav::List<Arguments...>::type argument_list;
-
 	template <typename... Partials>
 	using variadic_type = Function<
 		typename detail::resolve_placeholder<

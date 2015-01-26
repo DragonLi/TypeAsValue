@@ -7,7 +7,6 @@
 #include "list/list.h"
 #include "list/operation/reverse.h"
 #include "list/operation/contains.h"
-#include "list/operation/higher/fold.h"
 #include "list/operation/higher/misc.h"
 #include "list/operation/higher/query.h"
 #include "list/generator/iota.h"
