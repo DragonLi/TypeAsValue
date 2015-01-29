@@ -21,6 +21,14 @@ struct List<Head> {
 	typedef Cons<Head, void> type;
 };
 
+template <
+	typename Type,
+	Type...  Values
+>
+using ListOfType = List<
+	std::integral_constant<Type, Values>...
+>;
+
 template <typename Cons>
 using Head = Car<Cons>;
 

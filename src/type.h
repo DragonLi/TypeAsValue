@@ -14,6 +14,9 @@ using Size = std::integral_constant<std::size_t, Value>;
 template <bool Value>
 using Boolean = std::integral_constant<bool, Value>;
 
+template <char Value>
+using Char = std::integral_constant<char, Value>;
+
 template <
 	typename X,
 	typename Y

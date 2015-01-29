@@ -239,6 +239,24 @@ static_assert(
 	"(list 1 2) != (cons 1 (cons 2 void))"
 );
 
+// list of type
+
+static_assert(
+	std::is_same<
+		tav::Cons<tav::Int<1>, void>,
+		tav::ListOfType<int, 1>::type
+	>::value,
+	"(list 1) != (cons 1 void)"
+);
+
+static_assert(
+	std::is_same<
+		tav::Cons<tav::Int<1>, tav::Cons<tav::Int<2>, void>>,
+		tav::ListOfType<int, 1, 2>::type
+	>::value,
+	"(list 1 2) != (cons 1 (cons 2 void))"
+);
+
 // list length
 
 static_assert(
