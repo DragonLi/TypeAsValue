@@ -2,7 +2,7 @@
 #define TYPEASVALUE_SRC_LIST_GENERATOR_HIGHER_LIST_TABULATE_H_
 
 #include "list/generator/iota.h"
-#include "list/operation/higher/misc.h"
+#include "list/operation/higher/map.h"
 
 namespace tav {
 
