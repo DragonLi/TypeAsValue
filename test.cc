@@ -9,6 +9,7 @@
 #include "list/operation/contains.h"
 #include "list/operation/higher/map.h"
 #include "list/operation/higher/filter.h"
+#include "list/operation/higher/partition.h"
 #include "list/operation/higher/query.h"
 #include "list/generator/iota.h"
 #include "list/generator/make_list.h"
@@ -425,6 +426,35 @@ static_assert(
 		>::type
 	>::value,
 	"(filter odd? (list 1 2 3)) != (list 1 3)"
+);
+
+// list remove
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<1>, tav::Int<3>>::type,
+		tav::Remove<
+			tav::Even,
+			tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type
+		>::type
+	>::value,
+	"(remove even? (list 1 2 3)) != (list 1 3)"
+);
+
+// list partition
+
+static_assert(
+	std::is_same<
+		tav::Cons<
+			tav::List<tav::Int<1>, tav::Int<3>>::type,
+			tav::List<tav::Int<2>>::type
+		>,
+		tav::Partition<
+			tav::Odd,
+			tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type
+		>::type
+	>::value,
+	"(partition odd? (list 1 2 3)) != [(list 1 3) (list 2)]"
 );
 
 // list reverse

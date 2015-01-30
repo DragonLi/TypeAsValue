@@ -7,7 +7,7 @@
 namespace tav {
 
 template <
-	template<typename> class Function,
+	template<typename> class Predicate,
 	typename                 List
 >
 class Filter {
@@ -16,16 +16,30 @@ class Filter {
 			typename Current,
 			typename Previous
 		>
-		struct function_wrapper {
+		struct predicate_wrapper {
 			typedef If<
-				Function<Current>::type::value,
+				Predicate<Current>::type::value,
 				Cons<Current, Previous>,
 				Previous
 			> type;
 		};
 
 	public:
-		typedef typename Fold<function_wrapper, void, List>::type type;
+		typedef typename Fold<predicate_wrapper, void, List>::type type;
+
+};
+
+template <
+	template<typename> class Predicate,
+	typename                 List
+>
+class Remove {
+	private:
+		template <typename Element>
+		using predicate_negator = Not<Predicate<Element>>;
+
+	public:
+		typedef typename Filter<predicate_negator, List>::type type;
 
 };
 
