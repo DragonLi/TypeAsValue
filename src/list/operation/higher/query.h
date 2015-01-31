@@ -9,41 +9,41 @@
 namespace tav {
 
 template <
-	template<typename> class Function,
+	template<typename> class Predicate,
 	typename                 List
 >
 using Any = Fold<
 	Or,
 	Boolean<false>,
-	typename Map<Function, List>::type
+	typename Map<Predicate, List>::type
 >;
 
 template <
-	template<typename> class Function,
+	template<typename> class Predicate,
 	typename                 List
 >
 using All = Fold<
 	And,
 	Boolean<true>,
-	typename Map<Function, List>::type
+	typename Map<Predicate, List>::type
 >;
 
 template <
-	template<typename> class Function,
+	template<typename> class Predicate,
 	typename                 List
 >
 using None = Not<
-	typename Any<Function, List>::type
+	typename Any<Predicate, List>::type
 >;
 
 template <
-	template<typename> class Function,
+	template<typename> class Predicate,
 	typename                 List
 >
 using Count = Fold<
 	Add,
 	tav::Size<0>,
-	typename Map<Function, List>::type
+	typename Map<Predicate, List>::type
 >;
 
 }

@@ -11,6 +11,7 @@
 #include "list/operation/higher/filter.h"
 #include "list/operation/higher/partition.h"
 #include "list/operation/higher/query.h"
+#include "list/operation/higher/find.h"
 #include "list/generator/iota.h"
 #include "list/generator/make_list.h"
 #include "list/generator/higher/list_tabulate.h"
@@ -680,6 +681,41 @@ static_assert(
 		>::type
 	>::value,
 	"(count even? (list 1 3 5)) != 0"
+);
+
+//list find
+
+static_assert(
+	std::is_same<
+		tav::Int<4>,
+		tav::Find<
+			tav::Even,
+			tav::List<tav::Int<1>, tav::Int<3>, tav::Int<4>, tav::Int<6>>::type
+		>::type
+	>::value,
+	"(find even? (list 1 3 4 6)) != 4"
+);
+
+static_assert(
+	std::is_same<
+		tav::Int<6>,
+		tav::Find<
+			tav::Even,
+			tav::List<tav::Int<1>, tav::Int<3>, tav::Int<5>, tav::Int<6>>::type
+		>::type
+	>::value,
+	"(find even? (list 1 3 5 6)) != 6"
+);
+
+static_assert(
+	std::is_same<
+		tav::Boolean<false>,
+		tav::Find<
+			tav::Even,
+			tav::List<tav::Int<1>, tav::Int<3>, tav::Int<5>>::type
+		>::type
+	>::value,
+	"(find even? (list 1 3 5)) != #f"
 );
 
 // function apply
