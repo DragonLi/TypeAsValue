@@ -13,6 +13,7 @@
 #include "list/operation/higher/query.h"
 #include "list/operation/higher/find.h"
 #include "list/operation/higher/take_while.h"
+#include "list/operation/higher/drop_while.h"
 #include "list/generator/iota.h"
 #include "list/generator/make_list.h"
 #include "list/generator/higher/list_tabulate.h"
@@ -752,6 +753,41 @@ static_assert(
 		>::type
 	>::value,
 	"(take-while odd? (list 2 4 5 6)) != void"
+);
+
+// list drop while
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<5>, tav::Int<6>>::type,
+		tav::DropWhile<
+			tav::Even,
+			tav::List<tav::Int<2>, tav::Int<4>, tav::Int<5>, tav::Int<6>>::type
+		>::type
+	>::value,
+	"(drop-while even? (list 2 4 5 6)) != (list 5 6)"
+);
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<2>, tav::Int<4>, tav::Int<6>>::type,
+		tav::DropWhile<
+			tav::Odd,
+			tav::List<tav::Int<2>, tav::Int<4>, tav::Int<6>>::type
+		>::type
+	>::value,
+	"(drop-while odd? (list 2 4 6)) != (list 2 4 6)"
+);
+
+static_assert(
+	std::is_same<
+		void,
+		tav::DropWhile<
+			tav::Even,
+			tav::List<tav::Int<2>, tav::Int<4>, tav::Int<6>>::type
+		>::type
+	>::value,
+	"(drop-while even? (list 2 4 6)) != void"
 );
 
 // function apply

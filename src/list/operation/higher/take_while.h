@@ -1,7 +1,6 @@
 #ifndef TYPEASVALUE_SRC_LIST_OPERATION_HIGHER_TAKE_WHILE_H_
 #define TYPEASVALUE_SRC_LIST_OPERATION_HIGHER_TAKE_WHILE_H_
 
-#include "type.h"
 #include "conditional/if.h"
 
 namespace tav {
