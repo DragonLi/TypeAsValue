@@ -323,69 +323,59 @@ static_assert(
 
 static_assert(
 	std::is_same<
-		tav::Size<1>,
-		tav::Length<
-			tav::Take<
-				tav::Size<1>,
-				tav::List<tav::Int<1>, tav::Int<2>>::type
-			>::type
+		tav::List<tav::Int<1>>::type,
+		tav::Take<
+			tav::Size<1>,
+			tav::List<tav::Int<1>, tav::Int<2>>::type
 		>::type
 	>::value,
-	"(length (take 1 (list 1 2))) != 1"
+	"(take 1 (list 1 2)) != (list 1)"
 );
 
 static_assert(
 	std::is_same<
-		tav::Size<2>,
-		tav::Length<
-			tav::Take<
-				tav::Size<2>,
-				tav::List<tav::Int<1>, tav::Int<2>>::type
-			>::type
+		tav::List<tav::Int<1>, tav::Int<2>>::type,
+		tav::Take<
+			tav::Size<2>,
+			tav::List<tav::Int<1>, tav::Int<2>>::type
 		>::type
 	>::value,
-	"(length (take 2 (list 1 2))) != 2"
+	"(take 2 (list 1 2)) != (list 1 2)"
 );
 
 static_assert(
 	std::is_same<
-		tav::Size<2>,
-		tav::Length<
-			tav::Take<
-				tav::Size<3>,
-				tav::List<tav::Int<1>, tav::Int<2>>::type
-			>::type
+		tav::List<tav::Int<1>, tav::Int<2>>::type,
+		tav::Take<
+			tav::Size<3>,
+			tav::List<tav::Int<1>, tav::Int<2>>::type
 		>::type
 	>::value,
-	"(length (take 3 (list 1 2))) != 2"
+	"(take 3 (list 1 2)) != (list 1 2)"
 );
 
 // list append
 
 static_assert(
 	std::is_same<
-		tav::Size<2>,
-		tav::Length<
-			tav::Append<
-				tav::List<tav::Int<1>>::type,
-				tav::List<tav::Int<2>>::type
-			>::type
+		tav::List<tav::Int<1>, tav::Int<2>>::type,
+		tav::Append<
+			tav::List<tav::Int<1>>::type,
+			tav::List<tav::Int<2>>::type
 		>::type
 	>::value,
-	"(length (append (list 1) (list 2))) != 2"
+	"(append (list 1) (list 2)) != (list 1 2)"
 );
 
 static_assert(
 	std::is_same<
-		tav::Size<4>,
-		tav::Length<
-			tav::Append<
-				tav::List<tav::Int<1>, tav::Int<2>>::type,
-				tav::List<tav::Int<3>, tav::Int<4>>::type
-			>::type
+		tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>, tav::Int<4>>::type,
+		tav::Append<
+			tav::List<tav::Int<1>, tav::Int<2>>::type,
+			tav::List<tav::Int<3>, tav::Int<4>>::type
 		>::type
 	>::value,
-	"(length (append (list 1 2) (list 3 4))) != 4"
+	"(append (list 1 2) (list 3 4)) != (list 1 2 3 4)"
 );
 
 // list fold
@@ -577,7 +567,7 @@ static_assert(
 			>::type
 		>::type
 	>::value,
-	"(length (concatenate (list (list 1 2) (list 3) (list 4 5 6)))) != 6"
+	"(concatenate (list (list 1 2) (list 3) (list 4 5 6))) != (list 1 2 3 4 5 6)"
 );
 
 // list iota
