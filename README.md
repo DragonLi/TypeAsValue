@@ -26,9 +26,12 @@ const std::size_t count = tav::Length<
 * `Cons` structure
 * `List` function as helper for `Cons` construction
 * basic list operators such as `Nth`, `Length`, `Take` and `Append`
+* list generators such as `Iota` and `MakeList`
 * higher order list operation `Fold`
 * higher order list operations such as `Map` and `Filter` expressed in terms of `Fold`
-* higher order list queries such as `Any`, `All` and `None`
+* higher order list queries such as `Find`, `Any`, `All` and `None`
+* higher order list generators such as `ListTabulate`
+* basic partial function application support using `Apply`
 * `static_assert` based test cases for all of the above
 
 ## Requirements
