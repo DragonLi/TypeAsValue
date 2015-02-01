@@ -12,6 +12,7 @@
 #include "list/operation/higher/partition.h"
 #include "list/operation/higher/query.h"
 #include "list/operation/higher/find.h"
+#include "list/operation/higher/take_while.h"
 #include "list/generator/iota.h"
 #include "list/generator/make_list.h"
 #include "list/generator/higher/list_tabulate.h"
@@ -683,7 +684,7 @@ static_assert(
 	"(count even? (list 1 3 5)) != 0"
 );
 
-//list find
+// list find
 
 static_assert(
 	std::is_same<
@@ -716,6 +717,41 @@ static_assert(
 		>::type
 	>::value,
 	"(find even? (list 1 3 5)) != #f"
+);
+
+// list take while
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<2>, tav::Int<4>>::type,
+		tav::TakeWhile<
+			tav::Even,
+			tav::List<tav::Int<2>, tav::Int<4>, tav::Int<5>, tav::Int<6>>::type
+		>::type
+	>::value,
+	"(take-while even? (list 2 4 5 6)) != (list 2 4)"
+);
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<2>, tav::Int<4>, tav::Int<6>>::type,
+		tav::TakeWhile<
+			tav::Even,
+			tav::List<tav::Int<2>, tav::Int<4>, tav::Int<6>>::type
+		>::type
+	>::value,
+	"(take-while even? (list 2 4 6)) != (list 2 4 6)"
+);
+
+static_assert(
+	std::is_same<
+		void,
+		tav::TakeWhile<
+			tav::Odd,
+			tav::List<tav::Int<2>, tav::Int<4>, tav::Int<5>, tav::Int<6>>::type
+		>::type
+	>::value,
+	"(take-while odd? (list 2 4 5 6)) != void"
 );
 
 // function apply
