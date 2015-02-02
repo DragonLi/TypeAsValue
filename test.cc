@@ -17,6 +17,7 @@
 #include "list/generator/iota.h"
 #include "list/generator/make_list.h"
 #include "list/generator/higher/list_tabulate.h"
+#include "list/operation/delete.h"
 
 #include "function/apply.h"
 
@@ -432,6 +433,30 @@ static_assert(
 		>::type
 	>::value,
 	"(remove even? (list 1 2 3)) != (list 1 3)"
+);
+
+// list delete
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<1>, tav::Int<3>>::type,
+		tav::Delete<
+			tav::Int<2>,
+			tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type
+		>::type
+	>::value,
+	"(delete 2 (list 1 2 3)) != (list 1 3)"
+);
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type,
+		tav::Delete<
+			tav::Int<4>,
+			tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type
+		>::type
+	>::value,
+	"(delete 4 (list 1 2 3)) != (list 1 2 3)"
 );
 
 // list partition

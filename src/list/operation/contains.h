@@ -1,6 +1,7 @@
 #ifndef TYPEASVALUE_SRC_LIST_OPERATION_CONTAINS_H_
 #define TYPEASVALUE_SRC_LIST_OPERATION_CONTAINS_H_
 
+#include "type.h"
 #include "higher/query.h"
 
 namespace tav {
@@ -12,9 +13,7 @@ template <
 class Contains {
 	private:
 		template <typename Current>
-		struct comparator {
-			typedef std::is_same<Current, Element> type;
-		};
+		using comparator = EqualValue<Current, Element>;
 
 	public:
 		typedef typename Any<comparator, List>::type type;
