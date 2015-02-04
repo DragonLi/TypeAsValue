@@ -13,14 +13,14 @@ template <
 	typename Function,
 	typename std::enable_if<std::is_void<Current>::value, std::size_t>::type = 0
 >
-constexpr void for_each(const Function&) { }
+void for_each(const Function&) { }
 
 template <
 	typename Current,
 	typename Function,
 	typename std::enable_if<!std::is_void<Current>::value, std::size_t>::type = 0
 >
-constexpr void for_each(const Function& function) {
+void for_each(const Function& function) {
 	function(Head<Current>::value);
 
 	for_each<Tail<Current>, Function>(function);
