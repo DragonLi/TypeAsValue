@@ -16,13 +16,11 @@ class Filter {
 			typename Current,
 			typename Previous
 		>
-		struct predicate_wrapper {
-			typedef If<
-				Predicate<Current>::type::value,
-				Cons<Current, Previous>,
-				Previous
-			> type;
-		};
+		using predicate_wrapper = If<
+			Predicate<Current>::type::value,
+			Cons<Current, Previous>,
+			Previous
+		>;
 
 	public:
 		typedef typename Fold<predicate_wrapper, void, List>::type type;
