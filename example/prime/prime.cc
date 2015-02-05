@@ -24,17 +24,10 @@ template <
 	typename Candidates,
 	typename Base
 >
-class removeMultiplesOf {
-	private:
-		template <typename Element>
-		using predicate_wrapper = isMultipleOf<Element, Base>;
-
-	public:
-		typedef typename tav::Remove<
-			predicate_wrapper,
-			Candidates
-		>::type type;
-};
+using removeMultiplesOf = tav::Remove<
+	tav::Apply<isMultipleOf, tav::_0, Base>::template single_type,
+	Candidates
+>;
 
 template <typename Candidates>
 struct Sieve {
