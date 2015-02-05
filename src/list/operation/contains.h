@@ -3,6 +3,7 @@
 
 #include "type.h"
 #include "higher/query.h"
+#include "function/apply.h"
 
 namespace tav {
 
@@ -10,15 +11,10 @@ template <
 	typename Element,
 	typename List
 >
-class Contains {
-	private:
-		template <typename Current>
-		using comparator = EqualValue<Current, Element>;
-
-	public:
-		typedef typename Any<comparator, List>::type type;
-
-};
+using Contains = Any<
+	Apply<EqualValue, tav::_0, Element>::template single_type,
+	List
+>;
 
 }
 

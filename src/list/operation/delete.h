@@ -3,6 +3,7 @@
 
 #include "type.h"
 #include "higher/filter.h"
+#include "function/apply.h"
 
 namespace tav {
 
@@ -10,15 +11,10 @@ template <
 	typename Element,
 	typename List
 >
-class Delete {
-	private:
-		template <typename Current>
-		using comparator = EqualValue<Current, Element>;
-
-	public:
-		typedef typename Remove<comparator, List>::type type;
-
-};
+using Delete = Remove<
+	Apply<EqualValue, tav::_0, Element>::template single_type,
+	List
+>;
 
 }
 
