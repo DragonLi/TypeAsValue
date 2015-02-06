@@ -15,12 +15,10 @@ class Map {
 			typename Current,
 			typename Previous
 		>
-		struct function_wrapper {
-			typedef Cons<
-				typename Function<Current>::type,
-				Previous
-			> type;
-		};
+		using function_wrapper = Cons<
+			typename Function<Current>::type,
+			Previous
+		>;
 
 	public:
 		typedef typename Fold<function_wrapper, void, List>::type type;

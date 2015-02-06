@@ -12,10 +12,10 @@ template <
 struct TakeWhile {
 	typedef typename If<
 		Predicate<Head<Current>>::type::value,
-		Cons<
+		typename Cons<
 			Head<Current>,
 			typename TakeWhile<Predicate, Tail<Current>>::type
-		>,
+		>::type,
 		void
 	>::type type;
 };

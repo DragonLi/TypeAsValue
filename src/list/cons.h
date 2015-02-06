@@ -1,6 +1,8 @@
 #ifndef TYPEASVALUE_SRC_LIST_CONS_H_
 #define TYPEASVALUE_SRC_LIST_CONS_H_
 
+#include "pair.h"
+
 namespace tav {
 
 template <
@@ -8,15 +10,28 @@ template <
 	typename CDR
 >
 struct Cons {
-	typedef CAR car;
-	typedef CDR cdr;
+	typedef Pair<CAR, CDR> type;
 };
 
-template <typename Cons>
-using Car = typename Cons::car;
+template <typename Pair>
+struct Car {
+	static_assert(
+		IsPair<Pair>::type::value,
+		"Pair type required"
+	);
 
-template <typename Cons>
-using Cdr = typename Cons::cdr;
+	typedef typename Pair::car type;
+};
+
+template <typename Pair>
+struct Cdr {
+	static_assert(
+		IsPair<Pair>::type::value,
+		"Pair type required"
+	);
+
+	typedef typename Pair::cdr type;
+};
 
 }
 

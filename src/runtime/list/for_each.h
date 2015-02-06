@@ -21,7 +21,7 @@ template <
 	typename std::enable_if<!std::is_void<Current>::value, std::size_t>::type = 0
 >
 void for_each(const Function& function) {
-	function(Head<Current>::value);
+	function(Head<Current>::type::value);
 
 	for_each<Tail<Current>, Function>(function);
 }

@@ -18,7 +18,7 @@ class Filter {
 		>
 		using predicate_wrapper = If<
 			Predicate<Current>::type::value,
-			Cons<Current, Previous>,
+			typename Cons<Current, Previous>::type,
 			Previous
 		>;
 

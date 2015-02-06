@@ -11,18 +11,18 @@ template <
 	typename Element
 >
 struct MakeList {
-	typedef Cons<
+	typedef typename Cons<
 		Element,
 		typename MakeList<
 			Substract<Count, Size<1>>,
 			Element
 		>::type
-	> type;
+	>::type type;
 };
 
 template <typename Element>
 struct MakeList<Size<1>, Element> {
-	typedef Cons<Element, void> type;
+	typedef typename Cons<Element, void>::type type;
 };
 
 }

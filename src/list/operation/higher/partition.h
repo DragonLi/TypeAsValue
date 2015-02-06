@@ -9,12 +9,10 @@ template <
 	template<typename> class Predicate,
 	typename                 List
 >
-struct Partition {
-	typedef Cons<
-		typename Filter<Predicate, List>::type,
-		typename Remove<Predicate, List>::type
-	> type;
-};
+using Partition = Cons<
+	typename Filter<Predicate, List>::type,
+	typename Remove<Predicate, List>::type
+>;
 
 }
 

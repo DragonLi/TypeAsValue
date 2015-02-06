@@ -8,13 +8,13 @@ template <
 	typename Secondary
 >
 struct Append {
-	typedef Cons<
+	typedef typename Cons<
 		Head<Primary>,
 		typename Append<
 			Tail<Primary>,
 			Secondary
 		>::type
-	> type;
+	>::type type;
 };
 
 template <typename Secondary>

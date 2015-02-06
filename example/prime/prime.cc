@@ -31,7 +31,7 @@ using removeMultiplesOf = tav::Remove<
 
 template <typename Candidates>
 struct Sieve {
-	typedef tav::Cons<
+	typedef typename tav::Cons<
 		tav::Head<Candidates>,
 		typename Sieve<
 			typename removeMultiplesOf<
@@ -39,7 +39,7 @@ struct Sieve {
 				tav::Head<Candidates>
 			>::type
 		>::type
-	> type;
+	>::type type;
 };
 
 template <>

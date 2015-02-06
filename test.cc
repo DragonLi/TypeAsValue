@@ -189,8 +189,8 @@ static_assert(
 	std::is_same<
 		tav::Int<1>,
 		tav::Car<
-			tav::Cons<tav::Int<1>, void>
-		>
+			tav::Cons<tav::Int<1>, void>::type
+		>::type
 	>::value,
 	"(car (cons 1 void)) != 1"
 );
@@ -199,8 +199,8 @@ static_assert(
 	std::is_same<
 		tav::Int<1>,
 		tav::Car<
-			tav::Cons<tav::Int<1>, tav::Int<2>>
-		>
+			tav::Cons<tav::Int<1>, tav::Int<2>>::type
+		>::type
 	>::value,
 	"(car (cons 1 2)) != 1"
 );
@@ -209,8 +209,8 @@ static_assert(
 	std::is_same<
 		tav::Int<2>,
 		tav::Cdr<
-			tav::Cons<tav::Int<1>, tav::Int<2>>
-		>
+			tav::Cons<tav::Int<1>, tav::Int<2>>::type
+		>::type
 	>::value,
 	"(cdr (cons 1 2)) != 2"
 );
@@ -220,9 +220,9 @@ static_assert(
 		tav::Int<2>,
 		tav::Car<
 			tav::Cdr<
-				tav::Cons<tav::Int<1>, tav::Cons<tav::Int<2>, tav::Int<3>>>
-			>
-		>
+				tav::Cons<tav::Int<1>, tav::Cons<tav::Int<2>, tav::Int<3>>::type>::type
+			>::type
+		>::type
 	>::value,
 	"(car (cdr (cons 1 (cons 2 3)))) != 2"
 );
@@ -231,7 +231,7 @@ static_assert(
 
 static_assert(
 	std::is_same<
-		tav::Cons<tav::Int<1>, void>,
+		tav::Pair<tav::Int<1>, void>,
 		tav::List<tav::Int<1>>::type
 	>::value,
 	"(list 1) != (cons 1 void)"
@@ -239,7 +239,7 @@ static_assert(
 
 static_assert(
 	std::is_same<
-		tav::Cons<tav::Int<1>, tav::Cons<tav::Int<2>, void>>,
+		tav::Pair<tav::Int<1>, tav::Pair<tav::Int<2>, void>>,
 		tav::List<tav::Int<1>, tav::Int<2>>::type
 	>::value,
 	"(list 1 2) != (cons 1 (cons 2 void))"
@@ -249,7 +249,7 @@ static_assert(
 
 static_assert(
 	std::is_same<
-		tav::Cons<tav::Int<1>, void>,
+		tav::Pair<tav::Int<1>, void>,
 		tav::ListOfType<int, 1>::type
 	>::value,
 	"(list 1) != (cons 1 void)"
@@ -257,7 +257,7 @@ static_assert(
 
 static_assert(
 	std::is_same<
-		tav::Cons<tav::Int<1>, tav::Cons<tav::Int<2>, void>>,
+		tav::Pair<tav::Int<1>, tav::Pair<tav::Int<2>, void>>,
 		tav::ListOfType<int, 1, 2>::type
 	>::value,
 	"(list 1 2) != (cons 1 (cons 2 void))"
@@ -463,7 +463,7 @@ static_assert(
 
 static_assert(
 	std::is_same<
-		tav::Cons<
+		tav::Pair<
 			tav::List<tav::Int<1>, tav::Int<3>>::type,
 			tav::List<tav::Int<2>>::type
 		>,

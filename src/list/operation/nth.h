@@ -7,18 +7,18 @@ namespace tav {
 
 template <
 	typename Index,
-	typename Cons
+	typename Pair
 >
 struct Nth {
 	typedef typename Nth<
 		Substract<Index, Size<1>>,
-		Tail<Cons>
+		Tail<Pair>
 	>::type type;
 };
 
-template <typename Cons>
-struct Nth<Size<0>, Cons> {
-	typedef Head<Cons> type;
+template <typename Pair>
+struct Nth<Size<0>, Pair> {
+	typedef Head<Pair> type;
 };
 
 template <typename Index>

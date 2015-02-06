@@ -16,7 +16,7 @@ class Reverse {
 		struct reversed_append {
 			typedef typename Append<
 				Previous,
-				Cons<Current, void>
+				typename Cons<Current, void>::type
 			>::type type;
 		};
 

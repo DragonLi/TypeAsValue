@@ -10,15 +10,15 @@ template <
 	typename... Tail
 >
 struct List {
-	typedef Cons<
+	typedef typename Cons<
 		Head,
 		typename List<Tail...>::type
-	> type;
+	>::type type;
 };
 
 template <typename Head>
 struct List<Head> {
-	typedef Cons<Head, void> type;
+	typedef typename Cons<Head, void>::type type;
 };
 
 template <
@@ -30,10 +30,10 @@ using ListOfType = List<
 >;
 
 template <typename Cons>
-using Head = Car<Cons>;
+using Head = typename Car<Cons>::type;
 
 template <typename Cons>
-using Tail = Cdr<Cons>;
+using Tail = typename Cdr<Cons>::type;
 
 }
 

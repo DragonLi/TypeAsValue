@@ -7,11 +7,11 @@
 
 namespace tav {
 
-template <typename Cons>
+template <typename Pair>
 using Length = Fold<
 	Apply<Add, Size<1>, _1>::pair_type,
 	Size<0>,
-	Cons
+	Pair
 >;
 
 }
