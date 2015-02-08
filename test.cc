@@ -107,6 +107,54 @@ static_assert(
 	"(square 64) != 4096"
 );
 
+static_assert(
+	std::is_same<
+		tav::Boolean<true>,
+		tav::Odd<tav::Int<1>>::type
+	>::value,
+	"(odd? 1) != #t"
+);
+
+static_assert(
+	std::is_same<
+		tav::Boolean<false>,
+		tav::Odd<tav::Int<2>>::type
+	>::value,
+	"(odd? 2) != #f"
+);
+
+static_assert(
+	std::is_same<
+		tav::Boolean<true>,
+		tav::GreaterThan<tav::Int<2>, tav::Int<1>>::type
+	>::value,
+	"(> 2 1) != #f"
+);
+
+static_assert(
+	std::is_same<
+		tav::Boolean<false>,
+		tav::GreaterThan<tav::Int<1>, tav::Int<2>>::type
+	>::value,
+	"(> 1 2) != #f"
+);
+
+static_assert(
+	std::is_same<
+		tav::Boolean<true>,
+		tav::LowerThan<tav::Int<1>, tav::Int<2>>::type
+	>::value,
+	"(< 1 2) != #t"
+);
+
+static_assert(
+	std::is_same<
+		tav::Boolean<false>,
+		tav::LowerThan<tav::Int<2>, tav::Int<1>>::type
+	>::value,
+	"(< 2 1) != #f"
+);
+
 // logic
 
 static_assert(

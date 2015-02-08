@@ -42,6 +42,9 @@ using Divide = std::integral_constant<
 	X::value / Y::value
 >;
 
+template <typename Base>
+using Square = Multiply<Base, Base>;
+
 template <
 	typename X,
 	typename Y
@@ -60,8 +63,17 @@ using Even = EqualValue<
 template <typename X>
 using Odd = Not<Even<X>>;
 
-template <typename Base>
-using Square = Multiply<Base, Base>;
+template <
+	typename X,
+	typename Y
+>
+using GreaterThan = Boolean<(X::value > Y::value)>;
+
+template <
+	typename X,
+	typename Y
+>
+using LowerThan = Boolean<(X::value < Y::value)>;
 
 }
 
