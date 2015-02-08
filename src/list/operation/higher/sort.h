@@ -1,0 +1,46 @@
+#ifndef TYPEASVALUE_SRC_LIST_OPERATION_HIGHER_SORT_H_
+#define TYPEASVALUE_SRC_LIST_OPERATION_HIGHER_SORT_H_
+
+#include "filter.h"
+#include "list/operation/concatenate.h"
+
+namespace tav {
+
+template <
+	template<typename, typename> class Comparator,
+	typename                           Sequence
+>
+class Sort {
+	private:
+		using index = Divide<typename Length<Sequence>::type, Size<2>>;
+		using pivot = typename Nth<index, Sequence>::type;
+
+		using sequence_sans_pivot = typename Append<
+			typename Take<index, Sequence>::type,
+			typename Drop<Add<index, Size<1>>, Sequence>::type
+		>::type;
+
+		template <typename X>
+		using comparator_wrapper = Comparator<pivot, X>;
+
+		using lhs = typename Filter<comparator_wrapper, sequence_sans_pivot>::type;
+		using rhs = typename Remove<comparator_wrapper, sequence_sans_pivot>::type;
+
+	public:
+		typedef typename Concatenate<
+			typename List<
+				typename Sort<Comparator, lhs>::type,
+				typename List<pivot>::type,
+				typename Sort<Comparator, rhs>::type
+			>::type
+		>::type type;
+};
+
+template <template<typename, typename> class Comparator>
+struct Sort<Comparator, void> {
+	typedef void type;
+};
+
+}
+
+#endif  // TYPEASVALUE_SRC_LIST_OPERATION_HIGHER_SORT_H_

@@ -21,6 +21,16 @@ struct List<Head> {
 	typedef typename Cons<Head, void>::type type;
 };
 
+template <typename Head>
+struct List<Head, void> {
+	typedef typename List<Head>::type type;
+};
+
+template <typename... Tail>
+struct List<void, Tail...> {
+	typedef typename List<Tail...>::type type;
+};
+
 template <
 	typename Type,
 	Type...  Values
@@ -40,6 +50,7 @@ using Tail = typename Cdr<Cons>::type;
 #include "operation/basic.h"
 #include "operation/nth.h"
 #include "operation/take.h"
+#include "operation/drop.h"
 #include "operation/append.h"
 #include "operation/concatenate.h"
 

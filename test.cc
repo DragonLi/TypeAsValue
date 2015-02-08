@@ -14,6 +14,7 @@
 #include "list/operation/higher/find.h"
 #include "list/operation/higher/take_while.h"
 #include "list/operation/higher/drop_while.h"
+#include "list/operation/higher/sort.h"
 #include "list/generator/iota.h"
 #include "list/generator/make_list.h"
 #include "list/generator/higher/list_tabulate.h"
@@ -282,7 +283,7 @@ static_assert(
 		tav::Pair<tav::Int<1>, void>,
 		tav::List<tav::Int<1>>::type
 	>::value,
-	"(list 1) != (cons 1 void)"
+	"(list 1) != '(1)"
 );
 
 static_assert(
@@ -290,7 +291,15 @@ static_assert(
 		tav::Pair<tav::Int<1>, tav::Pair<tav::Int<2>, void>>,
 		tav::List<tav::Int<1>, tav::Int<2>>::type
 	>::value,
-	"(list 1 2) != (cons 1 (cons 2 void))"
+	"(list 1 2) != '(1 . 2)"
+);
+
+static_assert(
+	std::is_same<
+		tav::Pair<tav::Int<1>, tav::Pair<tav::Int<2>, void>>,
+		tav::List<void, tav::Int<1>, void, tav::Int<2>, void>::type
+	>::value,
+	"(list void 1 void 2 void) != '(1 . 2)"
 );
 
 // list of type
@@ -401,6 +410,41 @@ static_assert(
 		>::type
 	>::value,
 	"(take 3 (list 1 2)) != (list 1 2)"
+);
+
+// list drop
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<2>>::type,
+		tav::Drop<
+			tav::Size<1>,
+			tav::List<tav::Int<1>, tav::Int<2>>::type
+		>::type
+	>::value,
+	"(drop 1 (list 1 2)) != (list 2)"
+);
+
+static_assert(
+	std::is_same<
+		void,
+		tav::Drop<
+			tav::Size<2>,
+			tav::List<tav::Int<1>, tav::Int<2>>::type
+		>::type
+	>::value,
+	"(drop 2 (list 1 2)) != void"
+);
+
+static_assert(
+	std::is_same<
+		void,
+		tav::Drop<
+			tav::Size<3>,
+			tav::List<tav::Int<1>, tav::Int<2>>::type
+		>::type
+	>::value,
+	"(drop 3 (list 1 2)) != void"
 );
 
 // list append
@@ -851,6 +895,30 @@ static_assert(
 		>::type
 	>::value,
 	"(drop-while even? (list 2 4 6)) != void"
+);
+
+// list sort
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type,
+		tav::Sort<
+			tav::GreaterThan,
+			tav::List<tav::Int<3>, tav::Int<2>, tav::Int<1>>::type
+		>::type
+	>::value,
+	"(sort > (list 3 2 1)) != (list 1 2 3)"
+);
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<3>, tav::Int<2>, tav::Int<1>>::type,
+		tav::Sort<
+			tav::LowerThan,
+			tav::List<tav::Int<1>, tav::Int<3>, tav::Int<2>>::type
+		>::type
+	>::value,
+	"(sort < (list 1 3 2)) != (list 3 2 1)"
 );
 
 // function apply
