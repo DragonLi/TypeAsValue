@@ -9,8 +9,10 @@
 
 #include "runtime/list/for_each.h"
 
+// (define candidates (iota 1000 2 1))
 using candidates = tav::Iota<tav::Size<1000>, tav::Int<2>, tav::Int<1>>::type;
 
+// (define (isMultipleOf candidate base) (= (modulo candidate base) 0))
 template <
 	typename Candidate,
 	typename Base
@@ -20,6 +22,9 @@ using isMultipleOf = tav::EqualValue<
 	tav::Int<0>
 >;
 
+// (define (removeMultiplesOf candidates base)
+//   (remove (lambda (x) (isMultipleOf x base))
+//           candidates))
 template <
 	typename Candidates,
 	typename Base
@@ -29,6 +34,11 @@ using removeMultiplesOf = tav::Remove<
 	Candidates
 >;
 
+// (define (sieve candidates)
+//   (cond ((null-list? candidates) (list))
+//         (else                    (cons (car candidates)
+//                                        (sieve (removeMultiplesOf (cdr candidates)
+//                                                                  (car candidates)))))))
 template <typename Candidates>
 struct Sieve {
 	typedef typename tav::Cons<
@@ -47,6 +57,7 @@ struct Sieve<void> {
 	typedef void type;
 };
 
+// (define primes (sieve candidates))
 using primes = Sieve<candidates>::type;
 
 int main(int, char **) {

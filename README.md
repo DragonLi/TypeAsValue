@@ -1,6 +1,6 @@
 # TypeAsValue
 
-…is a template metaprogramming library intended for compile time computation written in C++. As its name implies it follows the overall concept of viewing types as values and templates as functions manipulating those values. 
+…is a template metaprogramming library intended for compile time computation written in C++. As its name implies it follows the overall concept of viewing types as values and templates as functions manipulating those values.
 
 This library is currently primarily a reimplementation of my previous attempt at this problem: [ConstList](https://github.com/KnairdA/ConstList). As detailed in the appropriate [blog article](http://blog.kummerlaender.eu/article/a_look_at_compile_time_computation_in_cpp/) the mixed approach between generic lambda expressions, `constexpr` marked functions and template metaprogramming doesn't offer sufficient flexibility which led me to approach compile time computation in a slightly different manner via this new library.
 
