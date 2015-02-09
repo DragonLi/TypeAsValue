@@ -602,7 +602,7 @@ static_assert(
 		tav::Pair<
 			tav::List<tav::Int<1>, tav::Int<3>>::type,
 			tav::List<tav::Int<2>>::type
-		>::type,
+		>,
 		tav::Partition<
 			tav::Odd,
 			tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type
