@@ -31,6 +31,11 @@ struct List<void, Tail...> {
 	typedef typename List<Tail...>::type type;
 };
 
+template <>
+struct List<void, void> {
+	typedef void type;
+};
+
 template <
 	typename Type,
 	Type...  Values
