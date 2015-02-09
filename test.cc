@@ -302,6 +302,26 @@ static_assert(
 	"(list void 1 void 2 void) != '(1 . 2)"
 );
 
+static_assert(
+	std::is_same<
+		tav::Int<1>,
+		tav::Head<
+			tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type
+		>
+	>::value,
+	"(head (list 1 2 3) != 1"
+);
+
+static_assert(
+	std::is_same<
+		tav::Pair<tav::Int<2>, tav::Pair<tav::Int<3>, void>>,
+		tav::Tail<
+			tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type
+		>
+	>::value,
+	"(tail (list 1 2 3) != '(2 . 3)"
+);
+
 // list of type
 
 static_assert(
@@ -375,6 +395,30 @@ static_assert(
 		>::type
 	>::value,
 	"(nth 1 (list 1 2)) != 2"
+);
+
+static_assert(
+	std::is_same<
+		tav::Int<1>,
+		tav::First<tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>
+	>::value,
+	"(first (list 1 2 3)) != 1"
+);
+
+static_assert(
+	std::is_same<
+		tav::Int<2>,
+		tav::Second<tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>
+	>::value,
+	"(second (list 1 2 3)) != 2"
+);
+
+static_assert(
+	std::is_same<
+		tav::Int<3>,
+		tav::Third<tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type>
+	>::value,
+	"(third (list 1 2 3)) != 3"
 );
 
 // list take
@@ -558,7 +602,7 @@ static_assert(
 		tav::Pair<
 			tav::List<tav::Int<1>, tav::Int<3>>::type,
 			tav::List<tav::Int<2>>::type
-		>,
+		>::type,
 		tav::Partition<
 			tav::Odd,
 			tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type
@@ -919,6 +963,17 @@ static_assert(
 		>::type
 	>::value,
 	"(sort < (list 1 3 2)) != (list 3 2 1)"
+);
+
+static_assert(
+	std::is_same<
+		tav::Iota<tav::Size<42>, tav::Int<1>, tav::Int<1>>::type,
+		tav::Sort<
+			tav::GreaterThan,
+			tav::Iota<tav::Size<42>, tav::Int<42>, tav::Int<-1>>::type
+		>::type
+	>::value,
+	"(sort > (iota 42 42 -1)) != (iota 42 1 1)"
 );
 
 // function apply

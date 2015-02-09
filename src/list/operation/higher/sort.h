@@ -1,8 +1,9 @@
 #ifndef TYPEASVALUE_SRC_LIST_OPERATION_HIGHER_SORT_H_
 #define TYPEASVALUE_SRC_LIST_OPERATION_HIGHER_SORT_H_
 
-#include "filter.h"
 #include "list/operation/concatenate.h"
+#include "list/operation/higher/partition.h"
+#include "function/apply.h"
 
 namespace tav {
 
@@ -20,11 +21,13 @@ class Sort {
 			typename Drop<Add<index, Size<1>>, Sequence>::type
 		>::type;
 
-		template <typename X>
-		using comparator_wrapper = Comparator<pivot, X>;
+		using partitions = typename Partition<
+			Apply<Comparator, pivot, tav::_0>::template single_type,
+			sequence_sans_pivot
+		>::type;
 
-		using lhs = typename Filter<comparator_wrapper, sequence_sans_pivot>::type;
-		using rhs = typename Remove<comparator_wrapper, sequence_sans_pivot>::type;
+		using lhs = typename Car<partitions>::type;
+		using rhs = typename Cdr<partitions>::type;
 
 	public:
 		typedef typename Concatenate<
