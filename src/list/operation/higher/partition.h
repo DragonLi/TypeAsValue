@@ -7,11 +7,11 @@ namespace tav {
 
 template <
 	template<typename> class Predicate,
-	typename                 List
+	typename                 Elements
 >
 using Partition = Cons<
-	typename Filter<Predicate, List>::type,
-	typename Remove<Predicate, List>::type
+	typename Filter<Predicate, Elements>::type,
+	typename Remove<Predicate, Elements>::type
 >;
 
 }
