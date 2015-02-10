@@ -19,6 +19,7 @@
 #include "list/generator/make_list.h"
 #include "list/generator/higher/list_tabulate.h"
 #include "list/operation/delete.h"
+#include "list/operation/delete_nth.h"
 
 #include "function/apply.h"
 
@@ -593,6 +594,19 @@ static_assert(
 		>::type
 	>::value,
 	"(delete 4 (list 1 2 3)) != (list 1 2 3)"
+);
+
+// list delete nth
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<1>, tav::Int<3>>::type,
+		tav::DeleteNth<
+			tav::Size<1>,
+			tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type
+		>::type
+	>::value,
+	"(delete-nth 1 (list 1 2 3)) != (list 1 3)"
 );
 
 // list partition
