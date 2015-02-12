@@ -18,7 +18,7 @@ template <
 	typename Candidate,
 	typename Base
 >
-using isMultipleOf = tav::EqualValue<
+using isMultipleOf = tav::IsEqualValue<
 	tav::Modulo<Candidate, Base>,
 	tav::Int<0>
 >;

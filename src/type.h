@@ -21,7 +21,7 @@ template <
 	typename X,
 	typename Y
 >
-using EqualType = typename std::is_same<
+using IsEqualType = typename std::is_same<
 	typename X::value_type,
 	typename Y::value_type
 >::type;
@@ -30,7 +30,7 @@ template <
 	typename X,
 	typename Y
 >
-using EqualValue = Boolean<X::value == Y::value>;
+using IsEqualValue = Boolean<X::value == Y::value>;
 
 }
 

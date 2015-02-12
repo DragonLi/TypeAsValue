@@ -55,7 +55,7 @@ using Modulo = std::integral_constant<
 >;
 
 template <typename X>
-using Even = EqualValue<
+using Even = IsEqualValue<
 	Modulo<X, Size<2>>,
 	Size<0>
 >;

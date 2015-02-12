@@ -30,23 +30,23 @@ int main(int, char **) { }
 static_assert(
 	std::is_same<
 		tav::Boolean<true>,
-		tav::EqualType<tav::Int<1>, tav::Int<2>>
+		tav::IsEqualType<tav::Int<1>, tav::Int<2>>
 	>::value,
-	"(EqualType 1 2) != #t"
+	"(IsEqualType 1 2) != #t"
 );
 
 static_assert(
 	std::is_same<
 		tav::Boolean<false>,
-		tav::EqualType<tav::Int<1>, tav::Size<1>>
+		tav::IsEqualType<tav::Int<1>, tav::Size<1>>
 	>::value,
-	"(EqualType (int 1) (size 2)) != #f"
+	"(IsEqualType (int 1) (size 2)) != #f"
 );
 
 static_assert(
 	std::is_same<
 		tav::Boolean<true>,
-		tav::EqualValue<tav::Int<1>, tav::Size<1>>
+		tav::IsEqualValue<tav::Int<1>, tav::Size<1>>
 	>::value,
 	"(equal? (int 1) (size 1)) != #t"
 );
@@ -54,7 +54,7 @@ static_assert(
 static_assert(
 	std::is_same<
 		tav::Boolean<false>,
-		tav::EqualValue<tav::Int<1>, tav::Int<2>>
+		tav::IsEqualValue<tav::Int<1>, tav::Int<2>>
 	>::value,
 	"(equal? 1 2) != #f"
 );

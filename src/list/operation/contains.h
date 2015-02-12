@@ -12,7 +12,7 @@ template <
 	typename List
 >
 using Contains = Any<
-	Apply<EqualValue, _0, Element>::template type,
+	Apply<IsEqualValue, _0, Element>::template type,
 	List
 >;
 
