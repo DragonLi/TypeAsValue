@@ -46,6 +46,14 @@ template <
 	template<typename...> class Function,
 	typename...                 Arguments
 >
+struct apply_none {
+	using type = Function<Arguments...>;
+};
+
+template <
+	template<typename...> class Function,
+	typename...                 Arguments
+>
 struct apply_variadic {
 	template <typename... Partials>
 	using type = Function<

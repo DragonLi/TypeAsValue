@@ -233,6 +233,31 @@ static_assert(
 	"(if #f 1 2) != 2"
 );
 
+static_assert(
+	std::is_same<
+		tav::Int<2>,
+		tav::Cond<
+			tav::Pair<tav::IsEqualValue<tav::Int<1>, tav::Int<2>>, tav::Int<1>>,
+			tav::Pair<tav::IsEqualValue<tav::Int<2>, tav::Int<2>>, tav::Int<2>>,
+			tav::Pair<tav::IsEqualValue<tav::Int<3>, tav::Int<2>>, tav::Int<3>>
+		>::type
+	>::value,
+	"(cond ((= 1 2) 1) ((= 2 2) 2) ((= 3 2) 3)) != 2"
+);
+
+static_assert(
+	std::is_same<
+		tav::Int<-1>,
+		tav::Cond<
+			tav::Pair<tav::IsEqualValue<tav::Int<1>, tav::Int<2>>, tav::Int< 1>>,
+			tav::Pair<tav::IsEqualValue<tav::Int<2>, tav::Int<3>>, tav::Int< 2>>,
+			tav::Pair<tav::IsEqualValue<tav::Int<3>, tav::Int<4>>, tav::Int< 3>>,
+			tav::Pair<tav::Boolean<true>,                          tav::Int<-1>>
+		>::type
+	>::value,
+	"(cond ((= 1 2) 1) ((= 2 3) 2) ((= 3 4) 3) (else -1)) != -1"
+);
+
 // cons
 
 static_assert(
@@ -1019,4 +1044,16 @@ static_assert(
 		>::type
 	>::value,
 	"(map (lambda (x) (+ x 10)) (list 0 2 4)) != (list 10 12 14)"
+);
+
+static_assert(
+	std::is_same<
+		tav::Int<42>,
+		tav::Apply<
+			tav::Multiply,
+			tav::Int<21>,
+			tav::Int<2>
+		>::type::type
+	>::value,
+	"(* 21 2) != 42"
 );

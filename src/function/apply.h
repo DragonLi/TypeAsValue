@@ -1,7 +1,8 @@
 #ifndef TYPEASVALUE_SRC_FUNCTION_APPLY_H_
 #define TYPEASVALUE_SRC_FUNCTION_APPLY_H_
 
-#include "conditional/if.h"
+#include "operation/math.h"
+#include "conditional/cond.h"
 
 #include "detail/apply.h"
 
@@ -16,14 +17,23 @@ template <
 	template<typename...> class Function,
 	typename...                 Arguments
 >
-struct Apply : If<
-	(detail::count_placeholders<Arguments...>::type::value > 2),
-	detail::apply_variadic<Function, Arguments...>,
-	typename If<
-		detail::count_placeholders<Arguments...>::type::value == 2,
-		detail::apply_pair<Function, Arguments...>,
+struct Apply : Cond<
+	Pair<
+		GreaterThan<typename detail::count_placeholders<Arguments...>::type,  Size<2>>,
+		detail::apply_variadic<Function, Arguments...>
+	>,
+	Pair<
+		IsEqualValue<typename detail::count_placeholders<Arguments...>::type, Size<2>>,
+		detail::apply_pair<Function, Arguments...>
+	>,
+	Pair<
+		IsEqualValue<typename detail::count_placeholders<Arguments...>::type, Size<1>>,
 		detail::apply_single<Function, Arguments...>
-	>::type
+	>,
+	Pair<
+		Boolean<true>,
+		detail::apply_none<Function, Arguments...>
+	>
 >::type { };
 
 }

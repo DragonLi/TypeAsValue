@@ -32,6 +32,9 @@ template <
 >
 using IsEqualValue = Boolean<X::value == Y::value>;
 
+template <typename X>
+using IsTrue = IsEqualValue<X, Boolean<true>>;
+
 }
 
 #endif  // TYPEASVALUE_SRC_TYPE_H_
