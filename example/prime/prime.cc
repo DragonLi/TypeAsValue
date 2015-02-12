@@ -2,6 +2,7 @@
 
 #include "type.h"
 #include "operation/math.h"
+#include "function/apply.h"
 
 #include "list/list.h"
 #include "list/operation/higher/filter.h"
@@ -30,7 +31,7 @@ template <
 	typename Base
 >
 using removeMultiplesOf = tav::Remove<
-	tav::Apply<isMultipleOf, tav::_0, Base>::template single_type,
+	tav::Apply<isMultipleOf, tav::_0, Base>::template type,
 	Candidates
 >;
 

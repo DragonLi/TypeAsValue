@@ -12,7 +12,7 @@ template <
 	typename List
 >
 using Contains = Any<
-	Apply<EqualValue, tav::_0, Element>::template single_type,
+	Apply<EqualValue, _0, Element>::template type,
 	List
 >;
 

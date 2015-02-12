@@ -18,7 +18,7 @@ class Sort {
 		using pivot = typename Nth<index, Sequence>::type;
 
 		using partitions = typename Partition<
-			Apply<Comparator, pivot, tav::_0>::template single_type,
+			Apply<Comparator, pivot, _0>::template type,
 			typename DeleteNth<index, Sequence>::type
 		>::type;
 
