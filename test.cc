@@ -1024,7 +1024,7 @@ static_assert(
 			tav::Multiply,
 			tav::Int<21>,
 			tav::_0
-		>::type<
+		>::function<
 			tav::Int<2>
 		>::type
 	>::value,
@@ -1039,7 +1039,7 @@ static_assert(
 				tav::Add,
 				tav::_0,
 				tav::Int<10>
-			>::type,
+			>::function,
 			tav::List<tav::Int<0>, tav::Int<2>, tav::Int<4>>::type
 		>::type
 	>::value,
@@ -1053,7 +1053,7 @@ static_assert(
 			tav::Multiply,
 			tav::Int<21>,
 			tav::Int<2>
-		>::type::type
+		>::function::type
 	>::value,
 	"(* 21 2) != 42"
 );

@@ -31,7 +31,7 @@ template <
 	typename Base
 >
 using removeMultiplesOf = tav::Remove<
-	tav::Apply<isMultipleOf, tav::_0, Base>::template type,
+	tav::Apply<isMultipleOf, tav::_0, Base>::template function,
 	Candidates
 >;
 

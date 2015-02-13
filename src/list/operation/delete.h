@@ -12,7 +12,7 @@ template <
 	typename List
 >
 using Delete = Remove<
-	Apply<IsEqualValue, _0, Element>::template type,
+	Apply<IsEqualValue, _0, Element>::template function,
 	List
 >;
 

@@ -47,7 +47,7 @@ template <
 	typename...                 Arguments
 >
 struct apply_none {
-	using type = Function<Arguments...>;
+	using function = Function<Arguments...>;
 };
 
 template <
@@ -56,7 +56,7 @@ template <
 >
 struct apply_variadic {
 	template <typename... Partials>
-	using type = Function<
+	using function = Function<
 		typename resolve_placeholder<
 			typename tav::List<Partials...>::type,
 			Arguments
@@ -70,10 +70,10 @@ template <
 >
 struct apply_single : apply_variadic<Function, Arguments...> {
 	template <typename Partial0>
-	using type = typename apply_variadic<
+	using function = typename apply_variadic<
 		Function,
 		Arguments...
-	>::template type<Partial0>;
+	>::template function<Partial0>;
 };
 
 template <
@@ -82,10 +82,10 @@ template <
 >
 struct apply_pair : apply_variadic<Function, Arguments...> {
 	template <typename Partial0, typename Partial1>
-	using type = typename apply_variadic<
+	using function = typename apply_variadic<
 		Function,
 		Arguments...
-	>::template type<Partial0, Partial1>;
+	>::template function<Partial0, Partial1>;
 };
 
 }
