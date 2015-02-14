@@ -9,10 +9,10 @@ template <
 	typename                           Current
 >
 struct Fold {
-	typedef typename Function<
+	typedef Eval<Function<
 		Head<Current>,
-		typename Fold<Function, Initial, Tail<Current>>::type
-	>::type type;
+		Eval<Fold<Function, Initial, Tail<Current>>>
+	>> type;
 };
 
 template <

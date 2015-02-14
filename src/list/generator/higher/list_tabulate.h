@@ -12,7 +12,7 @@ template <
 >
 using ListTabulate = Map<
 	Initializer,
-	typename Iota<Count, Size<0>, Size<1>>::type
+	Eval<Iota<Count, Size<0>, Size<1>>>
 >;
 
 }

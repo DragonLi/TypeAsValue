@@ -10,10 +10,10 @@ template <
 	typename Pair
 >
 struct Nth {
-	typedef typename Nth<
+	typedef Eval<Nth<
 		Substract<Index, Size<1>>,
 		Tail<Pair>
-	>::type type;
+	>> type;
 };
 
 template <typename Pair>
@@ -32,13 +32,13 @@ struct Nth<Size<0>, void> {
 };
 
 template <typename List>
-using First  = typename Nth<Size<0>, List>::type;
+using First  = Eval<Nth<Size<0>, List>>;
 
 template <typename List>
-using Second = typename Nth<Size<1>, List>::type;
+using Second = Eval<Nth<Size<1>, List>>;
 
 template <typename List>
-using Third  = typename Nth<Size<2>, List>::type;
+using Third  = Eval<Nth<Size<2>, List>>;
 
 }
 

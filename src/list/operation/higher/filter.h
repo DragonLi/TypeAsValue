@@ -17,13 +17,13 @@ class Filter {
 			typename Previous
 		>
 		using predicate_wrapper = If<
-			Predicate<Current>::type::value,
-			typename Cons<Current, Previous>::type,
+			Eval<Predicate<Current>>,
+			Eval<Cons<Current, Previous>>,
 			Previous
 		>;
 
 	public:
-		typedef typename Fold<predicate_wrapper, void, List>::type type;
+		typedef Eval<Fold<predicate_wrapper, void, List>> type;
 
 };
 
@@ -37,7 +37,7 @@ class Remove {
 		using predicate_negator = Not<Predicate<Element>>;
 
 	public:
-		typedef typename Filter<predicate_negator, List>::type type;
+		typedef Eval<Filter<predicate_negator, List>> type;
 
 };
 

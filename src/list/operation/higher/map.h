@@ -16,12 +16,12 @@ class Map {
 			typename Previous
 		>
 		using function_wrapper = Cons<
-			typename Function<Current>::type,
+			Eval<Function<Current>>,
 			Previous
 		>;
 
 	public:
-		typedef typename Fold<function_wrapper, void, List>::type type;
+		typedef Eval<Fold<function_wrapper, void, List>> type;
 
 };
 

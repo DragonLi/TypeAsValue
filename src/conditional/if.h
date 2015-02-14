@@ -6,12 +6,12 @@
 namespace tav {
 
 template <
-	bool     Condition,
+	typename Condition,
 	typename TrueBranch,
 	typename FalseBranch
 >
 using If = std::conditional<
-	Condition,
+	Condition::value,
 	TrueBranch,
 	FalseBranch
 >;

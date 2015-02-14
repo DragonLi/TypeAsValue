@@ -13,11 +13,11 @@ class Length {
 		using accumulate = Add<Size<1>, Accumulated>;
 
 	public:
-		typedef typename Fold<
+		typedef Eval<Fold<
 			accumulate,
 			Size<0>,
 			Cons
-		>::type type;
+		>> type;
 
 };
 

@@ -15,7 +15,7 @@ template <
 using Any = Fold<
 	Or,
 	Boolean<false>,
-	typename Map<Predicate, List>::type
+	Eval<Map<Predicate, List>>
 >;
 
 template <
@@ -25,7 +25,7 @@ template <
 using All = Fold<
 	And,
 	Boolean<true>,
-	typename Map<Predicate, List>::type
+	Eval<Map<Predicate, List>>
 >;
 
 template <
@@ -33,7 +33,7 @@ template <
 	typename                 List
 >
 using None = Not<
-	typename Any<Predicate, List>::type
+	Eval<Any<Predicate, List>>
 >;
 
 template <
@@ -43,7 +43,7 @@ template <
 using Count = Fold<
 	Add,
 	tav::Size<0>,
-	typename Map<Predicate, List>::type
+	Eval<Map<Predicate, List>>
 >;
 
 }

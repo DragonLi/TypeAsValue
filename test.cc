@@ -220,7 +220,7 @@ static_assert(
 static_assert(
 	std::is_same<
 		tav::Int<1>,
-		tav::If<true, tav::Int<1>, tav::Int<2>>::type
+		tav::If<tav::Boolean<true>, tav::Int<1>, tav::Int<2>>::type
 	>::value,
 	"(if #t 1 2) != 1"
 );
@@ -228,7 +228,7 @@ static_assert(
 static_assert(
 	std::is_same<
 		tav::Int<2>,
-		tav::If<false, tav::Int<1>, tav::Int<2>>::type
+		tav::If<tav::Boolean<false>, tav::Int<1>, tav::Int<2>>::type
 	>::value,
 	"(if #f 1 2) != 2"
 );

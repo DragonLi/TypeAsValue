@@ -14,25 +14,25 @@ template <
 >
 class Sort {
 	private:
-		using index = Divide<typename Length<Sequence>::type, Size<2>>;
-		using pivot = typename Nth<index, Sequence>::type;
+		using index = Divide<Eval<Length<Sequence>>, Size<2>>;
+		using pivot = Eval<Nth<index, Sequence>>;
 
-		using partitions = typename Partition<
+		using partitions = Eval<Partition<
 			Apply<Comparator, pivot, _0>::template function,
-			typename DeleteNth<index, Sequence>::type
-		>::type;
+			Eval<DeleteNth<index, Sequence>>
+		>>;
 
-		using lhs = typename Car<partitions>::type;
-		using rhs = typename Cdr<partitions>::type;
+		using lhs = Eval<Car<partitions>>;
+		using rhs = Eval<Cdr<partitions>>;
 
 	public:
-		typedef typename Concatenate<
-			typename List<
-				typename Sort<Comparator, lhs>::type,
-				typename List<pivot>::type,
-				typename Sort<Comparator, rhs>::type
-			>::type
-		>::type type;
+		typedef Eval<Concatenate<
+			Eval<List<
+				Eval<Sort<Comparator, lhs>>,
+				Eval<List<pivot>>,
+				Eval<Sort<Comparator, rhs>>
+			>>
+		>> type;
 };
 
 template <template<typename, typename> class Comparator>

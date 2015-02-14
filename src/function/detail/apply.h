@@ -33,13 +33,13 @@ template <
 	int      Index
 >
 struct resolve_placeholder<Partials, placeholder<Index>> {
-	typedef typename Nth<Size<Index>, Partials>::type type;
+	typedef Eval<Nth<Size<Index>, Partials>> type;
 };
 
 template <typename... Arguments>
 using count_placeholders = Count<
 	is_placeholder,
-	typename List<Arguments...>::type
+	Eval<List<Arguments...>>
 >;
 
 template <
@@ -57,10 +57,10 @@ template <
 struct apply_variadic {
 	template <typename... Partials>
 	using function = Function<
-		typename resolve_placeholder<
-			typename tav::List<Partials...>::type,
+		Eval<resolve_placeholder<
+			Eval<List<Partials...>>,
 			Arguments
-		>::type...
+		>>...
 	>;
 };
 

@@ -16,7 +16,7 @@ struct Cons {
 template <typename Pair>
 struct Car {
 	static_assert(
-		IsPair<Pair>::type::value,
+		Eval<IsPair<Pair>>::value,
 		"Pair type required"
 	);
 
@@ -26,7 +26,7 @@ struct Car {
 template <typename Pair>
 struct Cdr {
 	static_assert(
-		IsPair<Pair>::type::value,
+		Eval<IsPair<Pair>>::value,
 		"Pair type required"
 	);
 

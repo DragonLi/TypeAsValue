@@ -11,11 +11,11 @@ template <
 	typename                 Current
 >
 struct Find {
-	typedef typename If<
-		Predicate<Head<Current>>::type::value,
+	typedef Eval<If<
+		Eval<Predicate<Head<Current>>>,
 		Head<Current>,
-		typename Find<Predicate, Tail<Current>>::type
-	>::type type;
+		Eval<Find<Predicate, Tail<Current>>>
+	>> type;
 };
 
 template <

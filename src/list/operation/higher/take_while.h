@@ -10,14 +10,14 @@ template <
 	typename                 Current
 >
 struct TakeWhile {
-	typedef typename If<
-		Predicate<Head<Current>>::type::value,
-		typename Cons<
+	typedef Eval<If<
+		Eval<Predicate<Head<Current>>>,
+		Eval<Cons<
 			Head<Current>,
-			typename TakeWhile<Predicate, Tail<Current>>::type
-		>::type,
+			Eval<TakeWhile<Predicate, Tail<Current>>>
+		>>,
 		void
-	>::type type;
+	>> type;
 };
 
 template <

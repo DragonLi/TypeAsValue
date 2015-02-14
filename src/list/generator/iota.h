@@ -11,14 +11,14 @@ template <
 	typename Step
 >
 struct Iota {
-	typedef typename Cons<
+	typedef Eval<Cons<
 		Initial,
-		typename Iota<
+		Eval<Iota<
 			Substract<Count, Size<1>>,
 			Add<Initial, Step>,
 			Step
-		>::type
-	>::type type;
+		>>
+	>> type;
 };
 
 template <
@@ -26,7 +26,7 @@ template <
 	typename Step
 >
 struct Iota<Size<1>, Initial, Step> {
-	typedef typename Cons<Initial, void>::type type;
+	typedef Eval<Cons<Initial, void>> type;
 };
 
 }

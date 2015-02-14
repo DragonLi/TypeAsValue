@@ -6,22 +6,20 @@
 
 namespace tav {
 
-template <typename List>
+template <typename Sequence>
 class Reverse {
 	private:
 		template <
 			typename Current,
 			typename Previous
 		>
-		struct reversed_append {
-			typedef typename Append<
-				Previous,
-				typename Cons<Current, void>::type
-			>::type type;
-		};
+		using reversed_append = Append<
+			Previous,
+			Eval<List<Current>>
+		>;
 
 	public:
-		typedef typename Fold<reversed_append, void, List>::type type;
+		typedef Eval<Fold<reversed_append, void, Sequence>> type;
 
 };
 

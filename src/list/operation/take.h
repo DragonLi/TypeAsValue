@@ -10,13 +10,13 @@ template <
 	typename Current
 >
 struct Take {
-	typedef typename Cons<
+	typedef Eval<Cons<
 		Head<Current>,
-		typename Take<
+		Eval<Take<
 			Substract<Count, Size<1>>,
 			Tail<Current>
-		>::type
-	>::type type;
+		>>
+	>> type;
 };
 
 template <typename Current>

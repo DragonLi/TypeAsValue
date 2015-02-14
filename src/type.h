@@ -17,14 +17,17 @@ using Boolean = std::integral_constant<bool, Value>;
 template <char Value>
 using Char = std::integral_constant<char, Value>;
 
+template <typename Function>
+using Eval = typename Function::type;
+
 template <
 	typename X,
 	typename Y
 >
-using IsEqualType = typename std::is_same<
+using IsEqualType = Eval<std::is_same<
 	typename X::value_type,
 	typename Y::value_type
->::type;
+>>;
 
 template <
 	typename X,

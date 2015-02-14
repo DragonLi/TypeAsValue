@@ -10,10 +10,10 @@ template <
 	typename Current
 >
 struct Drop {
-	typedef typename Drop<
+	typedef Eval<Drop<
 		Substract<Count, Size<1>>,
 		Tail<Current>
-	>::type type;
+	>> type;
 };
 
 template <typename Current>

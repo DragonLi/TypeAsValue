@@ -10,8 +10,8 @@ template <
 	typename                 Elements
 >
 using Partition = Cons<
-	typename Filter<Predicate, Elements>::type,
-	typename Remove<Predicate, Elements>::type
+	Eval<Filter<Predicate, Elements>>,
+	Eval<Remove<Predicate, Elements>>
 >;
 
 }

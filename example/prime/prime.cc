@@ -11,7 +11,7 @@
 #include "runtime/list/for_each.h"
 
 // (define candidates (iota 1000 2 1))
-using candidates = tav::Iota<tav::Size<1000>, tav::Int<2>, tav::Int<1>>::type;
+using candidates = tav::Eval<tav::Iota<tav::Size<1000>, tav::Int<2>, tav::Int<1>>>;
 
 // (define (isMultipleOf candidate base) (= (modulo candidate base) 0))
 template <
@@ -42,15 +42,15 @@ using removeMultiplesOf = tav::Remove<
 //                                                                  (car candidates)))))))
 template <typename Candidates>
 struct Sieve {
-	typedef typename tav::Cons<
+	typedef tav::Eval<tav::Cons<
 		tav::Head<Candidates>,
-		typename Sieve<
-			typename removeMultiplesOf<
+		tav::Eval<Sieve<
+			tav::Eval<removeMultiplesOf<
 				tav::Tail<Candidates>,
 				tav::Head<Candidates>
-			>::type
-		>::type
-	>::type type;
+			>>
+		>>
+	>> type;
 };
 
 template <>
@@ -59,7 +59,7 @@ struct Sieve<void> {
 };
 
 // (define primes (sieve candidates))
-using primes = Sieve<candidates>::type;
+using primes = tav::Eval<Sieve<candidates>>;
 
 int main(int, char **) {
 	tav::runtime::for_each<primes>([](const int x) {

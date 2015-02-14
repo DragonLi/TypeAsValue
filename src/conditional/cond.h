@@ -12,15 +12,15 @@ template <typename... Branches>
 class Cond {
 	private:
 		template <typename Pair>
-		using predicate = IsTrue<typename Car<Pair>::type::type>;
+		using predicate = IsTrue<Eval<Eval<Car<Pair>>>>;
 
 	public:
-		typedef typename Cdr<
-			typename Find<
+		typedef Eval<Cdr<
+			Eval<Find<
 				predicate,
-				typename List<Branches...>::type
-			>::type
-		>::type type;
+				Eval<List<Branches...>>
+			>>
+		>> type;
 
 };
 

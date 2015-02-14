@@ -10,11 +10,11 @@ template <
 	typename                 Current
 >
 struct DropWhile {
-	typedef typename If<
-		Predicate<Head<Current>>::type::value,
-		typename DropWhile<Predicate, Tail<Current>>::type,
+	typedef Eval<If<
+		Eval<Predicate<Head<Current>>>,
+		Eval<DropWhile<Predicate, Tail<Current>>>,
 		Current
-	>::type type;
+	>> type;
 };
 
 template <
