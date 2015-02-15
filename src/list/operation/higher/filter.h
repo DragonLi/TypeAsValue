@@ -8,25 +8,17 @@ namespace tav {
 
 namespace detail {
 
-template <
-	template<typename> class Predicate,
-	typename                 List
->
-class Filter {
-	private:
-		template <
-			typename Current,
-			typename Previous
-		>
-		using predicate_wrapper = If<
-			Eval<Predicate<Current>>,
-			Cons<Current, Previous>,
-			Previous
-		>;
-
-	public:
-		typedef tav::Fold<predicate_wrapper, void, List> type;
-
+template <template<typename> class Predicate>
+struct filter_predicate {
+	template <
+		typename Current,
+		typename Previous
+	>
+	using function = If<
+		Eval<Predicate<Current>>,
+		Cons<Current, Previous>,
+		Previous
+	>;
 };
 
 }
@@ -35,7 +27,11 @@ template <
 	template<typename> class Predicate,
 	typename                 List
 >
-using Filter = Eval<detail::Filter<Predicate, List>>;
+using Filter = Fold<
+	detail::filter_predicate<Predicate>::template function,
+	void,
+	List
+>;
 
 }
 

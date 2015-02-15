@@ -7,18 +7,10 @@ namespace tav {
 
 namespace detail {
 
-template <
-	template<typename> class Predicate,
-	typename                 List
->
-class Remove {
-	private:
-		template <typename Element>
-		using predicate_negator = Not<Predicate<Element>>;
-
-	public:
-		typedef tav::Filter<predicate_negator, List> type;
-
+template <template<typename> class Predicate>
+struct predicate_negator {
+	template <typename Element>
+	using function = Not<Predicate<Element>>;
 };
 
 }
@@ -27,7 +19,10 @@ template <
 	template<typename> class Predicate,
 	typename                 List
 >
-using Remove = Eval<detail::Remove<Predicate, List>>;
+using Remove = Filter<
+	detail::predicate_negator<Predicate>::template function,
+	List
+>;
 
 }
 
