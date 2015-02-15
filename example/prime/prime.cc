@@ -5,13 +5,13 @@
 #include "function/apply.h"
 
 #include "list/list.h"
-#include "list/operation/higher/filter.h"
 #include "list/generator/iota.h"
+#include "list/operation/higher/remove.h"
 
 #include "runtime/list/for_each.h"
 
 // (define candidates (iota 1000 2 1))
-using candidates = tav::Eval<tav::Iota<tav::Size<1000>, tav::Int<2>, tav::Int<1>>>;
+using candidates = tav::Iota<tav::Size<1000>, tav::Int<2>, tav::Int<1>>;
 
 // (define (isMultipleOf candidate base) (= (modulo candidate base) 0))
 template <
@@ -42,15 +42,15 @@ using removeMultiplesOf = tav::Remove<
 //                                                                  (car candidates)))))))
 template <typename Candidates>
 struct Sieve {
-	typedef tav::Eval<tav::Cons<
+	typedef tav::Cons<
 		tav::Head<Candidates>,
 		tav::Eval<Sieve<
-			tav::Eval<removeMultiplesOf<
+			removeMultiplesOf<
 				tav::Tail<Candidates>,
 				tav::Head<Candidates>
-			>>
+			>
 		>>
-	>> type;
+	> type;
 };
 
 template <>

@@ -19,22 +19,22 @@ template <
 >
 struct Apply : Cond<
 	Pair<
-		GreaterThan<Eval<detail::count_placeholders<Arguments...>>, Size<2>>,
+		GreaterThan<detail::count_placeholders<Arguments...>, Size<2>>,
 		detail::apply_variadic<Function, Arguments...>
 	>,
 	Pair<
-		IsEqualValue<Eval<detail::count_placeholders<Arguments...>>, Size<2>>,
+		IsEqualValue<detail::count_placeholders<Arguments...>, Size<2>>,
 		detail::apply_pair<Function, Arguments...>
 	>,
 	Pair<
-		IsEqualValue<Eval<detail::count_placeholders<Arguments...>>, Size<1>>,
+		IsEqualValue<detail::count_placeholders<Arguments...>, Size<1>>,
 		detail::apply_single<Function, Arguments...>
 	>,
 	Pair<
 		Boolean<true>,
 		detail::apply_none<Function, Arguments...>
 	>
->::type { };
+> { };
 
 }
 

@@ -5,16 +5,18 @@
 
 namespace tav {
 
+namespace detail {
+
 template <
 	template<typename> class Predicate,
 	typename                 Current
 >
 struct DropWhile {
-	typedef Eval<If<
+	typedef If<
 		Eval<Predicate<Head<Current>>>,
 		Eval<DropWhile<Predicate, Tail<Current>>>,
 		Current
-	>> type;
+	> type;
 };
 
 template <
@@ -23,6 +25,14 @@ template <
 struct DropWhile<Predicate, void> {
 	typedef void type;
 };
+
+}
+
+template <
+	template<typename> class Predicate,
+	typename                 Current
+>
+using DropWhile = Eval<detail::DropWhile<Predicate, Current>>;
 
 }
 

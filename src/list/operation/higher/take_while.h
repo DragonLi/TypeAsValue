@@ -5,19 +5,21 @@
 
 namespace tav {
 
+namespace detail {
+
 template <
 	template<typename> class Predicate,
 	typename                 Current
 >
 struct TakeWhile {
-	typedef Eval<If<
+	typedef If<
 		Eval<Predicate<Head<Current>>>,
-		Eval<Cons<
+		Cons<
 			Head<Current>,
 			Eval<TakeWhile<Predicate, Tail<Current>>>
-		>>,
+		>,
 		void
-	>> type;
+	> type;
 };
 
 template <
@@ -26,6 +28,14 @@ template <
 struct TakeWhile<Predicate, void> {
 	typedef void type;
 };
+
+}
+
+template <
+	template<typename> class Predicate,
+	typename                 Current
+>
+using TakeWhile = Eval<detail::TakeWhile<Predicate, Current>>;
 
 }
 

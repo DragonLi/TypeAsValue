@@ -2,6 +2,7 @@
 #define TYPEASVALUE_SRC_LIST_OPERATION_HIGHER_PARTITION_H_
 
 #include "filter.h"
+#include "remove.h"
 
 namespace tav {
 
@@ -10,8 +11,8 @@ template <
 	typename                 Elements
 >
 using Partition = Cons<
-	Eval<Filter<Predicate, Elements>>,
-	Eval<Remove<Predicate, Elements>>
+	Filter<Predicate, Elements>,
+	Remove<Predicate, Elements>
 >;
 
 }

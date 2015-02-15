@@ -8,21 +8,28 @@
 
 namespace tav {
 
+namespace detail {
+
 template <typename... Branches>
 class Cond {
 	private:
 		template <typename Pair>
-		using predicate = IsTrue<Eval<Eval<Car<Pair>>>>;
+		using predicate = IsTrue<tav::Car<Pair>>;
 
 	public:
-		typedef Eval<Cdr<
-			Eval<Find<
+		typedef tav::Cdr<
+			tav::Find<
 				predicate,
-				Eval<List<Branches...>>
-			>>
-		>> type;
+				tav::List<Branches...>
+			>
+		> type;
 
 };
+
+}
+
+template <typename... Branches>
+using Cond = Eval<detail::Cond<Branches...>>;
 
 }
 

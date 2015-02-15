@@ -13,7 +13,7 @@ namespace detail {
 struct placeholder_tag { };
 
 template <typename Type>
-using is_placeholder = tav::Boolean<
+using is_placeholder = Boolean<
 	std::is_base_of<placeholder_tag, Type>::value
 >;
 
@@ -33,13 +33,13 @@ template <
 	int      Index
 >
 struct resolve_placeholder<Partials, placeholder<Index>> {
-	typedef Eval<Nth<Size<Index>, Partials>> type;
+	typedef tav::Nth<Size<Index>, Partials> type;
 };
 
 template <typename... Arguments>
 using count_placeholders = Count<
 	is_placeholder,
-	Eval<List<Arguments...>>
+	tav::List<Arguments...>
 >;
 
 template <
@@ -58,7 +58,7 @@ struct apply_variadic {
 	template <typename... Partials>
 	using function = Function<
 		Eval<resolve_placeholder<
-			Eval<List<Partials...>>,
+			tav::List<Partials...>,
 			Arguments
 		>>...
 	>;

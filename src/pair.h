@@ -19,7 +19,7 @@ struct Pair : detail::pair_tag {
 };
 
 template <typename Type>
-using IsPair = std::is_base_of<detail::pair_tag, Type>;
+using IsPair = Eval<std::is_base_of<detail::pair_tag, Type>>;
 
 }
 

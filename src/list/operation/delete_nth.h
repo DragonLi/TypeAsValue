@@ -12,8 +12,8 @@ template <
 	typename List
 >
 using DeleteNth = Append<
-	Eval<Take<Index, List>>,
-	Eval<Drop<Add<Index, Size<1>>, List>>
+	Take<Index, List>,
+	Drop<Add<Index, Size<1>>, List>
 >;
 
 }

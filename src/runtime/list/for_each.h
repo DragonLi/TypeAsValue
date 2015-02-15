@@ -7,6 +7,7 @@
 #include "list/list.h"
 
 namespace tav {
+
 namespace runtime {
 
 template <
@@ -28,6 +29,7 @@ void for_each(const Function& function) {
 }
 
 }
+
 }
 
 #endif  // TYPEASVALUE_SRC_RUNTIME_LIST_FOR_EACH_H_

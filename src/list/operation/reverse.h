@@ -6,6 +6,8 @@
 
 namespace tav {
 
+namespace detail {
+
 template <typename Sequence>
 class Reverse {
 	private:
@@ -13,15 +15,20 @@ class Reverse {
 			typename Current,
 			typename Previous
 		>
-		using reversed_append = Append<
+		using reversed_append = tav::Append<
 			Previous,
-			Eval<List<Current>>
+			tav::List<Current>
 		>;
 
 	public:
-		typedef Eval<Fold<reversed_append, void, Sequence>> type;
+		typedef tav::Fold<reversed_append, void, Sequence> type;
 
 };
+
+}
+
+template <typename Sequence>
+using Reverse = Eval<detail::Reverse<Sequence>>;
 
 }
 

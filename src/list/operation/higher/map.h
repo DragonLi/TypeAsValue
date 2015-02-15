@@ -5,6 +5,8 @@
 
 namespace tav {
 
+namespace detail {
+
 template <
 	template<typename> class Function,
 	typename                 List
@@ -21,9 +23,17 @@ class Map {
 		>;
 
 	public:
-		typedef Eval<Fold<function_wrapper, void, List>> type;
+		using type = tav::Fold<function_wrapper, void, List>;
 
 };
+
+}
+
+template <
+	template<typename> class Function,
+	typename                 List
+>
+using Map = Eval<detail::Map<Function, List>>;
 
 }
 

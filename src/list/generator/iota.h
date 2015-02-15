@@ -5,20 +5,22 @@
 
 namespace tav {
 
+namespace detail {
+
 template <
 	typename Count,
 	typename Initial,
 	typename Step
 >
 struct Iota {
-	typedef Eval<Cons<
+	typedef Cons<
 		Initial,
 		Eval<Iota<
 			Substract<Count, Size<1>>,
 			Add<Initial, Step>,
 			Step
 		>>
-	>> type;
+	> type;
 };
 
 template <
@@ -26,8 +28,17 @@ template <
 	typename Step
 >
 struct Iota<Size<1>, Initial, Step> {
-	typedef Eval<Cons<Initial, void>> type;
+	typedef Cons<Initial, void> type;
 };
+
+}
+
+template <
+	typename Count,
+	typename Initial,
+	typename Step
+>
+using Iota = Eval<detail::Iota<Count, Initial, Step>>;
 
 }
 

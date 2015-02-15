@@ -6,16 +6,18 @@
 
 namespace tav {
 
+namespace detail {
+
 template <
 	template<typename> class Predicate,
 	typename                 Current
 >
 struct Find {
-	typedef Eval<If<
+	typedef If<
 		Eval<Predicate<Head<Current>>>,
 		Head<Current>,
 		Eval<Find<Predicate, Tail<Current>>>
-	>> type;
+	> type;
 };
 
 template <
@@ -24,6 +26,14 @@ template <
 struct Find<Predicate, void> {
 	typedef Boolean<false> type;
 };
+
+}
+
+template <
+	template<typename> class Predicate,
+	typename                 List
+>
+using Find = Eval<detail::Find<Predicate, List>>;
 
 }
 

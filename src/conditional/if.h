@@ -10,11 +10,11 @@ template <
 	typename TrueBranch,
 	typename FalseBranch
 >
-using If = std::conditional<
+using If = Eval<std::conditional<
 	Condition::value,
 	TrueBranch,
 	FalseBranch
->;
+>>;
 
 }
 

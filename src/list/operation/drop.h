@@ -5,6 +5,8 @@
 
 namespace tav {
 
+namespace detail {
+
 template <
 	typename Count,
 	typename Current
@@ -31,6 +33,13 @@ struct Drop<Size<0>, void> {
 	typedef void type;
 };
 
+}
+
+template <
+	typename Count,
+	typename Current
+>
+using Drop = Eval<detail::Drop<Count, Current>>;
 
 }
 

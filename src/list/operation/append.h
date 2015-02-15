@@ -3,24 +3,34 @@
 
 namespace tav {
 
+namespace detail {
+
 template <
 	typename Primary,
 	typename Secondary
 >
 struct Append {
-	typedef Eval<Cons<
+	typedef Cons<
 		Head<Primary>,
 		Eval<Append<
 			Tail<Primary>,
 			Secondary
 		>>
-	>> type;
+	> type;
 };
 
 template <typename Secondary>
 struct Append<void, Secondary> {
 	typedef Secondary type;
 };
+
+}
+
+template <
+	typename Primary,
+	typename Secondary
+>
+using Append = Eval<detail::Append<Primary, Secondary>>;
 
 }
 

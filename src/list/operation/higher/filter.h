@@ -6,6 +6,8 @@
 
 namespace tav {
 
+namespace detail {
+
 template <
 	template<typename> class Predicate,
 	typename                 List
@@ -18,28 +20,22 @@ class Filter {
 		>
 		using predicate_wrapper = If<
 			Eval<Predicate<Current>>,
-			Eval<Cons<Current, Previous>>,
+			Cons<Current, Previous>,
 			Previous
 		>;
 
 	public:
-		typedef Eval<Fold<predicate_wrapper, void, List>> type;
+		typedef tav::Fold<predicate_wrapper, void, List> type;
 
 };
+
+}
 
 template <
 	template<typename> class Predicate,
 	typename                 List
 >
-class Remove {
-	private:
-		template <typename Element>
-		using predicate_negator = Not<Predicate<Element>>;
-
-	public:
-		typedef Eval<Filter<predicate_negator, List>> type;
-
-};
+using Filter = Eval<detail::Filter<Predicate, List>>;
 
 }
 

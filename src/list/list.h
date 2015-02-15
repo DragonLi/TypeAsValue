@@ -5,6 +5,8 @@
 
 namespace tav {
 
+namespace detail {
+
 template <
 	typename    Head,
 	typename... Tail
@@ -36,6 +38,11 @@ struct List<void, void> {
 	typedef void type;
 };
 
+}
+
+template <typename... Elements>
+using List = Eval<detail::List<Elements...>>;
+
 template <
 	typename Type,
 	Type...  Values
@@ -45,10 +52,10 @@ using ListOfType = List<
 >;
 
 template <typename Cons>
-using Head = Eval<Car<Cons>>;
+using Head = Car<Cons>;
 
 template <typename Cons>
-using Tail = Eval<Cdr<Cons>>;
+using Tail = Cdr<Cons>;
 
 }
 

@@ -3,16 +3,18 @@
 
 namespace tav {
 
+namespace detail {
+
 template <
 	template<typename, typename> class Function,
 	typename                           Initial,
 	typename                           Current
 >
 struct Fold {
-	typedef Eval<Function<
+	typedef Function<
 		Head<Current>,
 		Eval<Fold<Function, Initial, Tail<Current>>>
-	>> type;
+	> type;
 };
 
 template <
@@ -22,6 +24,15 @@ template <
 struct Fold<Function, Initial, void> {
 	typedef Initial type;
 };
+
+}
+
+template <
+	template<typename, typename> class Function,
+	typename                           Initial,
+	typename                           Current
+>
+using Fold = Eval<detail::Fold<Function, Initial, Current>>;
 
 }
 

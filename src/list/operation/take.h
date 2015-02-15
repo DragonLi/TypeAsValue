@@ -5,18 +5,20 @@
 
 namespace tav {
 
+namespace detail {
+
 template <
 	typename Count,
 	typename Current
 >
 struct Take {
-	typedef Eval<Cons<
+	typedef Cons<
 		Head<Current>,
 		Eval<Take<
 			Substract<Count, Size<1>>,
 			Tail<Current>
 		>>
-	>> type;
+	> type;
 };
 
 template <typename Current>
@@ -34,6 +36,13 @@ struct Take<Size<0>, void> {
 	typedef void type;
 };
 
+}
+
+template <
+	typename Count,
+	typename Current
+>
+using Take = Eval<detail::Take<Count, Current>>;
 
 }
 

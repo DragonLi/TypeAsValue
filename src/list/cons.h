@@ -5,18 +5,12 @@
 
 namespace tav {
 
-template <
-	typename CAR,
-	typename CDR
->
-struct Cons {
-	typedef Pair<CAR, CDR> type;
-};
+namespace detail {
 
 template <typename Pair>
 struct Car {
 	static_assert(
-		Eval<IsPair<Pair>>::value,
+		IsPair<Pair>::value,
 		"Pair type required"
 	);
 
@@ -26,12 +20,26 @@ struct Car {
 template <typename Pair>
 struct Cdr {
 	static_assert(
-		Eval<IsPair<Pair>>::value,
+		IsPair<Pair>::value,
 		"Pair type required"
 	);
 
 	typedef typename Pair::cdr type;
 };
+
+}
+
+template <
+	typename CAR,
+	typename CDR
+>
+using Cons = Pair<CAR, CDR>;
+
+template <typename Pair>
+using Car = Eval<detail::Car<Pair>>;
+
+template <typename Pair>
+using Cdr = Eval<detail::Cdr<Pair>>;
 
 }
 

@@ -6,24 +6,34 @@
 
 namespace tav {
 
+namespace detail {
+
 template <
 	typename Count,
 	typename Element
 >
 struct MakeList {
-	typedef Eval<Cons<
+	typedef Cons<
 		Element,
 		Eval<MakeList<
 			Substract<Count, Size<1>>,
 			Element
 		>>
-	>> type;
+	> type;
 };
 
 template <typename Element>
 struct MakeList<Size<1>, Element> {
-	typedef Eval<Cons<Element, void>> type;
+	typedef Cons<Element, void> type;
 };
+
+}
+
+template <
+	typename Count,
+	typename Element
+>
+using MakeList = Eval<detail::MakeList<Count, Element>>;
 
 }
 

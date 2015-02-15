@@ -8,37 +8,47 @@
 
 namespace tav {
 
+namespace detail {
+
 template <
 	template<typename, typename> class Comparator,
 	typename                           Sequence
 >
 class Sort {
 	private:
-		using index = Divide<Eval<Length<Sequence>>, Size<2>>;
-		using pivot = Eval<Nth<index, Sequence>>;
+		using index = Divide<tav::Length<Sequence>, Size<2>>;
+		using pivot = tav::Nth<index, Sequence>;
 
-		using partitions = Eval<Partition<
+		using partitions = Partition<
 			Apply<Comparator, pivot, _0>::template function,
-			Eval<DeleteNth<index, Sequence>>
-		>>;
+			DeleteNth<index, Sequence>
+		>;
 
-		using lhs = Eval<Car<partitions>>;
-		using rhs = Eval<Cdr<partitions>>;
+		using lhs = tav::Car<partitions>;
+		using rhs = tav::Cdr<partitions>;
 
 	public:
-		typedef Eval<Concatenate<
-			Eval<List<
+		using type = Concatenate<
+			tav::List<
 				Eval<Sort<Comparator, lhs>>,
-				Eval<List<pivot>>,
+				tav::List<pivot>,
 				Eval<Sort<Comparator, rhs>>
-			>>
-		>> type;
+			>
+		>;
 };
 
 template <template<typename, typename> class Comparator>
 struct Sort<Comparator, void> {
 	typedef void type;
 };
+
+}
+
+template <
+	template<typename, typename> class Comparator,
+	typename                           Sequence
+>
+using Sort = Eval<detail::Sort<Comparator, Sequence>>;
 
 }
 

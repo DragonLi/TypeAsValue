@@ -5,20 +5,22 @@
 
 namespace tav {
 
+namespace detail {
+
 template <
 	typename Index,
-	typename Pair
+	typename List
 >
 struct Nth {
 	typedef Eval<Nth<
 		Substract<Index, Size<1>>,
-		Tail<Pair>
+		Tail<List>
 	>> type;
 };
 
-template <typename Pair>
-struct Nth<Size<0>, Pair> {
-	typedef Head<Pair> type;
+template <typename List>
+struct Nth<Size<0>, List> {
+	typedef Head<List> type;
 };
 
 template <typename Index>
@@ -31,14 +33,22 @@ struct Nth<Size<0>, void> {
 	typedef void type;
 };
 
-template <typename List>
-using First  = Eval<Nth<Size<0>, List>>;
+}
+
+template <
+	typename Index,
+	typename List
+>
+using Nth = Eval<detail::Nth<Index, List>>;
 
 template <typename List>
-using Second = Eval<Nth<Size<1>, List>>;
+using First  = Nth<Size<0>, List>;
 
 template <typename List>
-using Third  = Eval<Nth<Size<2>, List>>;
+using Second = Nth<Size<1>, List>;
+
+template <typename List>
+using Third  = Nth<Size<2>, List>;
 
 }
 

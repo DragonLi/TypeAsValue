@@ -6,20 +6,23 @@
 
 namespace tav {
 
-template <typename Cons>
+namespace detail {
+
+template <typename List>
 class Length {
 	private:
 		template <typename, typename Accumulated>
 		using accumulate = Add<Size<1>, Accumulated>;
 
 	public:
-		typedef Eval<Fold<
-			accumulate,
-			Size<0>,
-			Cons
-		>> type;
+		typedef tav::Fold<accumulate, Size<0>, List> type;
 
 };
+
+}
+
+template <typename List>
+using Length = Eval<detail::Length<List>>;
 
 }
 
