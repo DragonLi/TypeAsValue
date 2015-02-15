@@ -10,26 +10,18 @@ namespace tav {
 
 namespace detail {
 
-template <typename... Branches>
-class Cond {
-	private:
-		template <typename Pair>
-		using predicate = IsTrue<tav::Car<Pair>>;
-
-	public:
-		typedef tav::Cdr<
-			tav::Find<
-				predicate,
-				tav::List<Branches...>
-			>
-		> type;
-
-};
+template <typename Pair>
+using cond_predicate = IsTrue<Car<Pair>>;
 
 }
 
 template <typename... Branches>
-using Cond = Eval<detail::Cond<Branches...>>;
+using Cond = Cdr<
+	Find<
+		detail::cond_predicate,
+		List<Branches...>
+	>
+>;
 
 }
 

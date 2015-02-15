@@ -7,24 +7,16 @@ namespace tav {
 
 namespace detail {
 
-template <
-	template<typename> class Function,
-	typename                 List
->
-class Map {
-	private:
-		template <
-			typename Current,
-			typename Previous
-		>
-		using function_wrapper = Cons<
-			Eval<Function<Current>>,
-			Previous
-		>;
-
-	public:
-		using type = tav::Fold<function_wrapper, void, List>;
-
+template <template<typename> class Function>
+struct map_transformation {
+	template <
+		typename Current,
+		typename Previous
+	>
+	using function = Cons<
+		Eval<Function<Current>>,
+		Previous
+	>;
 };
 
 }
@@ -33,7 +25,11 @@ template <
 	template<typename> class Function,
 	typename                 List
 >
-using Map = Eval<detail::Map<Function, List>>;
+using Map = Fold<
+	detail::map_transformation<Function>::template function,
+	void,
+	List
+>;
 
 }
 
