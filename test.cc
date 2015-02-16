@@ -323,14 +323,6 @@ static_assert(
 
 static_assert(
 	std::is_same<
-		tav::Pair<tav::Int<1>, tav::Pair<tav::Int<2>, void>>,
-		tav::List<void, tav::Int<1>, void, tav::Int<2>, void>
-	>::value,
-	"(list void 1 void 2 void) != '(1 . 2)"
-);
-
-static_assert(
-	std::is_same<
 		tav::Int<1>,
 		tav::Head<
 			tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>

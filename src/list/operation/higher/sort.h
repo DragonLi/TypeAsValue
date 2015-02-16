@@ -29,9 +29,9 @@ class Sort {
 
 	public:
 		using type = Concatenate<
-			tav::List<
+			List<
 				Eval<Sort<Comparator, lhs>>,
-				tav::List<pivot>,
+				List<pivot>,
 				Eval<Sort<Comparator, rhs>>
 			>
 		>;

@@ -8,27 +8,16 @@ namespace tav {
 
 namespace detail {
 
-template <typename Sequence>
-class Reverse {
-	private:
-		template <
-			typename Current,
-			typename Previous
-		>
-		using reversed_append = tav::Append<
-			Previous,
-			tav::List<Current>
-		>;
-
-	public:
-		typedef tav::Fold<reversed_append, void, Sequence> type;
-
-};
+template <
+	typename Current,
+	typename Previous
+>
+using reversed_append = tav::Append<Previous, List<Current>>;
 
 }
 
 template <typename Sequence>
-using Reverse = Eval<detail::Reverse<Sequence>>;
+using Reverse = Fold<detail::reversed_append, void, Sequence>;
 
 }
 

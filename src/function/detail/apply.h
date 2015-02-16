@@ -37,10 +37,7 @@ struct resolve_placeholder<Partials, placeholder<Index>> {
 };
 
 template <typename... Arguments>
-using count_placeholders = Count<
-	is_placeholder,
-	tav::List<Arguments...>
->;
+using count_placeholders = Count<is_placeholder, List<Arguments...>>;
 
 template <
 	template<typename...> class Function,
@@ -58,7 +55,7 @@ struct apply_variadic {
 	template <typename... Partials>
 	using function = Function<
 		Eval<resolve_placeholder<
-			tav::List<Partials...>,
+			List<Partials...>,
 			Arguments
 		>>...
 	>;

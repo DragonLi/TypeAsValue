@@ -2,46 +2,12 @@
 #define TYPEASVALUE_SRC_LIST_LIST_H_
 
 #include "cons.h"
+#include "detail/fold_variadic.h"
 
 namespace tav {
 
-namespace detail {
-
-template <
-	typename    Head,
-	typename... Tail
->
-struct List {
-	typedef Eval<Cons<
-		Head,
-		Eval<List<Tail...>>
-	>> type;
-};
-
-template <typename Head>
-struct List<Head> {
-	typedef Eval<Cons<Head, void>> type;
-};
-
-template <typename Head>
-struct List<Head, void> {
-	typedef Eval<List<Head>> type;
-};
-
-template <typename... Tail>
-struct List<void, Tail...> {
-	typedef Eval<List<Tail...>> type;
-};
-
-template <>
-struct List<void, void> {
-	typedef void type;
-};
-
-}
-
 template <typename... Elements>
-using List = Eval<detail::List<Elements...>>;
+using List = Eval<detail::fold_variadic<Pair, Elements...>>;
 
 template <
 	typename Type,
