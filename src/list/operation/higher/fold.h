@@ -10,10 +10,10 @@ template <
 	typename                           Initial,
 	typename                           Current
 >
-struct Fold {
+struct fold_pair {
 	typedef Function<
 		Head<Current>,
-		Eval<Fold<Function, Initial, Tail<Current>>>
+		Eval<fold_pair<Function, Initial, Tail<Current>>>
 	> type;
 };
 
@@ -21,7 +21,7 @@ template <
 	template<typename, typename> class Function,
 	typename                           Initial
 >
-struct Fold<Function, Initial, void> {
+struct fold_pair<Function, Initial, void> {
 	typedef Initial type;
 };
 
@@ -32,7 +32,7 @@ template <
 	typename                           Initial,
 	typename                           Current
 >
-using Fold = Eval<detail::Fold<Function, Initial, Current>>;
+using Fold = Eval<detail::fold_pair<Function, Initial, Current>>;
 
 }
 

@@ -13,17 +13,12 @@ namespace detail {
 struct placeholder_tag { };
 
 template <typename Type>
-using is_placeholder = Boolean<
-	std::is_base_of<placeholder_tag, Type>::value
->;
+using is_placeholder = Eval<std::is_base_of<placeholder_tag, Type>>;
 
 template <int Index>
 struct placeholder : placeholder_tag { };
 
-template <
-	typename Partials,
-	typename Argument
->
+template <typename, typename Argument>
 struct resolve_placeholder {
 	typedef Argument type;
 };
@@ -33,7 +28,7 @@ template <
 	int      Index
 >
 struct resolve_placeholder<Partials, placeholder<Index>> {
-	typedef tav::Nth<Size<Index>, Partials> type;
+	typedef Nth<Size<Index>, Partials> type;
 };
 
 template <typename... Arguments>

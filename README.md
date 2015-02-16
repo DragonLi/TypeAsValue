@@ -6,17 +6,15 @@ This library is a expanded reimplementation of my previous attempt at this probl
 
 ## Example
 
-```cpp
-// λ (length (filter odd? (list 1 2 3)))
-// 2
-
-const std::size_t count = tav::Length<
-	tav::Filter<
-		tav::Odd,
-		tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>::type
-	>::type
->::type::value;
-```
+	// λ (length (filter odd? (list 1 2 3)))
+	// 2
+	
+	const std::size_t count = tav::Length<
+		tav::Filter<
+			tav::Odd,
+			tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>
+		>
+	>::value;
 
 ## Current features
 
