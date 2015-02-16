@@ -2,44 +2,19 @@
 #define TYPEASVALUE_SRC_LIST_OPERATION_NTH_H_
 
 #include "operation/math.h"
+#include "drop.h"
 
 namespace tav {
 
-namespace detail {
-
 template <
 	typename Index,
 	typename List
 >
-struct Nth {
-	typedef Eval<Nth<
-		Substract<Index, Size<1>>,
-		Tail<List>
-	>> type;
-};
-
-template <typename List>
-struct Nth<Size<0>, List> {
-	typedef Head<List> type;
-};
-
-template <typename Index>
-struct Nth<Index, void> {
-	typedef void type;
-};
-
-template <>
-struct Nth<Size<0>, void> {
-	typedef void type;
-};
-
-}
-
-template <
-	typename Index,
-	typename List
->
-using Nth = Eval<detail::Nth<Index, List>>;
+using Nth = If<
+	IsPair<Drop<Index, List>>,
+	Head<Drop<Index, List>>,
+	void
+>;
 
 template <typename List>
 using First  = Nth<Size<0>, List>;
