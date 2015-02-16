@@ -1,6 +1,7 @@
 #ifndef TYPEASVALUE_SRC_LIST_LIST_H_
 #define TYPEASVALUE_SRC_LIST_LIST_H_
 
+#include "type.h"
 #include "cons.h"
 #include "detail/fold_variadic.h"
 

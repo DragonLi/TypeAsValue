@@ -14,31 +14,31 @@ template <
 	template<typename, typename> class Comparator,
 	typename                           Sequence
 >
-class Sort {
+class quick_sort {
 	private:
-		using index = Divide<tav::Length<Sequence>, Size<2>>;
-		using pivot = tav::Nth<index, Sequence>;
+		using index = Divide<Length<Sequence>, Size<2>>;
+		using pivot = Nth<index, Sequence>;
 
 		using partitions = Partition<
 			Apply<Comparator, pivot, _0>::template function,
 			DeleteNth<index, Sequence>
 		>;
 
-		using lhs = tav::Car<partitions>;
-		using rhs = tav::Cdr<partitions>;
+		using lhs = Car<partitions>;
+		using rhs = Cdr<partitions>;
 
 	public:
 		using type = Concatenate<
 			List<
-				Eval<Sort<Comparator, lhs>>,
+				Eval<quick_sort<Comparator, lhs>>,
 				List<pivot>,
-				Eval<Sort<Comparator, rhs>>
+				Eval<quick_sort<Comparator, rhs>>
 			>
 		>;
 };
 
 template <template<typename, typename> class Comparator>
-struct Sort<Comparator, void> {
+struct quick_sort<Comparator, void> {
 	typedef void type;
 };
 
@@ -48,7 +48,7 @@ template <
 	template<typename, typename> class Comparator,
 	typename                           Sequence
 >
-using Sort = Eval<detail::Sort<Comparator, Sequence>>;
+using Sort = Eval<detail::quick_sort<Comparator, Sequence>>;
 
 }
 
