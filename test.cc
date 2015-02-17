@@ -359,6 +359,44 @@ static_assert(
 	"(list 1 2) != (cons 1 (cons 2 void))"
 );
 
+// list section
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<2>>,
+		tav::Section<
+			tav::Size<1>,
+			tav::Size<1>,
+			tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>
+		>
+	>::value,
+	"(section 1 1 (list 1 2 3)) != (list 1)"
+);
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<2>, tav::Int<3>>,
+		tav::Section<
+			tav::Size<1>,
+			tav::Size<2>,
+			tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>
+		>
+	>::value,
+	"(section 1 2 (list 1 2 3)) != (list 1 2)"
+);
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>,
+		tav::Section<
+			tav::Size<0>,
+			tav::Size<2>,
+			tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>
+		>
+	>::value,
+	"(section 0 2 (list 1 2 3)) != (list 1 2 3)"
+);
+
 // list take
 
 static_assert(
