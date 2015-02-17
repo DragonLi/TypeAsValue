@@ -1,41 +1,28 @@
 #ifndef TYPEASVALUE_SRC_LIST_OPERATION_HIGHER_TAKE_WHILE_H_
 #define TYPEASVALUE_SRC_LIST_OPERATION_HIGHER_TAKE_WHILE_H_
 
-#include "conditional/if.h"
+#include "list_index.h"
+#include "list/operation/take.h"
+#include "utility/predicate.h"
 
 namespace tav {
 
-namespace detail {
-
 template <
 	template<typename> class Predicate,
-	typename                 Current
+	typename                 List
 >
-struct TakeWhile {
-	typedef If<
-		Eval<Predicate<Head<Current>>>,
-		Cons<
-			Head<Current>,
-			Eval<TakeWhile<Predicate, Tail<Current>>>
-		>,
-		void
-	> type;
-};
-
-template <
-	template<typename> class Predicate
->
-struct TakeWhile<Predicate, void> {
-	typedef void type;
-};
-
-}
-
-template <
-	template<typename> class Predicate,
-	typename                 Current
->
-using TakeWhile = Eval<detail::TakeWhile<Predicate, Current>>;
+using TakeWhile = Take<
+	typename utility::predicate_assurance<
+		utility::predicate_negator<std::is_void>::template function,
+		Length<List>
+	>::template assure<
+		ListIndex<
+			utility::predicate_negator<Predicate>::template function,
+			List
+		>
+	>,
+	List
+>;
 
 }
 

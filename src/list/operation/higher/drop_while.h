@@ -1,38 +1,28 @@
 #ifndef TYPEASVALUE_SRC_LIST_OPERATION_HIGHER_DROP_WHILE_H_
 #define TYPEASVALUE_SRC_LIST_OPERATION_HIGHER_DROP_WHILE_H_
 
-#include "conditional/if.h"
+#include "list_index.h"
+#include "list/operation/drop.h"
+#include "utility/predicate.h"
 
 namespace tav {
 
-namespace detail {
-
 template <
 	template<typename> class Predicate,
-	typename                 Current
+	typename                 List
 >
-struct DropWhile {
-	typedef If<
-		Eval<Predicate<Head<Current>>>,
-		Eval<DropWhile<Predicate, Tail<Current>>>,
-		Current
-	> type;
-};
-
-template <
-	template<typename> class Predicate
->
-struct DropWhile<Predicate, void> {
-	typedef void type;
-};
-
-}
-
-template <
-	template<typename> class Predicate,
-	typename                 Current
->
-using DropWhile = Eval<detail::DropWhile<Predicate, Current>>;
+using DropWhile = Drop<
+	typename utility::predicate_assurance<
+		utility::predicate_negator<std::is_void>::template function,
+		Length<List>
+	>::template assure<
+		ListIndex<
+			utility::predicate_negator<Predicate>::template function,
+			List
+		>
+	>,
+	List
+>;
 
 }
 

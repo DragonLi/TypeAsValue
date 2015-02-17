@@ -12,6 +12,7 @@
 #include "list/operation/higher/remove.h"
 #include "list/operation/higher/partition.h"
 #include "list/operation/higher/query.h"
+#include "list/operation/higher/list_index.h"
 #include "list/operation/higher/find.h"
 #include "list/operation/higher/take_while.h"
 #include "list/operation/higher/drop_while.h"
@@ -904,6 +905,30 @@ static_assert(
 		>
 	>::value,
 	"(count even? (list 1 3 5)) != 0"
+);
+
+// list index
+
+static_assert(
+	std::is_same<
+		tav::Size<2>,
+		tav::ListIndex<
+			tav::Even,
+			tav::List<tav::Int<1>, tav::Int<3>, tav::Int<4>, tav::Int<6>>
+		>
+	>::value,
+	"(list-index even? (list 1 3 4 6)) != 2"
+);
+
+static_assert(
+	std::is_same<
+		void,
+		tav::ListIndex<
+			tav::Even,
+			tav::List<tav::Int<1>, tav::Int<3>, tav::Int<5>>
+		>
+	>::value,
+	"(list-index even? (list 1 3 5)) != void"
 );
 
 // list find
