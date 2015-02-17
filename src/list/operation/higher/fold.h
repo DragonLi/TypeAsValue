@@ -8,12 +8,12 @@ namespace detail {
 template <
 	template<typename, typename> class Function,
 	typename                           Initial,
-	typename                           Current
+	typename                           Pair
 >
 struct fold_pair {
 	typedef Function<
-		Head<Current>,
-		Eval<fold_pair<Function, Initial, Tail<Current>>>
+		Car<Pair>,
+		Eval<fold_pair<Function, Initial, Cdr<Pair>>>
 	> type;
 };
 
@@ -30,9 +30,9 @@ struct fold_pair<Function, Initial, void> {
 template <
 	template<typename, typename> class Function,
 	typename                           Initial,
-	typename                           Current
+	typename                           List
 >
-using Fold = Eval<detail::fold_pair<Function, Initial, Current>>;
+using Fold = Eval<detail::fold_pair<Function, Initial, List>>;
 
 }
 

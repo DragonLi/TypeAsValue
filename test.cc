@@ -359,6 +359,76 @@ static_assert(
 	"(list 1 2) != (cons 1 (cons 2 void))"
 );
 
+// list take
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<1>>,
+		tav::Take<
+			tav::Size<1>,
+			tav::List<tav::Int<1>, tav::Int<2>>
+		>
+	>::value,
+	"(take 1 (list 1 2)) != (list 1)"
+);
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<1>, tav::Int<2>>,
+		tav::Take<
+			tav::Size<2>,
+			tav::List<tav::Int<1>, tav::Int<2>>
+		>
+	>::value,
+	"(take 2 (list 1 2)) != (list 1 2)"
+);
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<1>, tav::Int<2>>,
+		tav::Take<
+			tav::Size<3>,
+			tav::List<tav::Int<1>, tav::Int<2>>
+		>
+	>::value,
+	"(take 3 (list 1 2)) != (list 1 2)"
+);
+
+// list drop
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<2>>,
+		tav::Drop<
+			tav::Size<1>,
+			tav::List<tav::Int<1>, tav::Int<2>>
+		>
+	>::value,
+	"(drop 1 (list 1 2)) != (list 2)"
+);
+
+static_assert(
+	std::is_same<
+		void,
+		tav::Drop<
+			tav::Size<2>,
+			tav::List<tav::Int<1>, tav::Int<2>>
+		>
+	>::value,
+	"(drop 2 (list 1 2)) != void"
+);
+
+static_assert(
+	std::is_same<
+		void,
+		tav::Drop<
+			tav::Size<3>,
+			tav::List<tav::Int<1>, tav::Int<2>>
+		>
+	>::value,
+	"(drop 3 (list 1 2)) != void"
+);
+
 // list length
 
 static_assert(
@@ -438,76 +508,6 @@ static_assert(
 		tav::Third<tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>>
 	>::value,
 	"(third (list 1 2 3)) != 3"
-);
-
-// list take
-
-static_assert(
-	std::is_same<
-		tav::List<tav::Int<1>>,
-		tav::Take<
-			tav::Size<1>,
-			tav::List<tav::Int<1>, tav::Int<2>>
-		>
-	>::value,
-	"(take 1 (list 1 2)) != (list 1)"
-);
-
-static_assert(
-	std::is_same<
-		tav::List<tav::Int<1>, tav::Int<2>>,
-		tav::Take<
-			tav::Size<2>,
-			tav::List<tav::Int<1>, tav::Int<2>>
-		>
-	>::value,
-	"(take 2 (list 1 2)) != (list 1 2)"
-);
-
-static_assert(
-	std::is_same<
-		tav::List<tav::Int<1>, tav::Int<2>>,
-		tav::Take<
-			tav::Size<3>,
-			tav::List<tav::Int<1>, tav::Int<2>>
-		>
-	>::value,
-	"(take 3 (list 1 2)) != (list 1 2)"
-);
-
-// list drop
-
-static_assert(
-	std::is_same<
-		tav::List<tav::Int<2>>,
-		tav::Drop<
-			tav::Size<1>,
-			tav::List<tav::Int<1>, tav::Int<2>>
-		>
-	>::value,
-	"(drop 1 (list 1 2)) != (list 2)"
-);
-
-static_assert(
-	std::is_same<
-		void,
-		tav::Drop<
-			tav::Size<2>,
-			tav::List<tav::Int<1>, tav::Int<2>>
-		>
-	>::value,
-	"(drop 2 (list 1 2)) != void"
-);
-
-static_assert(
-	std::is_same<
-		void,
-		tav::Drop<
-			tav::Size<3>,
-			tav::List<tav::Int<1>, tav::Int<2>>
-		>
-	>::value,
-	"(drop 3 (list 1 2)) != void"
 );
 
 // list append
