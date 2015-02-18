@@ -12,7 +12,7 @@ template <
 	typename Current,
 	typename Previous
 >
-using reversed_append = tav::Append<Previous, List<Current>>;
+using reversed_append = Append<Previous, List<Current>>;
 
 }
 

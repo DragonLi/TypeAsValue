@@ -1,27 +1,23 @@
 #ifndef TYPEASVALUE_SRC_LIST_OPERATION_APPEND_H_
 #define TYPEASVALUE_SRC_LIST_OPERATION_APPEND_H_
 
+#include "higher/fold.h"
+
 namespace tav {
 
 namespace detail {
 
-template <
-	typename Primary,
-	typename Secondary
->
-struct Append {
-	typedef Cons<
-		Head<Primary>,
-		Eval<Append<
-			Tail<Primary>,
-			Secondary
-		>>
-	> type;
-};
-
-template <typename Secondary>
-struct Append<void, Secondary> {
-	typedef Secondary type;
+template <typename Replacement>
+struct replace_void_cdr {
+	template <typename CAR, typename CDR>
+	using function = Cons<
+		CAR,
+		If<
+			Eval<std::is_void<CDR>>,
+			Replacement,
+			CDR
+		>
+	>;
 };
 
 }
@@ -30,7 +26,15 @@ template <
 	typename Primary,
 	typename Secondary
 >
-using Append = Eval<detail::Append<Primary, Secondary>>;
+using Append = If<
+	Eval<std::is_void<Primary>>,
+	Secondary,
+	Fold<
+		detail::replace_void_cdr<Secondary>::template function,
+		void,
+		Primary
+	>
+>;
 
 }
 

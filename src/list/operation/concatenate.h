@@ -2,6 +2,7 @@
 #define TYPEASVALUE_SRC_LIST_OPERATION_CONCATENATE_H_
 
 #include "append.h"
+#include "higher/remove.h"
 #include "higher/fold.h"
 
 namespace tav {
