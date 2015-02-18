@@ -38,6 +38,12 @@ using IsEqualValue = Boolean<X::value == Y::value>;
 template <typename X>
 using IsTrue = IsEqualValue<X, Boolean<true>>;
 
+template <typename X>
+using IsBoolean = Eval<std::is_same<typename X::value_type, bool>>;
+
+template <typename X>
+using IsSize = Eval<std::is_same<typename X::value_type, std::size_t>>;
+
 }
 
 #endif  // TYPEASVALUE_SRC_TYPE_H_

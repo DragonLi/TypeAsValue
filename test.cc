@@ -922,13 +922,13 @@ static_assert(
 
 static_assert(
 	std::is_same<
-		void,
+		tav::Boolean<false>,
 		tav::ListIndex<
 			tav::Even,
 			tav::List<tav::Int<1>, tav::Int<3>, tav::Int<5>>
 		>
 	>::value,
-	"(list-index even? (list 1 3 5)) != void"
+	"(list-index even? (list 1 3 5)) != #f"
 );
 
 // list find

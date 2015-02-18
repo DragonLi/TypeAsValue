@@ -13,7 +13,7 @@ template <
 >
 using DropWhile = Drop<
 	typename utility::predicate_assurance<
-		utility::predicate_negator<std::is_void>::template function,
+		IsSize,
 		Length<List>
 	>::template assure<
 		ListIndex<

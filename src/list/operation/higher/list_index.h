@@ -29,7 +29,7 @@ template <
 	typename                 Index
 >
 struct index_of_first<Predicate, void, Index> {
-	typedef void type;
+	typedef Boolean<false> type;
 };
 
 }
