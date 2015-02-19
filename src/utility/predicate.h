@@ -21,6 +21,28 @@ struct predicate_assurance {
 	>;
 };
 
+template <
+	template<typename...> class Function,
+	typename...                 Arguments
+>
+struct defer_eval {
+	typedef Function<Arguments...> type;
+};
+
+template <
+	template<typename> class Predicate,
+	template<typename> class Charge,
+	typename                 Surrogate
+>
+struct predicate_guard {
+	template <typename Value>
+	using check = Eval<If<
+		Eval<Predicate<Value>>,
+		defer_eval<Charge, Value>,
+		Surrogate
+	>>;
+};
+
 template <template<typename> class Predicate>
 struct predicate_negator {
 	template <typename Element>

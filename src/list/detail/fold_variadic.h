@@ -21,10 +21,10 @@ struct fold_variadic {
 
 template <
 	template <typename, typename> class Function,
-	typename                            Head
+	typename                            Last
 >
-struct fold_variadic<Function, Head> {
-	typedef Function<Head, void> type;
+struct fold_variadic<Function, Last> {
+	typedef Function<Last, void> type;
 };
 
 }

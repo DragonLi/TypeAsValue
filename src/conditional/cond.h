@@ -1,10 +1,7 @@
 #ifndef TYPEASVALUE_SRC_CONDITIONAL_COND_H_
 #define TYPEASVALUE_SRC_CONDITIONAL_COND_H_
 
-#include <type_traits>
-
-#include "list/list.h"
-#include "list/operation/higher/find.h"
+#include "list/detail/find_variadic.h"
 
 namespace tav {
 
@@ -16,12 +13,9 @@ using cond_predicate = IsTrue<Car<Pair>>;
 }
 
 template <typename... Branches>
-using Cond = Cdr<
-	Find<
-		detail::cond_predicate,
-		List<Branches...>
-	>
->;
+using Cond = Cdr<Eval<
+	detail::find_variadic<detail::cond_predicate, Branches...>
+>>;
 
 }
 
