@@ -19,6 +19,15 @@ using Cond = Cdr<Eval<
 	detail::find_variadic<detail::cond_predicate, Branches...>
 >>;
 
+template <
+	typename Condition,
+	typename Result
+>
+using Branch = Pair<Condition, Result>;
+
+template <typename Result>
+using Else = Branch<Boolean<true>, Result>;
+
 }
 
 #endif  // TYPEASVALUE_SRC_CONDITIONAL_COND_H_

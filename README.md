@@ -20,7 +20,7 @@ This library is a expanded reimplementation of my previous attempt at this probl
 
 * guaranteed evaluation during compile time
 * basic math and logic operations
-* conditionals
+* conditionals such as `If` and `Cond`
 * `Cons` constructor for `Pair` type
 * `List` function as helper for `Pair` based list construction
 * basic list operators such as `Nth`, `Length`, `Take` and `Append`

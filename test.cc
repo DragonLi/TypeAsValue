@@ -239,9 +239,9 @@ static_assert(
 	std::is_same<
 		tav::Int<2>,
 		tav::Cond<
-			tav::Pair<tav::IsEqualValue<tav::Int<1>, tav::Int<2>>, tav::Int<1>>,
-			tav::Pair<tav::IsEqualValue<tav::Int<2>, tav::Int<2>>, tav::Int<2>>,
-			tav::Pair<tav::IsEqualValue<tav::Int<3>, tav::Int<2>>, tav::Int<3>>
+			tav::Branch<tav::IsEqualValue<tav::Int<1>, tav::Int<2>>, tav::Int<1>>,
+			tav::Branch<tav::IsEqualValue<tav::Int<2>, tav::Int<2>>, tav::Int<2>>,
+			tav::Branch<tav::IsEqualValue<tav::Int<3>, tav::Int<2>>, tav::Int<3>>
 		>
 	>::value,
 	"(cond ((= 1 2) 1) ((= 2 2) 2) ((= 3 2) 3)) != 2"
@@ -251,10 +251,10 @@ static_assert(
 	std::is_same<
 		tav::Int<-1>,
 		tav::Cond<
-			tav::Pair<tav::IsEqualValue<tav::Int<1>, tav::Int<2>>, tav::Int< 1>>,
-			tav::Pair<tav::IsEqualValue<tav::Int<2>, tav::Int<3>>, tav::Int< 2>>,
-			tav::Pair<tav::IsEqualValue<tav::Int<3>, tav::Int<4>>, tav::Int< 3>>,
-			tav::Pair<tav::Boolean<true>,                          tav::Int<-1>>
+			tav::Branch<tav::IsEqualValue<tav::Int<1>, tav::Int<2>>, tav::Int< 1>>,
+			tav::Branch<tav::IsEqualValue<tav::Int<2>, tav::Int<3>>, tav::Int< 2>>,
+			tav::Branch<tav::IsEqualValue<tav::Int<3>, tav::Int<4>>, tav::Int< 3>>,
+			tav::Else<tav::Int<-1>>
 		>
 	>::value,
 	"(cond ((= 1 2) 1) ((= 2 3) 2) ((= 3 4) 3) (else -1)) != -1"
