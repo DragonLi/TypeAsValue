@@ -1,6 +1,8 @@
 #ifndef TYPEASVALUE_SRC_CONDITIONAL_COND_H_
 #define TYPEASVALUE_SRC_CONDITIONAL_COND_H_
 
+#include "type.h"
+#include "list/cons.h"
 #include "list/detail/find_variadic.h"
 
 namespace tav {
