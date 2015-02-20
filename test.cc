@@ -22,6 +22,7 @@
 #include "list/generator/higher/list_tabulate.h"
 #include "list/operation/delete.h"
 #include "list/operation/delete_nth.h"
+#include "list/operation/replace_nth.h"
 
 #include "function/apply.h"
 
@@ -664,6 +665,20 @@ static_assert(
 		>
 	>::value,
 	"(delete-nth 1 (list 1 2 3)) != (list 1 3)"
+);
+
+// list replace nth
+
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<1>, tav::Int<42>, tav::Int<3>>,
+		tav::ReplaceNth<
+			tav::Size<1>,
+			tav::Int<42>,
+			tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>
+		>
+	>::value,
+	"(replace-nth 1 42 (list 1 2 3)) != (list 1 42 3)"
 );
 
 // list partition

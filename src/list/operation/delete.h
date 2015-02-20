@@ -9,11 +9,11 @@ namespace tav {
 
 template <
 	typename Element,
-	typename List
+	typename Sequence
 >
 using Delete = Remove<
 	Apply<IsEqualValue, _0, Element>::template function,
-	List
+	Sequence
 >;
 
 }

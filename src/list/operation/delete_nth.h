@@ -9,11 +9,11 @@ namespace tav {
 
 template <
 	typename Index,
-	typename List
+	typename Sequence
 >
 using DeleteNth = Append<
-	Take<Index, List>,
-	Drop<Add<Index, Size<1>>, List>
+	Take<Index, Sequence>,
+	Drop<Add<Index, Size<1>>, Sequence>
 >;
 
 }
