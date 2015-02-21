@@ -1,6 +1,9 @@
 #ifndef TYPEASVALUE_SRC_LIST_GENERATOR_DETAIL_GENERATE_NESTED_STRUCTURE_H_
 #define TYPEASVALUE_SRC_LIST_GENERATOR_DETAIL_GENERATE_NESTED_STRUCTURE_H_
 
+#include "type.h"
+#include "operation/math.h"
+
 namespace tav {
 
 namespace detail {

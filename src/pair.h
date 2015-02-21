@@ -3,6 +3,8 @@
 
 #include <type_traits>
 
+#include "type.h"
+
 namespace tav {
 
 namespace detail { struct pair_tag { }; }
