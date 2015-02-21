@@ -20,21 +20,6 @@ using mirror = tav::List<
 	tav::List<tav::Size<5>, tav::Int<0>, tav::Int<1>, tav::Size<1>, tav::Char<'R'>>
 >;
 
-// (define mirror_initial_tape (list 1 1 1 0 0 0 0))
-using mirror_initial_tape = tav::ListOfType<int, 1, 1, 1, 0, 0, 0, 0>;
-
-// (define mirror_final_tape
-//   (run mirror
-//        1
-//        mirror_initial_tape
-//        0))
-using mirror_final_tape = machine::run<
-	mirror,
-	tav::Size<1>,
-	mirror_initial_tape,
-	tav::Size<0>
->;
-
 // (define busy_beaver (list (list 'A' 0 1 'B' 'R') [...]))
 using busy_beaver = tav::List<
 //            [state]         [read]       [write]      [next state]    [head movement]
@@ -46,49 +31,53 @@ using busy_beaver = tav::List<
 	tav::List<tav::Char<'C'>, tav::Int<1>, tav::Int<1>, void,           tav::Char<'N'> >
 >;
 
-// (define busy_beaver_initial_tape (make-list 13 0))
-using busy_beaver_initial_tape = tav::MakeList<tav::Size<13>, tav::Int<0>>;
-
-// (define busy_beaver_final_tape
-//   (run busy_beaver
-//        'A'
-//        busy_beaver_initial_tape
-//        6))
-using busy_beaver_final_tape = machine::run<
-	busy_beaver,
-	tav::Char<'A'>,
-	busy_beaver_initial_tape,
-	tav::Size<6>
->;
-
-int main(int, char **) {
+template <
+	typename Initial,
+	typename Final
+>
+void printStates(const std::string& name) {
 	const auto printField = [](const int x) {
 		std::cout << x << " ";
 	};
 
-	std::cout << "1. Mirror"
+	std::cout << name
 	          << std::endl
 	          << "   Initial: ";
 
-	tav::runtime::for_each<mirror_initial_tape>(printField);
+	tav::runtime::for_each<Initial>(printField);
 
 	std::cout << std::endl
 	          << "   Final:   ";
 
-	tav::runtime::for_each<mirror_final_tape>(printField);
-
-	std::cout << std::endl
-	          << std::endl
-	          << "2. Busy Beaver"
-	          << std::endl
-	          << "   Initial: ";
-
-	tav::runtime::for_each<busy_beaver_initial_tape>(printField);
-
-	std::cout << std::endl
-	          << "   Final:   ";
-
-	tav::runtime::for_each<busy_beaver_final_tape>(printField);
+	tav::runtime::for_each<Final>(printField);
 
 	std::cout << std::endl;
+}
+
+int main(int, char **) {
+	// (define mirror_tape (list 1 1 1 0 0 0 0))
+	using mirror_tape = tav::ListOfType<int, 1, 1, 1, 0, 0, 0, 0>;
+
+	printStates<
+		mirror_tape,
+		machine::run<
+			mirror,
+			tav::Size<1>,
+			mirror_tape,
+			tav::Size<0>
+		>
+	>("1. Mirror");
+
+	// (define busy_beaver_tape (make-list 13 0))
+	using busy_beaver_tape = tav::MakeList<tav::Size<13>, tav::Int<0>>;
+
+	printStates<
+		busy_beaver_tape,
+		machine::run<
+			busy_beaver,
+			tav::Char<'A'>,
+			busy_beaver_tape,
+			tav::Size<6>
+		>
+	>("2. Busy Beaver");
 }
