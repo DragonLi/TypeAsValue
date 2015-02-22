@@ -18,11 +18,11 @@ using ListOfType = List<
 	std::integral_constant<Type, Values>...
 >;
 
-template <typename Cons>
-using Head = Car<Cons>;
+template <typename Pair>
+using Head = Car<Pair>;
 
-template <typename Cons>
-using Tail = Cdr<Cons>;
+template <typename Pair>
+using Tail = Cdr<Pair>;
 
 }
 

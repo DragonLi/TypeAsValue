@@ -33,6 +33,28 @@ int main(int, char **) { }
 static_assert(
 	std::is_same<
 		tav::Boolean<true>,
+		tav::IsEqual<
+			tav::Pair<tav::Int<1>, tav::Int<2>>,
+			tav::Pair<tav::Int<1>, tav::Int<2>>
+		>
+	>::value,
+	"(IsEqual '(1 . 2) '(1 . 2)) != #t"
+);
+
+static_assert(
+	std::is_same<
+		tav::Boolean<false>,
+		tav::IsEqual<
+			tav::Pair<tav::Int<1>, tav::Int<2>>,
+			tav::Pair<tav::Int<2>, tav::Int<3>>
+		>
+	>::value,
+	"(IsEqual '(1 . 2) '(2 . 3)) != #f"
+);
+
+static_assert(
+	std::is_same<
+		tav::Boolean<true>,
 		tav::IsEqualType<tav::Int<1>, tav::Int<2>>
 	>::value,
 	"(IsEqualType 1 2) != #t"

@@ -8,21 +8,41 @@
 
 namespace machine {
 
+// (define (updatePosition direction position)
+//   (cond ((= direction RIGHT) (+ position 1))
+//         ((= direction LEFT)  (- Position 1))
+//         (else                position)))
+template <
+	typename Direction,
+	typename Position
+>
+using updatePosition = tav::Cond<
+	tav::Branch<
+		tav::IsEqualValue<Direction, tav::Char<'R'>>,
+		tav::Add<Position, tav::Size<1>>
+	>,
+	tav::Branch<
+		tav::IsEqualValue<Direction, tav::Char<'L'>>,
+		tav::Substract<Position, tav::Size<1>>
+	>,
+	tav::Else<
+		Position
+	>
+>;
+
+
 // (define (simulate transition tape state position)
 //   (if (= state FINAL)
 //     tape
-//     (let* ((current_symbol (readSymbol position tape))
-//            (current_state  (transition state current_symbol))
-//            (direction      (nth MOVE  current_state))
-//            (next_symbol    (nth WRITE current_state))
-//            (next_state     (nth NEXT  current_state))
-//            (next_position  (cond ((= direction RIGHT) (+ position 1))
-//                                  ((= direction LEFT)  (- Position 1))
-//                                  (else                position))))
+//     (let ((current_state (transition state
+//                                      (readSymbol position tape))))
 //       (simulate transition
-//                 (writeSymbol position next_symbol tape)
-//                 next_state,
-//                 next_position)))
+//                 (current_state NEXT)
+//                 (writeSymbol position
+//                              (current_state WRITE)
+//                              tape)
+//                 (updatePosition (current_state MOVE)
+//                                 position)))))
 template <
 	template<typename, typename> class Transition,
 	typename                           State,
@@ -30,39 +50,31 @@ template <
 	typename                           Position
 >
 class simulate {
+	static_assert(
+		tav::Not<tav::LowerThan<Position, tav::Size<0>>>::value,
+		"machine head position out of bounds"
+	);
+
 	private:
-		using current_symbol = tape::readSymbol<Position, Tape>;
-		using current_state  = Transition<State, current_symbol>;
-
-		using direction      = tav::Nth<state::field::MOVE,  current_state>;
-
-		using next_symbol    = tav::Nth<state::field::WRITE, current_state>;
-		using next_state     = tav::Nth<state::field::NEXT,  current_state>;
-		using next_position  = tav::Cond<
-			tav::Branch<
-				tav::IsEqualValue<direction, tav::Char<'R'>>,
-				tav::Add<Position, tav::Size<1>>
-			>,
-			tav::Branch<
-				tav::IsEqualValue<direction, tav::Char<'L'>>,
-				tav::Substract<Position, tav::Size<1>>
-			>,
-			tav::Else<
-				Position
-			>
-		>;
-
-		static_assert(
-			tav::Not<tav::LowerThan<next_position, tav::Size<0>>>::value,
-			"next position out of bounds"
-		);
+		template <typename Field>
+		using current_state = typename Transition<
+			State,
+			tape::readSymbol<Position, Tape>
+		>::template get<Field>;
 
 	public:
 		using type = tav::Eval<simulate<
 			Transition,
-			next_state,
-			tape::writeSymbol<Position, next_symbol, Tape>,
-			next_position
+			current_state<state::field::NEXT>,
+			tape::writeSymbol<
+				Position,
+				current_state<state::field::WRITE>,
+				Tape
+			>,
+			updatePosition<
+				current_state<state::field::MOVE>,
+				Position
+			>
 		>>;
 };
 
@@ -77,8 +89,8 @@ struct simulate<Transition, void, Tape, Position> {
 
 // (define (run program state tape position)
 //   (simulate (transition program)
-//             tape
 //             state
+//             tape
 //             position))
 template <
 	typename Program,

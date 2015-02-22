@@ -9,12 +9,26 @@ namespace machine {
 
 namespace state {
 
-struct field {
+namespace field {
 	using ID    = tav::Size<0>;
 	using READ  = tav::Size<1>;
 	using WRITE = tav::Size<2>;
 	using NEXT  = tav::Size<3>;
 	using MOVE  = tav::Size<4>;
+}
+
+// (define (state_accessor state)
+//   (lambda (field)
+//           (nth field state)))
+template <typename State>
+struct state_accessor {
+	static_assert(
+		tav::IsPair<State>::value,
+		"machine state is invalid"
+	);
+
+	template <typename Field>
+	using get = tav::Nth<Field, State>;
 };
 
 // (define (state_predicate id read)
@@ -54,7 +68,9 @@ struct transition {
 		typename State,
 		typename Symbol
 	>
-	using state = findState<State, Symbol, States>;
+	using state = state_accessor<
+		findState<State, Symbol, States>
+	>;
 };
 
 }

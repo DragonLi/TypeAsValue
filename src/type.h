@@ -24,10 +24,16 @@ template <
 	typename X,
 	typename Y
 >
-using IsEqualType = Eval<std::is_same<
+using IsEqual = Eval<std::is_same<X, Y>>;
+
+template <
+	typename X,
+	typename Y
+>
+using IsEqualType = IsEqual<
 	typename X::value_type,
 	typename Y::value_type
->>;
+>;
 
 template <
 	typename X,
@@ -36,13 +42,13 @@ template <
 using IsEqualValue = Boolean<X::value == Y::value>;
 
 template <typename X>
+using IsBoolean = IsEqual<typename X::value_type, bool>;
+
+template <typename X>
 using IsTrue = IsEqualValue<X, Boolean<true>>;
 
 template <typename X>
-using IsBoolean = Eval<std::is_same<typename X::value_type, bool>>;
-
-template <typename X>
-using IsSize = Eval<std::is_same<typename X::value_type, std::size_t>>;
+using IsSize = IsEqual<typename X::value_type, std::size_t>;
 
 }
 
