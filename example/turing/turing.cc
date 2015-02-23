@@ -5,6 +5,8 @@
 
 #include "src/machine.h"
 
+using BLANK = machine::tape::BLANK;
+
 // (define mirror (list (list 1 1 0 2 'R') [...]))
 using mirror = tav::List<
 //            [state]       [read]       [write]      [next state]  [head movement]
@@ -31,13 +33,27 @@ using busy_beaver = tav::List<
 	tav::List<tav::Char<'C'>, tav::Int<1>, tav::Int<1>, void,           tav::Char<'N'> >
 >;
 
+// (define binary_increment (list (list 0 '() '() 1 'L') [...]))
+using binary_increment = tav::List<
+//            [state]       [read]               [write]              [next state]  [head movement]
+	tav::List<tav::Size<0>, BLANK,               BLANK,               tav::Size<1>, tav::Char<'L'>>,
+	tav::List<tav::Size<0>, tav::Boolean<false>, tav::Boolean<false>, tav::Size<0>, tav::Char<'R'>>,
+	tav::List<tav::Size<0>, tav::Boolean<true>,  tav::Boolean<true>,  tav::Size<0>, tav::Char<'R'>>,
+	tav::List<tav::Size<1>, BLANK,               tav::Boolean<true>,  tav::Size<2>, tav::Char<'R'>>,
+	tav::List<tav::Size<1>, tav::Boolean<false>, tav::Boolean<true>,  tav::Size<2>, tav::Char<'L'>>,
+	tav::List<tav::Size<1>, tav::Boolean<true>,  tav::Boolean<false>, tav::Size<1>, tav::Char<'L'>>,
+	tav::List<tav::Size<2>, BLANK,               BLANK,               void,         tav::Char<'L'>>,
+	tav::List<tav::Size<2>, tav::Boolean<false>, tav::Boolean<false>, tav::Size<2>, tav::Char<'R'>>,
+	tav::List<tav::Size<2>, tav::Boolean<true>,  tav::Boolean<true>,  tav::Size<2>, tav::Char<'R'>>
+>;
+
 template <
 	typename Initial,
 	typename Final
 >
 void printStates(const std::string& name) {
-	const auto printField = [](const int x) {
-		std::cout << x << " ";
+	const auto printField = [](const auto x) {
+		std::cout << x << ' ';
 	};
 
 	std::cout << name
@@ -80,4 +96,17 @@ int main(int, char **) {
 			tav::Size<6>
 		>
 	>("2. Busy Beaver");
+
+	// (define binary_increment_tape (list #t #f #t #f #t #f))
+	using binary_increment_tape = tav::ListOfType<bool, 1, 0, 1, 0, 1, 0>;
+
+	printStates<
+		binary_increment_tape,
+		machine::run<
+			binary_increment,
+			tav::Size<0>,
+			binary_increment_tape,
+			tav::Size<0>
+		>
+	>("3. Binary Increment");
 }

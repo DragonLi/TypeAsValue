@@ -42,8 +42,8 @@ template <
 struct state_predicate {
 	template <typename State>
 	using function = tav::And<
-		tav::IsEqualValue<Id,   tav::Nth<field::ID,   State>>,
-		tav::IsEqualValue<Read, tav::Nth<field::READ, State>>
+		tav::IsEqual<Id,   tav::Nth<field::ID,   State>>,
+		tav::IsEqual<Read, tav::Nth<field::READ, State>>
 	>;
 };
 

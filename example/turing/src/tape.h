@@ -10,6 +10,12 @@ namespace machine {
 
 namespace tape {
 
+struct BLANK {
+	typedef BLANK type;
+
+	static constexpr char value{'\0'};
+};
+
 // (define (readSymbol position tape)
 //   (if (= (length tape) position)
 //       '()
@@ -18,11 +24,11 @@ template <
 	typename Position,
 	typename Tape
 >
-using readSymbol = tav::If<
-	tav::IsEqualValue<tav::Length<Tape>, Position>,
-	void,
-	tav::Nth<Position, Tape>
->;
+using readSymbol = tav::Eval<tav::If<
+	tav::LowerThan<Position, tav::Length<Tape>>,
+	tav::utility::defer_eval<tav::Nth, Position, Tape>,
+	BLANK
+>>;
 
 // (define (writeSymbol position symbol tape)
 //   (if (= (length tape) position)
