@@ -12,7 +12,7 @@ template <
 	typename...                 Arguments
 >
 struct apply_none {
-	using function = Function<Arguments...>;
+	using type = Function<Arguments...>;
 };
 
 template <

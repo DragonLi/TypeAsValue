@@ -3,6 +3,7 @@
 
 #include "conditional/if.h"
 #include "operation/logic.h"
+#include "function/apply.h"
 
 namespace tav {
 
@@ -22,14 +23,6 @@ struct predicate_assurance {
 };
 
 template <
-	template<typename...> class Function,
-	typename...                 Arguments
->
-struct defer_eval {
-	typedef Function<Arguments...> type;
-};
-
-template <
 	template<typename> class Predicate,
 	template<typename> class Charge,
 	typename                 Surrogate
@@ -38,7 +31,7 @@ struct predicate_guard {
 	template <typename Value>
 	using check = Eval<If<
 		Eval<Predicate<Value>>,
-		defer_eval<Charge, Value>,
+		Apply<Charge, Value>,
 		Surrogate
 	>>;
 };

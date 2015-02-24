@@ -1146,7 +1146,7 @@ static_assert(
 			tav::Multiply,
 			tav::Int<21>,
 			tav::Int<2>
-		>::function::type
+		>::type
 	>::value,
 	"(* 21 2) != 42"
 );

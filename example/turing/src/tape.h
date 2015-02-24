@@ -5,6 +5,7 @@
 #include "list/list.h"
 #include "list/operation/replace_nth.h"
 #include "conditional/if.h"
+#include "function/apply.h"
 
 namespace machine {
 
@@ -26,7 +27,7 @@ template <
 >
 using readSymbol = tav::Eval<tav::If<
 	tav::LowerThan<Position, tav::Length<Tape>>,
-	tav::utility::defer_eval<tav::Nth, Position, Tape>,
+	tav::Apply<tav::Nth, Position, Tape>,
 	BLANK
 >>;
 
