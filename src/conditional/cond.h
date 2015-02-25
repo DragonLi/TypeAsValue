@@ -12,12 +12,20 @@ namespace detail {
 template <typename Pair>
 using cond_predicate = IsTrue<Car<Pair>>;
 
+template <typename... Branches>
+struct select_cond_branch {
+	using type = Eval<detail::find_variadic<detail::cond_predicate, Branches...>>;
+
+	static_assert(
+		IsPair<type>::value,
+		"all branch conditions resolve to false"
+	);
+};
+
 }
 
 template <typename... Branches>
-using Cond = Cdr<Eval<
-	detail::find_variadic<detail::cond_predicate, Branches...>
->>;
+using Cond = Cdr<Eval<detail::select_cond_branch<Branches...>>>;
 
 template <
 	typename Condition,
