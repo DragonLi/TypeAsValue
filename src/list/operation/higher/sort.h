@@ -29,11 +29,9 @@ class quick_sort {
 
 	public:
 		using type = Concatenate<
-			List<
-				Eval<quick_sort<Comparator, lhs>>,
-				List<pivot>,
-				Eval<quick_sort<Comparator, rhs>>
-			>
+			Eval<quick_sort<Comparator, lhs>>,
+			List<pivot>,
+			Eval<quick_sort<Comparator, rhs>>
 		>;
 };
 

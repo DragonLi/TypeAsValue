@@ -839,6 +839,18 @@ static_assert(
 	"(concatenate (list (list 1 2) (list 3) (list 4 5 6))) != (list 1 2 3 4 5 6)"
 );
 
+static_assert(
+	std::is_same<
+		tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>, tav::Int<4>, tav::Int<5>, tav::Int<6>>,
+		tav::Concatenate<
+			tav::List<tav::Int<1>, tav::Int<2>>,
+			tav::List<tav::Int<3>>,
+			tav::List<tav::Int<4>, tav::Int<5>, tav::Int<6>>
+		>
+	>::value,
+	"(concatenate (list 1 2) (list 3) (list 4 5 6)) != (list 1 2 3 4 5 6)"
+);
+
 // list iota
 
 static_assert(

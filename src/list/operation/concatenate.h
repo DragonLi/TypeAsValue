@@ -2,16 +2,23 @@
 #define TYPEASVALUE_SRC_LIST_OPERATION_CONCATENATE_H_
 
 #include "append.h"
-#include "higher/remove.h"
 #include "higher/fold.h"
+#include "conditional/if.h"
 
 namespace tav {
 
-template <typename ListOfLists>
+template <
+	typename    Head,
+	typename... Tail
+>
 using Concatenate = Fold<
 	Append,
 	void,
-	ListOfLists
+	If<
+		Boolean<sizeof...(Tail) == 0>,
+		Head,
+		List<Head, Tail...>
+	>
 >;
 
 }

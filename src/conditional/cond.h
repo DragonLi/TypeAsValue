@@ -9,12 +9,14 @@ namespace tav {
 
 namespace detail {
 
-template <typename Pair>
-using cond_predicate = IsTrue<Car<Pair>>;
-
 template <typename... Branches>
-struct select_cond_branch {
-	using type = Eval<detail::find_variadic<detail::cond_predicate, Branches...>>;
+class select_cond_branch {
+	private:
+		template <typename Pair>
+		using predicate = IsTrue<Car<Pair>>;
+
+	public:
+		using type = Eval<detail::find_variadic<predicate, Branches...>>;
 
 	static_assert(
 		IsPair<type>::value,
