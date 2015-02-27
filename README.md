@@ -16,6 +16,8 @@ This library is a expanded reimplementation of my previous attempt at this probl
 		>
 	>::value;
 
+More extensive examples are available in the form of implementations of the [Sieve of Eratosthenes](https://github.com/KnairdA/TypeAsValue/tree/master/example/prime) as well as of a [Turing machine](https://github.com/KnairdA/TypeAsValue/tree/master/example/turing).
+
 ## Current features
 
 * guaranteed evaluation during compile time
@@ -33,6 +35,17 @@ This library is a expanded reimplementation of my previous attempt at this probl
 * basic partial function application support using `Apply`
 * `static_assert` based test cases for all of the above
 * MIT license
+
+## Building
+
+As _TypeAsValue_ is completely implemented via template metaprogramming it is a header only library and as such may only be built in conjunction with the code which is making use of it. This means that one may use a arbitrary build system in practice while the `static_assert` based test cases and example applications make use of _CMake_ and can be compiled as follows:
+
+	git clone "https://github.com/KnairdA/TypeAsValue.git"
+	cd TypeAsValue # respectively "cd TypeAsValue/example/{turing|prime}"
+	mkdir build
+	cd build
+	cmake ..
+	make
 
 ## Requirements
 
