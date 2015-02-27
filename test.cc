@@ -758,23 +758,23 @@ static_assert(
 static_assert(
 	std::is_same<
 		tav::Boolean<true>,
-		tav::All<
+		tav::Every<
 			tav::Even,
 			tav::List<tav::Int<2>, tav::Int<4>, tav::Int<6>>
 		>
 	>::value,
-	"(all even? (list 2 4 6)) != #t"
+	"(every even? (list 2 4 6)) != #t"
 );
 
 static_assert(
 	std::is_same<
 		tav::Boolean<false>,
-		tav::All<
+		tav::Every<
 			tav::Odd,
 			tav::List<tav::Int<1>, tav::Int<2>, tav::Int<3>>
 		>
 	>::value,
-	"(all odd? (list 1 2 3)) != #f"
+	"(every odd? (list 1 2 3)) != #f"
 );
 
 static_assert(

@@ -22,7 +22,7 @@ template <
 	template<typename> class Predicate,
 	typename                 List
 >
-using All = Fold<
+using Every = Fold<
 	And,
 	Boolean<true>,
 	Map<Predicate, List>
