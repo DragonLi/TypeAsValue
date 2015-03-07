@@ -9,7 +9,7 @@ using BLANK = machine::tape::BLANK;
 
 // (define mirror (list (list 1 1 0 2 'R') [...]))
 using mirror = tav::List<
-//            [state]       [read]       [write]      [next state]  [head movement]
+	//        [state]       [read]       [write]      [next state]  [head movement]
 	tav::List<tav::Size<1>, tav::Int<1>, tav::Int<0>, tav::Size<2>, tav::Char<'R'>>,
 	tav::List<tav::Size<1>, tav::Int<0>, tav::Int<0>, void,         tav::Char<'N'> >,
 	tav::List<tav::Size<2>, tav::Int<1>, tav::Int<1>, tav::Size<2>, tav::Char<'R'>>,
@@ -24,7 +24,7 @@ using mirror = tav::List<
 
 // (define busy_beaver (list (list 'A' 0 1 'B' 'R') [...]))
 using busy_beaver = tav::List<
-//            [state]         [read]       [write]      [next state]    [head movement]
+	//        [state]         [read]       [write]      [next state]    [head movement]
 	tav::List<tav::Char<'A'>, tav::Int<0>, tav::Int<1>, tav::Char<'B'>, tav::Char<'R'>>,
 	tav::List<tav::Char<'A'>, tav::Int<1>, tav::Int<1>, tav::Char<'C'>, tav::Char<'L'> >,
 	tav::List<tav::Char<'B'>, tav::Int<0>, tav::Int<1>, tav::Char<'A'>, tav::Char<'L'> >,
@@ -35,7 +35,7 @@ using busy_beaver = tav::List<
 
 // (define binary_increment (list (list 0 '() '() 1 'L') [...]))
 using binary_increment = tav::List<
-//            [state]       [read]               [write]              [next state]  [head movement]
+	//        [state]       [read]               [write]              [next state]  [head movement]
 	tav::List<tav::Size<0>, BLANK,               BLANK,               tav::Size<1>, tav::Char<'L'>>,
 	tav::List<tav::Size<0>, tav::Boolean<false>, tav::Boolean<false>, tav::Size<0>, tav::Char<'R'>>,
 	tav::List<tav::Size<0>, tav::Boolean<true>,  tav::Boolean<true>,  tav::Size<0>, tav::Char<'R'>>,

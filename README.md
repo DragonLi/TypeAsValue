@@ -4,6 +4,8 @@
 
 This library is a expanded reimplementation of my previous attempt at this problem: [ConstList](https://github.com/KnairdA/ConstList). As detailed in the appropriate [blog article](http://blog.kummerlaender.eu/article/a_look_at_compile_time_computation_in_cpp/) the mixed approach between generic lambda expressions, `constexpr` marked functions and template metaprogramming doesn't offer sufficient flexibility which led me to approach compile time computation in a slightly different manner via this new library. As one might notice this boils down to using _Scheme_ as a metaphor for C++ template metaprogramming. In fact all test cases and examples are documented by representing their logic in _Scheme_.
 
+Furthermore an overview of this library alongside some background information is available in the form of a blog article on [using _Scheme_ as a metaphor for template metaprogramming](http://blog.kummerlaender.eu/article/using_scheme_as_a_metaphor_for_template_metaprogramming/).
+
 ## Example
 
 	// λ (length (filter odd? (list 1 2 3)))

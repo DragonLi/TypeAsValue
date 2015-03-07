@@ -17,7 +17,7 @@ template <
 	template<typename...> class Function,
 	typename...                 Arguments
 >
-struct Apply : Cond<
+using Apply = Cond<
 	Branch<
 		GreaterThan<detail::count_placeholders<Arguments...>, Size<2>>,
 		detail::apply_variadic<Function, Arguments...>
@@ -33,7 +33,7 @@ struct Apply : Cond<
 	Else<
 		detail::apply_none<Function, Arguments...>
 	>
-> { };
+>;
 
 }
 

@@ -13,7 +13,7 @@ namespace detail {
 
 struct placeholder_tag { };
 
-template <int Index>
+template <std::size_t Index>
 struct placeholder : placeholder_tag { };
 
 template <typename Type>
@@ -28,8 +28,8 @@ struct resolve_placeholder {
 };
 
 template <
-	typename Partials,
-	int      Index
+	typename    Partials,
+	std::size_t Index
 >
 struct resolve_placeholder<Partials, placeholder<Index>> {
 	typedef Nth<Size<Index>, Partials> type;

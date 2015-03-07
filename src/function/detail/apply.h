@@ -33,7 +33,7 @@ template <
 	template<typename...> class Function,
 	typename...                 Arguments
 >
-struct apply_single : apply_variadic<Function, Arguments...> {
+struct apply_single {
 	template <typename Partial0>
 	using function = typename apply_variadic<
 		Function,
@@ -45,7 +45,7 @@ template <
 	template<typename...> class Function,
 	typename...                 Arguments
 >
-struct apply_pair : apply_variadic<Function, Arguments...> {
+struct apply_pair {
 	template <typename Partial0, typename Partial1>
 	using function = typename apply_variadic<
 		Function,
