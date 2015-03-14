@@ -47,66 +47,77 @@ using binary_increment = tav::List<
 	tav::List<tav::Size<2>, tav::Boolean<true>,  tav::Boolean<true>,  tav::Size<2>, tav::Char<'R'>>
 >;
 
-template <
-	typename Initial,
-	typename Final
->
-void printStates(const std::string& name) {
-	const auto printField = [](const auto x) {
-		std::cout << x << ' ';
-	};
+const auto printField = [](const auto x) {
+	std::cout << x;
+};
 
-	std::cout << name
-	          << std::endl
-	          << "   Initial: ";
+template <typename States>
+void printStates() {
+	using position = tav::Car<tav::Head<States>>;
+	using tape     = tav::Cdr<tav::Head<States>>;
+	using prefix   = tav::MakeList<tav::Size<3>, tav::Char<' '>>;
 
-	tav::runtime::for_each<Initial>(printField);
-
-	std::cout << std::endl
-	          << "   Final:   ";
-
-	tav::runtime::for_each<Final>(printField);
+	tav::runtime::for_each<tav::Concatenate<prefix, tape>>(printField);
 
 	std::cout << std::endl;
+
+	tav::runtime::for_each<tav::Concatenate<
+		prefix,
+		tav::MakeList<position, tav::Char<' '>>,
+		tav::List<tav::Char<'^'>>
+	>>(printField);
+
+	std::cout << std::endl;
+
+	printStates<tav::Tail<States>>();
 }
+
+template <>
+void printStates<void>() { }
 
 int main(int, char **) {
 	// (define mirror_tape (list 1 1 1 0 0 0 0))
 	using mirror_tape = tav::ListOfType<int, 1, 1, 1, 0, 0, 0, 0>;
 
+	std::cout << "1. Mirror"
+	          << std::endl;
+
 	printStates<
-		mirror_tape,
 		machine::run<
 			mirror,
 			tav::Size<1>,
 			mirror_tape,
 			tav::Size<0>
 		>
-	>("1. Mirror");
+	>();
 
 	// (define busy_beaver_tape (make-list 13 0))
 	using busy_beaver_tape = tav::MakeList<tav::Size<13>, tav::Int<0>>;
 
+	std::cout << "2. Busy Beaver"
+	          << std::endl;
+
 	printStates<
-		busy_beaver_tape,
 		machine::run<
 			busy_beaver,
 			tav::Char<'A'>,
 			busy_beaver_tape,
 			tav::Size<6>
 		>
-	>("2. Busy Beaver");
+	>();
 
 	// (define binary_increment_tape (list #t #f #t #f #t #f))
 	using binary_increment_tape = tav::ListOfType<bool, 1, 0, 1, 0, 1, 0>;
 
+	std::cout << "3. Binary Increment"
+	          << std::endl;
+
 	printStates<
-		binary_increment_tape,
 		machine::run<
 			binary_increment,
 			tav::Size<0>,
 			binary_increment_tape,
 			tav::Size<0>
 		>
-	>("3. Binary Increment");
+	>();
 }

@@ -63,19 +63,22 @@ class simulate {
 		>::template get<Field>;
 
 	public:
-		using type = tav::Eval<simulate<
-			Transition,
-			current_state<state::field::NEXT>,
-			tape::writeSymbol<
-				Position,
-				current_state<state::field::WRITE>,
-				Tape
-			>,
-			updatePosition<
-				current_state<state::field::MOVE>,
-				Position
-			>
-		>>;
+		using type = tav::Cons<
+			tav::Pair<Position, Tape>,
+			tav::Eval<simulate<
+				Transition,
+				current_state<state::field::NEXT>,
+				tape::writeSymbol<
+					Position,
+					current_state<state::field::WRITE>,
+					Tape
+				>,
+				updatePosition<
+					current_state<state::field::MOVE>,
+					Position
+				>
+			>>
+		>;
 };
 
 template <
@@ -84,7 +87,10 @@ template <
 	typename                           Position
 >
 struct simulate<Transition, void, Tape, Position> {
-	typedef Tape type;
+	using type = tav::Cons<
+		tav::Pair<Position, Tape>,
+		void
+	>;
 };
 
 // (define (run program state tape position)
