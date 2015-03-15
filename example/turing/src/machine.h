@@ -33,16 +33,18 @@ using updatePosition = tav::Cond<
 
 // (define (simulate transition tape state position)
 //   (if (= state FINAL)
-//     tape
+//     (cons '(position . tape)
+//           '())
 //     (let ((current_state (transition state
 //                                      (readSymbol position tape))))
-//       (simulate transition
-//                 (current_state NEXT)
-//                 (writeSymbol position
-//                              (current_state WRITE)
-//                              tape)
-//                 (updatePosition (current_state MOVE)
-//                                 position)))))
+//       (cons '(position tape)
+//             (simulate transition
+//                       (current_state NEXT)
+//                       (writeSymbol position
+//                                    (current_state WRITE)
+//                                    tape)
+//                       (updatePosition (current_state MOVE)
+//                                       position))))))
 template <
 	template<typename, typename> class Transition,
 	typename                           State,

@@ -53,14 +53,22 @@ const auto printField = [](const auto x) {
 
 template <typename States>
 void printStates() {
+	// (define position (car (head states)))
 	using position = tav::Car<tav::Head<States>>;
+	// (define tape (cdr (head states)))
 	using tape     = tav::Cdr<tav::Head<States>>;
+	// (define prefix (make-list 3 " "))
 	using prefix   = tav::MakeList<tav::Size<3>, tav::Char<' '>>;
 
+	// (for-each printField (concatenate prefix tape))
 	tav::runtime::for_each<tav::Concatenate<prefix, tape>>(printField);
 
 	std::cout << std::endl;
 
+	// (for-each printField
+	//   (concatenate prefix
+	//                (make-list position " ")
+	//                (list "^")))
 	tav::runtime::for_each<tav::Concatenate<
 		prefix,
 		tav::MakeList<position, tav::Char<' '>>,
@@ -83,6 +91,7 @@ int main(int, char **) {
 	          << std::endl;
 
 	printStates<
+		// (run mirror 1 mirror_tape 0)
 		machine::run<
 			mirror,
 			tav::Size<1>,
@@ -98,6 +107,7 @@ int main(int, char **) {
 	          << std::endl;
 
 	printStates<
+		// (run busy_beaver "A" busy_beaver_tape 6)
 		machine::run<
 			busy_beaver,
 			tav::Char<'A'>,
@@ -113,6 +123,7 @@ int main(int, char **) {
 	          << std::endl;
 
 	printStates<
+		// (run binary_increment 0 binary_increment_tape 0)
 		machine::run<
 			binary_increment,
 			tav::Size<0>,
